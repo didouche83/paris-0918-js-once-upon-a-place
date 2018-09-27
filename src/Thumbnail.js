@@ -1,6 +1,6 @@
 import React from "react";
 
-const Thumbnail = (title, writer, release_year) => (
+const Thumbnail = ({title, writer, release_year}) => (
 	<article>
 		<img src="" alt =""/>
 		<aside>

@@ -85,11 +85,7 @@ const locations = [
 const Results = () => (
 	<div>
 		{locations.map(loc =>
-			(<Thumbnail
-                loc.title 
-                loc.writer
-                loc.release_year
-                />
+			(<Thumbnail{...loc}/>
 		))}
 	</div>
 	);
