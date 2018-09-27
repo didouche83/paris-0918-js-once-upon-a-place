@@ -1,0 +1,23 @@
+footer{
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	height: 30px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+p{
+	margin: 0;
+	margin-right: 10px;
+	padding: 0;
+	color: white;
+}
+
+a{
+	color: white;
+	text-decoration: none;
+}
