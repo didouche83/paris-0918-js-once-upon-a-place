@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from 'react';
 import Thumbnail from "./Thumbnail";
 
 const locations = [
@@ -82,12 +82,16 @@ const locations = [
     },
 ];
 
-const Results = () => (
-	<div>
-		{locations.map(loc =>
-			(<Thumbnail{...loc}/>
-		))}
-	</div>
-	);
+class Results extends Component {
+    render(){
+        return(
+            <div>
+                {locations.map(loc =>
+                    (<Thumbnail{...loc}/>
+                ))}
+            </div>
+        );
+    }
+}
 
 export default Results;
