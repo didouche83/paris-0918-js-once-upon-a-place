@@ -1,14 +1,15 @@
 import React from "react";
+import './Thumbnail.css';
 
-const Thumbnail = ({title, writer, release_year}) => (
+const Thumbnail = ({title, writer, release_year, locations}) => (
 	<article>
-		<img src="" alt =""/>
+		<img src="https://via.placeholder.com/100x150" alt ={title}/>
 		<aside>
-			<h3>{title}</h3>
-			<hr/>
+			<h4>{title}</h4>
 			<ul>
-				<li>Auteur : {writer}</li>
-				<li>Sorti en : {release_year}</li>
+				<li><em>Writer : </em>{writer}</li>
+				<li><em>released : </em>{release_year}</li>
+				<li><em>Shooting place : </em>{locations}</li>
 			</ul>
 		</aside>
 	</article>
