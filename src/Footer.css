@@ -3,6 +3,7 @@ footer{
 	flex-flow: row wrap;
 	justify-content: center;
 	align-items: center;
+
 	background-color: transparent;
 	height: 50px;
 	padding-bottom: 10px;
