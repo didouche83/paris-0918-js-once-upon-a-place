@@ -10,7 +10,10 @@ const Search = () => (
 				<input type="submit" value="Search"/>
 			</div>
 		</form>
-		<p className="intro">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio autem eum rerum pariatur, id a minima, doloribus natus nihil fuga alias ut molestiae illum neque! Vero mollitia modi alias esse.</p>
+		<div className="intro">
+			<p>Discover where your favorites movies have been filmed around the world with Once Upon A Place </p>
+			 <small>You could be surprised to find one near from you</small>
+			 </div>
 	</main>
 );
 

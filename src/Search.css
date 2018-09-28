@@ -1,9 +1,20 @@
+main {
+	/*border: 1px solid yellow;*/
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
 form{
 	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	/*border: 1px solid blue;*/
 }
 
 label{
@@ -13,33 +24,55 @@ label{
 }
 
 .inputs{
-	background-color: lightgrey;
-	width: 90%;
-	max-width: 400px;
+	/*background-color: #fff;*/
+	width: 70%;
+	/*max-width: 1000px;*/
+	/*border: 1px solid red;*/
 }
 
 input{
-	border-radius: 0px;
+	border-radius: 5px;
 	border: none;
-	padding: 10px 0;
+	padding: 20px 0;
 	margin: 0;
-	background-color: lightgrey;
+	background-color: #fff;
+	/*border: 1px solid green;*/
+	font-size: 1.5rem;
 }
 
 input[type="submit"]{
-	border-left: 1px grey solid;
-	width: 30%;
+	/*border-left: 1px #000 solid;*/
+	width: 20%;
+	background: rgb(251,66,80);/*rgb(0,173,94*/
+	color: #fff;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {	
+	background: rgb(135,3,13);
 }
 
 input[type="text"]{
-	width: 65%;
-	padding-left: 5%;
+	width: 70%;
+	margin-right: 5px;
+	padding-left: 10px;
+	/*margin-right: 10px;*/
 }
 
 .intro{
+
 	margin: 5%;
 	width : 90%;
-	max-width: 400px;
-	text-align: justify;
+	max-width: 800px;
+	text-align: center;
 	margin-top: 40px;
+	color: #212121 !important;
+	font-weight: 800;
+	font-size: 1.25em;
+	background: rgba(255,255,255,0.3);
+	border-radius: 5px;
+}
+
+.intro p {
+	color: #212121;
 }
