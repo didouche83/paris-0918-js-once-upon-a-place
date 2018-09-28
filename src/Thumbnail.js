@@ -4,7 +4,7 @@ class Thumbnail extends Component{
 	render(){
 		return(
 			<article>
-				<img src="" alt ={this.prop.title}/>
+				<img src="https://via.placeholder.com/100x150" alt ={this.prop.title}/>
 				<aside>
 					<h3>{this.prop.title}</h3>
 					<hr/>
@@ -17,5 +17,6 @@ class Thumbnail extends Component{
 		);
 	}
 }
+
 
 export default Thumbnail;
