@@ -1,18 +1,22 @@
-import React from "react";
-import './Thumbnail.css';
+import React, { Component } from 'react';
 
-const Thumbnail = ({title, writer, release_year, locations}) => (
-	<article>
-		<img src="https://via.placeholder.com/100x150" alt ={title}/>
-		<aside>
-			<h4>{title}</h4>
-			<ul>
-				<li><em>Writer : </em>{writer}</li>
-				<li><em>released : </em>{release_year}</li>
-				<li><em>Shooting place : </em>{locations}</li>
-			</ul>
-		</aside>
-	</article>
-);
+class Thumbnail extends Component{
+	render(){
+		return(
+			<article>
+				<img src="https://via.placeholder.com/100x150" alt ={this.prop.title}/>
+				<aside>
+					<h3>{this.prop.title}</h3>
+					<hr/>
+					<ul>
+						<li>Auteur : {this.prop.writer}</li>
+						<li>Sorti en : {this.prop.release_year}</li>
+					</ul>
+				</aside>
+			</article>
+		);
+	}
+}
+
 
 export default Thumbnail;
