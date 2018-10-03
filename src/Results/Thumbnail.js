@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Thumbnail extends React{
+class Thumbnail extends Component{
 	render(){
 		return(
 			<div>
