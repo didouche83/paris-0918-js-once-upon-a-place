@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
-import ResultList from './Results/ResultList';
+import ResultList from './ResultList';
 // import Map from './Map';
 // import HeaderResults from './HeaderResults';
 
@@ -34,7 +34,13 @@ class Results extends Component {
               <NavLink to="/Results/List">List</NavLink>
               <NavLink to="/Results/Map">Map</NavLink>
               <Switch>
-                <Route path="/Results/List" component={ResultList} />
+                <Route 
+                  path="/Results/List" 
+                  render={(props)=> 
+                    <ResultList 
+                      locationsList={this.state.res} 
+                    />}
+                />
                 <Route path="/Results/Map" component={Map} />
               </Switch>
             </div>

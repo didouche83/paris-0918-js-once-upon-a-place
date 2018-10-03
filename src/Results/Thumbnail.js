@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Results from './Results/Results'
 
 class Thumbnail extends Component{
 	render(){
