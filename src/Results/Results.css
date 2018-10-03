@@ -1,3 +1,13 @@
+.Results{
+    border: 1px solid grey;
+    height: 80vh;
+    width: 80vw;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px black;
+    background-color: white;
+    color: black;
+}
+
 .tab{
     color: white;
     font-weight: bold;

@@ -11,7 +11,7 @@ class Results extends Component {
   };
 
   searchLoc = async () =>{
-    const input = 'man'//this.props.input;
+    const input = this.props.input;
     const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`);
     if (api_call.ok) {
       const data = await api_call.json();

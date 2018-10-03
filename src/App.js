@@ -18,7 +18,7 @@ class App extends Component {
                     path="/Results" 
                     render={(props)=> 
                       <Results 
-                        // input={document.getElementById('searchInput').value} 
+                        input={document.getElementById('searchInput').value} 
                       />} 
                   />
                 </Switch>
