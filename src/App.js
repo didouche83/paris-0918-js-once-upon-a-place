@@ -14,7 +14,13 @@ class App extends Component {
         <BrowserRouter>
                 <Switch>
                   <Route exact path="/" component={Home} />
-                  <Route path="/Results" component={Results} />
+                  <Route 
+                    path="/Results" 
+                    render={(props)=> 
+                      <Results 
+                        input={document.getElementById('searchInput').value} 
+                      />} 
+                  />
                 </Switch>
             </BrowserRouter>
         <Footer/>

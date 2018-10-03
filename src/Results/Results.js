@@ -10,7 +10,8 @@ class Results extends Component {
   };
 
   searchLoc = async () =>{
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25Man%25'`);
+    const input = this.props.input;
+    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'`);
     if (api_call.ok) {
       const data = await api_call.json();
       this.setState({
@@ -54,7 +55,7 @@ class Results extends Component {
         </div>
       );
     }else{
-      return <p>Loading...</p>
+      return <h2>La recherche n'a donné aucun résultat</h2>
     }
   }
 }
