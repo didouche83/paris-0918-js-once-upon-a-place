@@ -9,43 +9,47 @@ class Results extends Component {
     res: []
   };
 
-  searchMovie = async () =>{
+  searchLoc = async () =>{
     const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25Man%25'`);
     if (api_call.ok) {
       const data = await api_call.json();
       this.setState({
         res: data
       })
-    }else{
-      const data = undefined;
     }
   };
 
-  componentWillMount(){
-    this.searchMovie()
+  componentDidMount(){
+    this.searchLoc()
   };
 
   render(){
-    return(
-      <div className= "Results">
-        {/* <HeaderResults/> */}
+    if (this.state.res.length > 0){
+      return(
+        <div className= "Results">
+          {/* <HeaderResults/> */}
 
-        {/* <BrowserRouter className="mobileOnly">
-          <NavLink to="/Result/List">List</NavLink>
-          <NavLink to="/Result/Map">Map</NavLink>
-          <Switch>
-            <Route path="/Result/List" component={ResultList} />
-            <Route path="/Results/Map" component={Map} />
-          </Switch>
-        </BrowserRouter> */}
+          <BrowserRouter className="mobileOnly">
+            <div>
+              <NavLink to="/Results/List">List</NavLink>
+              <NavLink to="/Results/Map">Map</NavLink>
+              <Switch>
+                <Route path="/Results/List" component={ResultList} />
+                <Route path="/Results/Map" component={Map} />
+              </Switch>
+            </div>
+          </BrowserRouter>
 
-        <ResultList 
-          className="desktopOnly"
-          locationsList = {this.state.res}
-        />
-        {/* <Map className="desktopOnly"/> */}
-      </div>
-    );
+          <ResultList 
+            className="desktopOnly"
+            locationsList = {this.state.res}
+          />
+          {/* <Map className="desktopOnly"/> */}
+        </div>
+      );
+    }else{
+      return <p>Loading...</p>
+    }
   }
 }
 

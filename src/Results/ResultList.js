@@ -11,6 +11,7 @@ class ResultList extends Component {
                 <Thumbnail locationMovie= {e}/>
             })
         )
+
     }
 }
 
