@@ -1,10 +1,17 @@
 import React, {Component} from 'react';
+import Thumbnail from './Thumbnail';
 
 class ResultList extends Component {
     render() {
-        return(
-        <p>ResultList</p>
-        );
+         console.log("resultList",this.props.locationsList);
+        
+        return (
+            this.props.locationsList.map(e => {
+                //return <p>Resultat: {e.title}</p>
+                return <Thumbnail locationMovie= {e}/>
+            })
+        )
+
     }
 }
 

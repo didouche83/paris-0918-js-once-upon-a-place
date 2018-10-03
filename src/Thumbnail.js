@@ -14,10 +14,10 @@ class Thumbnail extends Component{
     }
 
 	//handleClick = () => {
-		//console.log({this.props})*/
-	};
-	render(){
-		console.log({this.props.locationMovie})
+		//console.log({this.props})
+	};*/
+	render() {
+		//console.log({this.props.locationMovie})
 		return(
 			<p>blablabla</p>
 			/*<div>
@@ -26,7 +26,7 @@ class Thumbnail extends Component{
 				<p className="description">{this.props.description}</p>
 				<button onClick={this.togglePopup.bind(this)}>More informations</button>		
 			</div>*/
-			);
+		);
 	}
 };
 

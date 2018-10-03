@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
 import Header from './Header';
 import Home from './Home.js';
-import Results from './Results';
+import Results from './Results/Results';
 import Footer from './Footer';
 import './App.css';
 
