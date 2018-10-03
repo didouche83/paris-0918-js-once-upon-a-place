@@ -2,17 +2,30 @@ import React, { Component } from 'react';
 import Results from './Results/Results'
 
 class Thumbnail extends Component{
-	handleClick = () => {
-		console.log({this.props})
+	/*constructor() {
+    	super();
+    	this.state = {
+      		showPopup: false
+      	};
+    }
+
+    togglePopup() {
+    	this.setState({showPopup: !this.state.showPopup});
+    }
+
+	//handleClick = () => {
+		//console.log({this.props})*/
 	};
 	render(){
+		console.log({this.props.locationMovie})
 		return(
-			<div>
-				<h3>{this.props.title}</h3>
-				<img className="affiche" src={this.props.affiche} alt={this.props.title} />
-				<p className="description">{this.props.descritpion}</p>
-				<button onClick={this.handle.click}>More informations</button>				
-			</div>
+			<p>blablabla</p>
+			/*<div>
+				<h3>{this.props.locationMovie.title}</h3>
+				<img className="affiche" src={this.props.affiche} alt={this.props.locationMovie.title} />
+				<p className="description">{this.props.description}</p>
+				<button onClick={this.togglePopup.bind(this)}>More informations</button>		
+			</div>*/
 			);
 	}
 };
