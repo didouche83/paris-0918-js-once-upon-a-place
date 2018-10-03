@@ -57,12 +57,11 @@ class Results extends Component {
                 </Switch>
               </div>
             </BrowserRouter>
-          </div>          
-          <ResultList 
-            className="desktopOnly"
-            locationsList = {this.state.res}
-          />
-          <Map className="desktopOnly"/>
+          </div>
+          <div className="desktopOnly">      
+            <ResultList locationsList = {this.state.res} />
+            <Map />
+          </div>
         </div>
       );
     }else{
