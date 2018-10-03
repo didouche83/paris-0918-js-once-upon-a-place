@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
 import ResultList from './ResultList';
-// import Map from './Map';
+import Map from './Map';
 // import HeaderResults from './HeaderResults';
+import './Results.css'
 
 class Results extends Component {
   state = {
@@ -10,12 +11,16 @@ class Results extends Component {
   };
 
   searchLoc = async () =>{
-    const input = this.props.input;
+    const input = 'man'//this.props.input;
     const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`);
     if (api_call.ok) {
       const data = await api_call.json();
       this.setState({
         res: data
+      })
+    }else{
+      this.setState({
+        res: []
       })
     }
   };
@@ -29,29 +34,35 @@ class Results extends Component {
       return(
         <div className= "Results">
           {/* <HeaderResults/> */}
-
-          <BrowserRouter className="mobileOnly">
-            <div>
-              <NavLink to="/Results/List">List</NavLink>
-              <NavLink to="/Results/Map">Map</NavLink>
-              <Switch>
-                <Route 
-                  path="/Results/List" 
-                  render={(props)=> 
-                    <ResultList 
-                      locationsList={this.state.res} 
-                    />}
-                />
-                <Route path="/Results/Map" component={Map} />
-              </Switch>
-            </div>
-          </BrowserRouter>
-
+          <div className="mobileOnly">
+            <BrowserRouter>
+              <div>
+                <NavLink 
+                  className="tab"
+                  to="/Results/List"
+                  >List</NavLink>
+                <NavLink 
+                  className="tab"
+                  to="/Results/Map"
+                  >Map</NavLink>
+                <Switch>
+                  <Route 
+                    path="/Results/List"
+                    render={(props)=> 
+                      <ResultList 
+                        locationsList={this.state.res} 
+                      />}
+                  />
+                  <Route path="/Results/Map" component={Map} />
+                </Switch>
+              </div>
+            </BrowserRouter>
+          </div>          
           <ResultList 
             className="desktopOnly"
             locationsList = {this.state.res}
           />
-          {/* <Map className="desktopOnly"/> */}
+          <Map className="desktopOnly"/>
         </div>
       );
     }else{
