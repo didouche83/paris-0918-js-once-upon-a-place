@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Results from './Results/Results'
 
-class Thumbnail extends React{
+class Thumbnail extends Component{
 	handleClick = () => {
 		console.log({this.props})
 	};
