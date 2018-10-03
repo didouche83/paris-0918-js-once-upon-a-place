@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import Results from './Results/Results'
 
 class Thumbnail extends React{
+	handleClick = () => {
+		console.log({this.props})
+	};
 	render(){
 		return(
 			<div>
-				Movie Thumbnail
+				<h3>{this.props.title}</h3>
+				<img className="affiche" src={this.props.affiche} alt={this.props.title} />
+				<p className="description">{this.props.descritpion}</p>
+				<button onClick={this.handle.click}>More informations</button>				
 			</div>
 			);
 	}
