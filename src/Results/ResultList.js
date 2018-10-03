@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Thumbnail from './Thumbnail';
+import MediaCard from './MediaCard';
+import Dialog from './Dialog';
 
 class ResultList extends Component {
     render() {
@@ -8,7 +10,11 @@ class ResultList extends Component {
         return (
             this.props.locationsList.map(e => {
                 //return <p>Resultat: {e.title}</p>
-                return <Thumbnail locationMovie= {e}/>
+                return (
+                	<div>
+                		<MediaCard locationMovie= {e}/>
+                	</div>
+                )
             })
         )
 
