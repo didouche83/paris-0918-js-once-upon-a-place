@@ -42,7 +42,13 @@ class MediaCard extends Component {
                 {this.props.locationMovie.title}
               </Typography>
               <Typography component="p">
-                 {this.props.locationMovie.locations}, {this.props.locationMovie.release_year}, 
+                 Scenes locations: {this.props.locationMovie.locations}
+              </Typography>
+              <Typography component="p">
+                  -
+              </Typography>
+              <Typography component="p">
+                 Shooting year: {this.props.locationMovie.release_year}
               </Typography>
               <div id="button">
                 <Dialog locationMovie={this.props.locationMovie}/>
