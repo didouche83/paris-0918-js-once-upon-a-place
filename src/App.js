@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
-import Header from './Header';
+import { Route, BrowserRouter, Switch, } from 'react-router-dom';
+import './App.css';
+
 import Home from './Home.js';
 import Results from './Results/Results';
 import Footer from './Footer';
@@ -13,7 +14,13 @@ class App extends Component {
         <BrowserRouter>
                 <Switch>
                   <Route exact path="/" component={Home} />
-                  <Route path="/Results" component={Results} />
+                  <Route 
+                    path="/Results" 
+                    render={(props)=> 
+                      <Results 
+                        input={document.getElementById('searchInput').value} 
+                      />} 
+                  />
                 </Switch>
             </BrowserRouter>
         <Footer/>
