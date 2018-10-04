@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import './Thumbnail.css';
 
 
 function Transition(props) {
@@ -34,8 +35,8 @@ class AlertDialogSlide extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="extendedFab" aria-label="Delete" color="primary" id="boutonQuiMarche" onClick={this.handleClickOpen} className={this.props.button}>
-        More informations...
+        <Button variant="extendedFab" size="small" aria-label="Delete" color="primary" id="boutonQuiMarche" onClick={this.handleClickOpen} className={this.props.button}>
+        ...
         </Button>
         <Dialog
           open={this.state.open}

@@ -1,0 +1,22 @@
+#boutonQuiMarche {
+	background-color: grey;
+	opacity: 0.8;
+	/*width: 80%;*/
+}
+
+#carde{
+	margin-bottom: 10px;
+	width: 100%;
+	border:2px solid red;
+}
+
+#cardmedia{
+	border: 2px solid blue;
+	max-width: 100%;
+}
+
+#cardactionarea{
+	border: 2px solid yellow;
+	width: 100%;
+}
+
