@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
 import ResultList from './ResultList';
 import Map from './Map';
-// import HeaderResults from './HeaderResults';
+import HeaderResults from './HeaderResults';
 import './Results.css'
 
 class Results extends Component {
@@ -33,7 +33,7 @@ class Results extends Component {
     if (this.state.res.length > 0){
       return(
         <div className= "Results">
-          {/* <HeaderResults/> */}
+          <HeaderResults valueInput={this.props.input}/>
           <div className="mobileOnly">
             <BrowserRouter>
               <div>
