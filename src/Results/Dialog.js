@@ -35,8 +35,8 @@ class AlertDialogSlide extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="extendedFab" size="small" aria-label="Delete" color="primary" id="boutonQuiMarche" onClick={this.handleClickOpen} className={this.props.button}>
-        ...
+        <Button variant="contained" className={this.props.button} onClick={this.handleClickOpen} id="boutonQuiMarche2">
+        See more
         </Button>
         <Dialog
           open={this.state.open}

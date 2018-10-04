@@ -14,10 +14,10 @@ import Dialog from './Dialog';
 
 const styles = {
   card: {
-    width: "100%",
+    //maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: 200,
   },
 };
 
@@ -30,24 +30,26 @@ class MediaCard extends Component {
         <Card id="carde" className={classes.card}>
         <div id="cardmedia">
           <CardActionArea id="cardactionarea">
+            <div id="cardImage">
               <CardMedia
                 className={classes.media}
-                image="https://i.pinimg.com/236x/90/c0/f4/90c0f44112136cf542f8f11da25e3331.jpg"
+                image="http://www.ralentirtravaux.com/images/troie.jpg"
                 title={this.props.locationMovie.title}
               />
-            <CardContent>
+            </div>
+            <CardContent id="CardContent">
               <Typography gutterBottom variant="headline" component="h2">
                 {this.props.locationMovie.title}
               </Typography>
               <Typography component="p">
                  {this.props.locationMovie.locations}, {this.props.locationMovie.release_year}, 
               </Typography>
+              <div id="button">
+                <Dialog locationMovie={this.props.locationMovie}/>
+              </div>
             </CardContent>
           </CardActionArea>
         </div>
-          <CardActions>
-            <Dialog locationMovie={this.props.locationMovie}/>
-          </CardActions>
         </Card>
 
       </div>
