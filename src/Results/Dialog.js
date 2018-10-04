@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import MediaCard from './MediaCard';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -28,7 +27,7 @@ class AlertDialogSlide extends React.Component {
   render() {
     return (
       <div>
-        <Button id="boutonQuiMarche" onClick={this.handleClickOpen}>More informations</Button>
+        <Button color="primary" id="boutonQuiMarche" onClick={this.handleClickOpen}>More informations</Button>
         <Dialog
           open={this.state.open}
           TransitionComponent={Transition}
