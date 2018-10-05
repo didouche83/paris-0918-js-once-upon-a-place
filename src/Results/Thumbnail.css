@@ -11,9 +11,10 @@
 
 #carde{
 	margin-bottom: 10px;
-	width: 40%;
-	height: 100%;
-	background-color: rgb(255, 255, 255, 0.8)
+	width: 36%;
+	max-height: 100%;
+	/*height:45vh;*/
+	background-color: rgb(255, 255, 255, 0.8);
 	/*border: 2px solid blue;*/
 }
 
@@ -40,8 +41,12 @@
 }
 
 #cardImage{
-	width:34%;
-	height: 100%;
+	/*width:34%;*/
+	width:140px;
+	height: 200px;
+	margin-left: 3px;
+	/*border: 2px red solid;*/
+	/*max-height: 100%;*/
 	float:left;
 }
 

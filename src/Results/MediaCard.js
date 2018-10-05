@@ -26,7 +26,6 @@ class MediaCard extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
         <Card id="carde" className={classes.card}>
         <div id="cardmedia">
           <CardActionArea id="cardactionarea">
@@ -57,8 +56,6 @@ class MediaCard extends Component {
           </CardActionArea>
         </div>
         </Card>
-
-      </div>
     );
   }
 }
