@@ -59,7 +59,9 @@ class Results extends Component {
             </BrowserRouter>
           </div>
           <div className="desktopOnly">      
-            <ResultList locationsList = {this.state.res} />
+            <ResultList 
+              locationsList = {this.state.res} 
+            />
             <Map />
           </div>
         </div>
