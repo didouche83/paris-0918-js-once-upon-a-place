@@ -1,0 +1,35 @@
+.Results{
+    border: 1px solid grey;
+    height: 80vh;
+    width: 80vw;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px black;
+    background-color: white;
+    color: black;
+}
+
+.tab{
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 20px 80px;
+    background-color: grey;
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0px 3px 2px rgb(211, 210, 210) inset;
+}
+
+.mobileOnly{
+    display: none;
+}
+.desktopOnly{
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .mobileOnly{
+        display: block;
+    }
+    .desktopOnly{
+        display: none;
+    }
+}

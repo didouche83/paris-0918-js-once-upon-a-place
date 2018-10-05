@@ -1,7 +1,7 @@
 main {
 	/*border: 1px solid yellow;*/
 	width: 100%;
-	margin: auto;
+
 	text-align: center;
 	display: flex;
 	justify-content: center;
@@ -24,6 +24,7 @@ label{
 }
 
 .inputs{
+
 	/*background-color: #fff;*/
 	width: 70%;
 	/*max-width: 1000px;*/
