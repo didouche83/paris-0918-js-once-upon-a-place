@@ -33,36 +33,41 @@ class Results extends Component {
     if (this.state.res.length > 0){
       return(
         <div className= "Results">
-          <HeaderResults valueInput={this.props.input}/>
-          <div className="mobileOnly">
-            <BrowserRouter>
-              <div>
-                <NavLink 
-                  className="tab"
-                  to="/Results/List"
-                  >List</NavLink>
-                <NavLink 
-                  className="tab"
-                  to="/Results/Map"
-                  >Map</NavLink>
-                <Switch>
-                  <Route 
-                    path="/Results/List"
-                    render={(props)=> 
-                      <ResultList 
-                        locationsList={this.state.res} 
-                      />}
-                  />
-                  <Route path="/Results/Map" component={Map} />
-                </Switch>
-              </div>
-            </BrowserRouter>
+          <div className='resHeader'>
+            <HeaderResults valueInput={this.props.input}/>
           </div>
-          <div className="desktopOnly">      
-            <ResultList 
-              locationsList = {this.state.res} 
-            />
-            <Map />
+
+          <div className='resContent'>
+            <div className="mobileOnly">
+              <BrowserRouter>
+                <div className='router'>
+                  <NavLink 
+                    className="tab"
+                    to="/Results/List"
+                    >List</NavLink>
+                  <NavLink 
+                    className="tab"
+                    to="/Results/Map"
+                    >Map</NavLink>
+                  <Switch>
+                    <Route 
+                      path="/Results/List"
+                      render={(props)=> 
+                        <ResultList 
+                          locationsList={this.state.res} 
+                        />}
+                    />
+                    <Route path="/Results/Map" component={Map} />
+                  </Switch>
+                </div>
+              </BrowserRouter>
+            </div>
+            <div className="desktopOnly">      
+              <ResultList 
+                locationsList = {this.state.res} 
+              />
+              <Map />
+            </div>
           </div>
         </div>
       );
