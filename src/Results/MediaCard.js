@@ -14,10 +14,10 @@ import Dialog from './Dialog';
 
 const styles = {
   card: {
-    maxWidth: 345,
+    //maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: 200,
   },
 };
 
@@ -27,25 +27,35 @@ class MediaCard extends Component {
 
     return (
       <div>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="https://i.pinimg.com/236x/90/c0/f4/90c0f44112136cf542f8f11da25e3331.jpg"
-              title={this.props.locationMovie.title}
-            />
-            <CardContent>
+        <Card id="carde" className={classes.card}>
+        <div id="cardmedia">
+          <CardActionArea id="cardactionarea">
+            <div id="cardImage">
+              <CardMedia
+                className={classes.media}
+                image="http://www.ralentirtravaux.com/images/troie.jpg"
+                title={this.props.locationMovie.title}
+              />
+            </div>
+            <CardContent id="CardContent">
               <Typography gutterBottom variant="headline" component="h2">
                 {this.props.locationMovie.title}
               </Typography>
               <Typography component="p">
-                 {this.props.locationMovie.locations}, {this.props.locationMovie.release_year}, 
+                 Scenes locations: {this.props.locationMovie.locations}
               </Typography>
+              <Typography component="p">
+                  -
+              </Typography>
+              <Typography component="p">
+                 Shooting year: {this.props.locationMovie.release_year}
+              </Typography>
+              <div id="button">
+                <Dialog locationMovie={this.props.locationMovie}/>
+              </div>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Dialog locationMovie={this.props.locationMovie}/>
-          </CardActions>
+        </div>
         </Card>
 
       </div>
