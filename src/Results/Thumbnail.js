@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import ReactDom from 'react-dom';
+import Modal from '@material-ui/core/Modal';
+import MediaCard from './MediaCard'
 
 class Thumbnail extends Component{
 	/*constructor() {
@@ -10,7 +13,7 @@ class Thumbnail extends Component{
 
     togglePopup() {
     	this.setState({showPopup: !this.state.showPopup});
-    }
+    }*/
 
 	// 	<h3>{this.props.locationMovie.title}</h3>
 			// 	<img className="affiche" src={this.props.affiche} alt={this.props.locationMovie.title} />
@@ -20,17 +23,19 @@ class Thumbnail extends Component{
 
 
 	//handleClick = () => {
-		//console.log({this.props})
-	};*/
-	render() {
-		console.log(this.props.locationMovie)
+	//};
+
+	render(){
+		//console.log(this.props.locationMovie)
 		//console.log('coucou')
 		return(
 			
 			<div>
 				<h3>{this.props.locationMovie.title}</h3>
 			 	<p className="location">{this.props.locationMovie.locations}</p>
-			 	<p className="year">{this.props.locationMovie.release_year}</p>		
+			 	<p className="year">{this.props.locationMovie.release_year}</p>	
+			 
+
 			</div>
 
 		
