@@ -13,7 +13,7 @@ class Home extends Component {
 					<label htmlFor="searchInput"></label>
 					<div className="inputs">
 						<input type="text" id="searchInput" placeholder="Search movie..."/>
-						<NavLink to="/Results"> 
+						<NavLink to="/Results/List"> 
               <input type="submit" value="Search"/>
             </NavLink>
 					</div>

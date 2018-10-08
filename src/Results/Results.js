@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
 import ResultList from './ResultList';
-// import Map from './Map';
-// import HeaderResults from './HeaderResults';
+import Map from './Map';
+import HeaderResults from './HeaderResults';
+import './Results.css'
 
 class Results extends Component {
   state = {
@@ -10,11 +11,16 @@ class Results extends Component {
   };
 
   searchLoc = async () =>{
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25Man%25'`);
+    const input = this.props.input;
+    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`);
     if (api_call.ok) {
       const data = await api_call.json();
       this.setState({
         res: data
+      })
+    }else{
+      this.setState({
+        res: []
       })
     }
   };
@@ -27,34 +33,46 @@ class Results extends Component {
     if (this.state.res.length > 0){
       return(
         <div className= "Results">
-          {/* <HeaderResults/> */}
+          <div className='resHeader'>
+            <HeaderResults valueInput={this.props.input}/>
+          </div>
 
-          <BrowserRouter className="mobileOnly">
-            <div>
-              <NavLink to="/Results/List">List</NavLink>
-              <NavLink to="/Results/Map">Map</NavLink>
-              <Switch>
-                <Route 
-                  path="/Results/List" 
-                  render={(props)=> 
-                    <ResultList 
-                      locationsList={this.state.res} 
-                    />}
-                />
-                <Route path="/Results/Map" component={Map} />
-              </Switch>
+          <div className='resContent'>
+            <div className="mobileOnly">
+              <BrowserRouter>
+                <div className='router'>
+                  <NavLink 
+                    className="tab"
+                    to="/Results/List"
+                    >List</NavLink>
+                  <NavLink 
+                    className="tab"
+                    to="/Results/Map"
+                    >Map</NavLink>
+                  <Switch>
+                    <Route 
+                      path="/Results/List"
+                      render={(props)=> 
+                        <ResultList 
+                          locationsList={this.state.res} 
+                        />}
+                    />
+                    <Route path="/Results/Map" component={Map} />
+                  </Switch>
+                </div>
+              </BrowserRouter>
             </div>
-          </BrowserRouter>
-
-          <ResultList 
-            className="desktopOnly"
-            locationsList = {this.state.res}
-          />
-          {/* <Map className="desktopOnly"/> */}
+            <div className="desktopOnly">      
+              <ResultList 
+                locationsList = {this.state.res} 
+              />
+              <Map />
+            </div>
+          </div>
         </div>
       );
     }else{
-      return <p>Loading...</p>
+      return <h2>La recherche n'a donné aucun résultat</h2>
     }
   }
 }

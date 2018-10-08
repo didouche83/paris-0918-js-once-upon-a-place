@@ -1,17 +1,23 @@
 import React, {Component} from 'react';
-import Thumbnail from './Thumbnail';
+import MediaCard from './MediaCard';
+import './ResultList.css';
 
 class ResultList extends Component {
     render() {
          console.log("resultList",this.props.locationsList);
         
         return (
-            this.props.locationsList.map(e => {
-                //return <p>Resultat: {e.title}</p>
-                return <Thumbnail locationMovie= {e}/>
-            })
+            <div className='cardContainer'>{
+                this.props.locationsList.map(e => {
+                    //return <p>Resultat: {e.title}</p>
+                    return (
+                        <div className='card'>
+                            <MediaCard locationMovie= {e}/>
+                        </div>
+                    )
+                })
+            }</div>
         )
-
     }
 }
 
