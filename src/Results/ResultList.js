@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import MediaCard from './MediaCard';
+import Expander from './Expander';
 import './ResultList.css';
 
 class ResultList extends Component {
@@ -12,7 +13,8 @@ class ResultList extends Component {
                     //return <p>Resultat: {e.title}</p>
                     return (
                         <div className='card'>
-                            <MediaCard locationMovie= {e}/>
+                            
+                            <Expander locationMovie= {e}/>
                         </div>
                     )
                 })
@@ -22,3 +24,6 @@ class ResultList extends Component {
 }
 
 export default ResultList;
+
+
+//<MediaCard locationMovie= {e}/>
