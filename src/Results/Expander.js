@@ -14,7 +14,16 @@ import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '50%',
+  },
+  affiche:{
+    width: '60%',
+  },
+  button:{
+    float: 'bottom',
+  },
+  trailer:{
+      margin: '2px',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -32,7 +41,7 @@ const styles = theme => ({
     alignItems: 'center',
   },
   column: {
-    flexBasis: '33.33%',
+    flexBasis: '50%',
   },
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
@@ -117,30 +126,25 @@ function DetailedExpansionPanel(props) {
   return (
     <div className={classes.root}>
       <ExpansionPanel defaultExpanded>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
             <Typography className={classes.heading}>
         {props.locationMovie.title}</Typography>
-            <img src="http://www.ralentirtravaux.com/images/troie.jpg" alt="affiche"/>
+            <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.locationMovie.title}/>
           </div>
           <div className={classes.column}>
-            <Typography className={classes.secondaryHeading}>Select trip destination</Typography>
+            <Typography className={classes.secondaryHeading}>Scenes locations: {props.locationMovie.locations}</Typography>
+            <Typography className={classes.secondaryHeading}> Shooting year: {props.locationMovie.release_year}</Typography>
           </div>
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.details}>
-          <div className={classes.column} />
-          <div className={classes.column}>
-            <Chip label="Barbados" className={classes.chip} onDelete={() => {}} />
-          </div>
-          <div className={classNames(classes.column, classes.helper)}>
-            <Typography variant="caption">
-              Select your destination of choice
+        
+          <div>Dans la Grèce antique, l'enlèvement d'Hélène, reine de Sparte, par Paris, prince de Troie, est une insulte que le roi Ménélas ne peut supporter. L'honneur familial étant en jeu, Agamemnon, frère de Ménélas et puissant roi de Mycènes, réunit toutes les armées grecques afin de faire sortir Hélène de Troie. L'issue de la guerre de Troie dépendra notamment d'un homme, Achille. Arrogant, rebelle, et réputé invicible, celui-ci n'a d'attache pour rien ni personne si ce n'est sa propre gloire.</div>
+         
+          <div className={classes.trailer}>
+            <iframe width="500" height="255" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               <br />
-              <a href="#sub-labels-and-columns" className={classes.link}>
-                Learn more
-              </a>
-            </Typography>
           </div>
         </ExpansionPanelDetails>
         <Divider />
