@@ -5,22 +5,32 @@ import './Home.css';
 
 class Home extends Component {
 	state = {
-		titles:[]
+		titles:[],
+		inputValue: ''
 	}
 
   autoComp = async (e) =>{
-    const input = e.target.value;
+    const input = this.state.inputValue;
     const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`
     const call_api = await fetch(url);
 		const data = await call_api.json();
-		const titles = data.map(x=>x.title).filter((x,i,t)=>x!=t[i-1]);
+		const titles = data.map(x=>x.title).filter((x,i,t)=>x!==t[i-1]);
 			this.setState({
 				titles:input.length?titles:[]
 			})
 	}
 	
 	autoCompFill = (e) =>{
-		document.getElementById('searchInput').value = e.target.innerHTML;
+		this.setState({
+			inputValue: e.target.innerHTML
+		})
+	}
+
+	inputChange = (e) =>{
+		this.setState({
+			inputValue: e.target.value
+		})
+		this.autoComp();
 	}
 
 	render(){
@@ -31,7 +41,7 @@ class Home extends Component {
 				<form>
 					<label htmlFor="searchInput"></label>
 					<div className="inputs">
-						<input onKeyUp={this.autoComp} type="text" id="searchInput" autocomplete="off" placeholder="Search movie..."/>
+						<input onChange ={this.inputChange} value={this.state.inputValue} type="text" id="searchInput" autocomplete="off" placeholder="Search movie..."/>
 						<NavLink to="/Results/List"> 
               <input type="submit" value="Search"/>
             </NavLink>
