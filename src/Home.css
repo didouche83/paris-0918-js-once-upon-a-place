@@ -77,3 +77,12 @@ input[type="text"]{
 .intro p {
 	color: #212121;
 }
+
+.autoCompRes{
+	width: 70%
+}
+
+.autoCompLig{
+	background-color: #fff;
+	width: 70%;
+}

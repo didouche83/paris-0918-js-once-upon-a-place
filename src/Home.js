@@ -32,7 +32,11 @@ class Home extends Component {
 					<label htmlFor="searchInput"></label>
 					<div className="inputs">
 						<input onKeyUp={this.autoComp} type="text" id="searchInput" autocomplete="off" placeholder="Search movie..."/>
-						{this.state.titles.length > 0 &&
+						<NavLink to="/Results/List"> 
+              <input type="submit" value="Search"/>
+            </NavLink>
+					</div>
+					{this.state.titles.length > 0 &&
 							<div className='autoCompRes'>
 								{this.state.titles.map((title,i) => 
 										<div
@@ -44,10 +48,6 @@ class Home extends Component {
 								}
 							</div>
 						}
-						<NavLink to="/Results/List"> 
-              <input type="submit" value="Search"/>
-            </NavLink>
-					</div>
 				</form>
 				<p className="intro">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio autem eum rerum pariatur, id a minima, doloribus natus nihil fuga alias ut molestiae illum neque! Vero mollitia modi alias esse.</p>
 			</main>
