@@ -8,16 +8,21 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   root: {
     width: '50%',
+    border: '1px solid red',
+    marginBottom: '15px',
+  },
+  synopsis: {
+    marginRight: '3vw',
   },
   affiche:{
     width: '60%',
+    border: '2px solid blue',
   },
   button:{
     float: 'bottom',
@@ -26,11 +31,7 @@ const styles = theme => ({
       margin: '2px',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
+    fontSize: theme.typography.pxToRem(30),
   },
   icon: {
     verticalAlign: 'bottom',
@@ -56,91 +57,81 @@ const styles = theme => ({
   },
 });
 
-function DetailedExpansionPanel(props) {
+//----------------------------------------------------------------------------------------------------------------------------------------
+//limite le nombre de mots affichés dans la card initiale
+const reduceLengthTextCard = synopsis =>{
+  if (synopsis.length > 50){
+    return(synopsis.substr(0, 50) + '...')
+  }
+}
+const synopsisTroy = "Dans la Grèce antique, l'enlèvement d'Hélène, reine de Sparte, par Paris, prince de Troie, est une insulte que le roi Ménélas ne peut supporter. L'honneur familial étant en jeu, Agamemnon, frère de Ménélas et puissant roi de Mycènes, réunit toutes les armées grecques afin de faire sortir Hélène de Troie. L'issue de la guerre de Troie dépendra notamment d'un homme, Achille. Arrogant, rebelle, et réputé invicible, celui-ci n'a d'attache pour rien ni personne si ce n'est sa propre gloire."
+const reducedTextSynopsis = reduceLengthTextCard(synopsisTroy)
+//limite le nombre de mots affichés dans la card initiale
+//-----------------------------------------------------------------------------------------------------------------------------------------
 
-    /* CONTENU DETAILLE
+/*cache le début du synopsis de la card au clic pour afficher l'expander
+const showReducedSynopsis = event =>{
+  if(this.synopsisReduced.contains({reducedTextSynopsis})){
+      return(this.synopsisReduced.remove({reducedTextSynopsis}));
+  }
+  else{
+      return(this.synopsisReduced.add({reducedTextSynopsis}));
+  }
+};
+//cache le début du synopsis de la card au clic pour afficher l'expander
 
-    <Dialog
-          open={this.state.open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={this.handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="alert-dialog-slide-title">
-            {this.props.locationMovie.title}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              {this.props.locationMovie.locations},  {this.props.locationMovie.release_year}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+/*trifouillage pour cacher texte
+constructor(props) {
+  super(props),
+  this.state = {
+    showReducedSynopsis: true,
+  }
+}
 
+onClick = () => {
+  this.setState ({showReducedSynopsis: !this.state.showReducedSynopsis})
+}
 
-// CONTENU DE BASE
+const showingSynopsis = this.state.showReducedSynopsis ? 'ok' : 'hidden'
+trifouillage pour cacher texte
 
-<Card id="carde" className={classes.card}>
-<div id="cardmedia">
-  <CardActionArea id="cardactionarea">
-    <div id="cardImage">
-      <CardMedia
-        className={classes.media}
-        image="http://www.ralentirtravaux.com/images/troie.jpg"
-        title={this.props.locationMovie.title}
-      />
-    </div>
-    <CardContent id="CardContent">
-      <Typography gutterBottom variant="headline" component="h2">
-        {this.props.locationMovie.title}
-      </Typography>
-      <Typography component="p">
-         Scenes locations: {this.props.locationMovie.locations}
-      </Typography>
-      <Typography component="p">
-          -
-      </Typography>
-      <Typography component="p">
-         Shooting year: {this.props.locationMovie.release_year}
-      </Typography>
-      <div id="button">
-        <Dialog locationMovie={this.props.locationMovie}/>
-      </div>
-    </CardContent>
-  </CardActionArea>
-</div>
-</Card> */
+<div onClick="showingSynopsis(this,'synopsisReduced')" style="display:none;" className={classes.synopsisReduced}> Synopsis: {reducedTextSynopsis}</div>
+const showingSynopsis = (synopsisReduced, synopsisReduced){
+  const divADiminuer = (document.getElementById(id));
+  if(divADiminuer.style.display=="none") { // Si le div est masqué...
+        divADiminuer.style.display = "block"; // ... on l'affiche...
+      } else { // S'il est visible...
+        div.style.display = "none"; // ... on le masque...
+      }
+}*/
+//--------------------------------------------------------------------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-
-
+const DetailedExpansionPanel = props => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <ExpansionPanel defaultExpanded>
+      <ExpansionPanel>
+        
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
-            <Typography className={classes.heading}>
-        {props.locationMovie.title}</Typography>
+            <div className={classes.heading}>
+              {props.locationMovie.title}
+            </div>
             <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.locationMovie.title}/>
           </div>
           <div className={classes.column}>
-            <Typography className={classes.secondaryHeading}>Scenes locations: {props.locationMovie.locations}</Typography>
-            <Typography className={classes.secondaryHeading}> Shooting year: {props.locationMovie.release_year}</Typography>
+            <div className={classes.secondaryHeading}>Scenes locations: {props.locationMovie.locations}</div>
+            <div className={classes.secondaryHeading}> Shooting year: {props.locationMovie.release_year}</div>
+            <div /*onClick={showingSynopsis}*/ className={classes.synopsisReduced}> Synopsis: {reducedTextSynopsis}</div>
+    
           </div>
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.details}>
         
-          <div>Dans la Grèce antique, l'enlèvement d'Hélène, reine de Sparte, par Paris, prince de Troie, est une insulte que le roi Ménélas ne peut supporter. L'honneur familial étant en jeu, Agamemnon, frère de Ménélas et puissant roi de Mycènes, réunit toutes les armées grecques afin de faire sortir Hélène de Troie. L'issue de la guerre de Troie dépendra notamment d'un homme, Achille. Arrogant, rebelle, et réputé invicible, celui-ci n'a d'attache pour rien ni personne si ce n'est sa propre gloire.</div>
+          <div className={classes.synopsis}>Synopsis: {synopsisTroy}</div>
          
           <div className={classes.trailer}>
             <iframe width="500" height="255" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -148,12 +139,6 @@ function DetailedExpansionPanel(props) {
           </div>
         </ExpansionPanelDetails>
         <Divider />
-        <ExpansionPanelActions>
-          <Button size="small">Cancel</Button>
-          <Button size="small" color="primary">
-            Save
-          </Button>
-        </ExpansionPanelActions>
       </ExpansionPanel>
     </div>
   );
