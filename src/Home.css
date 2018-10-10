@@ -85,4 +85,5 @@ input[type="text"]{
 .autoCompLig{
 	background-color: #fff;
 	width: 70%;
+	cursor: pointer;
 }
