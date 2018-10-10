@@ -9,6 +9,14 @@ import './App.css';
 
 class App extends Component {
 
+  state = {
+    inputValue:''
+  }
+
+  lift = (a) =>{
+    this.setState({inputValue:a})
+  }
+
   render() {
     return (
       <div className="App">
@@ -16,16 +24,17 @@ class App extends Component {
                 <Switch>
                   <Route 
                     exact path="/" 
-                    render={(props)=> 
+                    render={()=> 
                       <Home 
-                        autoComp={this.autoComp} 
+                        autoComp={this.autoComp}
+                        lift={this.lift}
                       />} 
                   />
                   <Route 
                     path="/Results" 
-                    render={(props)=> 
+                    render={()=> 
                       <Results 
-                        input={document.getElementById('searchInput').value} 
+                        inputValue={this.state.inputValue} 
                       />} 
                   />
                 </Switch>

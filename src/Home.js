@@ -31,6 +31,7 @@ class Home extends Component {
 			inputValue: e.target.value
 		})
 		this.autoComp();
+		this.props.lift(e.target.value)
 	}
 
 	render(){
@@ -42,7 +43,7 @@ class Home extends Component {
 					<label htmlFor="searchInput"></label>
 					<div className="inputs">
 						<input onChange ={this.inputChange} value={this.state.inputValue} type="text" id="searchInput" autocomplete="off" placeholder="Search movie..."/>
-						<NavLink to="/Results/List"> 
+						<NavLink to="/Results"> 
               				<input type="submit" value="Search"/>
             			</NavLink>
 					</div>

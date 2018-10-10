@@ -75,7 +75,7 @@ class HeaderResults extends React.Component {
 
   componentDidMount() {
     this.setState({
-      value : this.props.valueInput
+      value : this.props.inputValue
     })
   }
 

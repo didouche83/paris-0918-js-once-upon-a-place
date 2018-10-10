@@ -13,7 +13,7 @@ class Results extends Component {
   };
 
   searchLoc = async () =>{
-    const input = this.props.input;
+    const input = this.props.inputValue;
     const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`);
     const data = await api_call.json();
     this.setState({
@@ -37,7 +37,7 @@ class Results extends Component {
         return(
           <div className= "Results">
             <div className='resHeader'>
-              <HeaderResults valueInput={this.props.input}/>
+              <HeaderResults inputValue={this.props.inputValue}/>
             </div>
 
             <div className='resContent'>
