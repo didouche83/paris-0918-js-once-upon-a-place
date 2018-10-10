@@ -8,12 +8,19 @@ import Footer from './Footer';
 import './App.css';
 
 class App extends Component {
+
   render() {
     return (
       <div className="App">
         <BrowserRouter>
                 <Switch>
-                  <Route exact path="/" component={Home} />
+                  <Route 
+                    exact path="/" 
+                    render={(props)=> 
+                      <Home 
+                        autoComp={this.autoComp} 
+                      />} 
+                  />
                   <Route 
                     path="/Results" 
                     render={(props)=> 
