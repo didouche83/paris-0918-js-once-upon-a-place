@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
+import {AppBar,Tabs,Tab} from '@material-ui/core';
 import ResultList from './ResultList';
 import Map from './Map';
 import HeaderResults from './HeaderResults';
-import './Results.css'
+import './Results.css';
 
 class Results extends Component {
   state = {
     res: [],
-    isLoaded: false
+    isLoaded: false,
+    value: 0
   };
 
   searchLoc = async () =>{
@@ -25,7 +26,12 @@ class Results extends Component {
     this.searchLoc()
   };
 
+  handleChange = (_, value) => {
+    this.setState({ value });
+  };
+
   render(){
+    const { value } = this.state;
     if (this.state.isLoaded){
       if (this.state.res.length > 0){
         return(
@@ -36,28 +42,18 @@ class Results extends Component {
 
             <div className='resContent'>
               <div className="mobileOnly">
-                <BrowserRouter>
-                  <div className='router'>
-                    <NavLink 
-                      className="tab"
-                      to="/Results/List"
-                      >List</NavLink>
-                    <NavLink 
-                      className="tab"
-                      to="/Results/Map"
-                      >Map</NavLink>
-                    <Switch>
-                      <Route 
-                        path="/Results/List"
-                        render={(props)=> 
-                          <ResultList 
-                            locationsList={this.state.res} 
-                          />}
-                      />
-                      <Route path="/Results/Map" component={Map} />
-                    </Switch>
-                  </div>
-                </BrowserRouter>
+                <div>
+                  <AppBar position="static">
+                    <Tabs value={value} onChange={this.handleChange} centered>
+                      <Tab label="List" />
+                      <Tab label="Map" />
+                    </Tabs>
+                  </AppBar>
+                  {value === 0 && <ResultList 
+                    locationsList = {this.state.res} 
+                  />}
+                  {value === 1 && <Map />}
+                </div>
               </div>
               <div className="desktopOnly">      
                 <ResultList 
