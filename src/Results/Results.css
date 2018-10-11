@@ -1,4 +1,4 @@
-.Results{
+/* .Results{
     border: 1px solid grey;
     height: 100vh;
     width: 100vw;
@@ -12,11 +12,11 @@
 .router{
     width: 100%;
     margin-top:10px;
-}
+} */
 
 
 
-.tab{
+/* .tab{
     color: white;
     font-weight: bold;
     font-size: 1.2em;
@@ -28,16 +28,21 @@
 
 .mobileOnly{
     display: none;
-}
-.desktopOnly{
+} */
+/* .desktopOnly{
     display: block;
-}
+} */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
     .mobileOnly{
         display: block;
     }
     .desktopOnly{
         display: none;
     }
-}
+} */
+
+/* .Results {
+    height: 100vh;
+    width: 100vw;
+} */

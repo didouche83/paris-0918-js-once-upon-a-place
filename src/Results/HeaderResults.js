@@ -1,142 +1,142 @@
-import React from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import { AppBar, Toolbar, IconButton, InputBase } from "@material-ui/core";
+import {
+  withStyles,
+} from "@material-ui/core/styles";
+import { Search } from "@material-ui/icons";
 import logo from '../images/logoCamera.svg';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-
-const theme = createMuiTheme({
-  palette: {
-      primary: {
-        light: '#fafafa',
-        main: '#ffffff',
-        dark: '#c7c7c7',
-        contrastText: '#000000',
-      },
-  },
-});
+import { NavLink } from 'react-router-dom';
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    height:'10vh'
+    width: "100%",
+  },
+  app: {
+    backgroundColor: 'white'
+  },
+  grow: {
+    flexGrow: 0
+  },
+  menuButton: {
+    marginLeft: -10,
+    marginRight: 10,
+    marginTop: 4,
+    marginBottom: 4
   },
   logo: {
-    width: theme.spacing.unit * 4,
+    width: theme.spacing.unit * 6,
   },
-  margin: {
-    margin: theme.spacing.unit,
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing.unit,
+      width: "auto"
+    },
+    border: "solid",
+    borderColor: "lightgrey",
+    borderWidth: theme.spacing.unit * 0.1,
+    boxShadow: "1px 3px 6px #aaa",
+    "&:hover": {
+      boxShadow: "3px 3px 6px #aaa"
+    },
+    height: 45
   },
-  textField: {
-    //flexBasis: 500,
-    // width: '200px',
-    
-    // transition:'width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    // theme.transitions.create('width')
-    // position: 'relative',
-    // borderRadius: theme.shape.borderRadius,
-    // backgroundColor: fade(theme.palette.common.grey, 0.15),
-    // '&:hover': {
-    //   backgroundColor: fade(theme.palette.common.grey, 0.25),
-    // },
-    // marginLeft: 0,
-    // transition: theme.transitions.create('width'),
-    // width: '100%',
-    // [theme.breakpoints.up('sm')]: {
-    //   width: 120,
-    //   '&:focus': {
-    //     width: 200,
-    //   },
-    // },
+  searchIcon: {
+    color: "black",
+    width: theme.spacing.unit * 9,
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
-  // inputA:{
-  //   width: '10%'
-  // }
+  inputRoot: {
+    color: "black",
+    width: "100%",
+    height:'100%'
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create("width"),
+    [theme.breakpoints.up("sm")]: {
+      width: 200,
+      "&:focus": {
+        width: 300
+      }
+    }
+  }
 });
 
-class HeaderResults extends React.Component {
 
-  constructor () {
-    super()
-    this.state = {
-      value: ''
+class HeaderResults extends Component {
+
+    state = {
+        value: this.props.inputValue
     }
-    this.onChange = this.onChange.bind(this)
-  }
 
-  componentDidMount() {
-    this.setState({
-      value : this.props.inputValue
-    })
-  }
+    onChange = (event) => {
+        this.setState({
+            value: event.target.value
+        })
+    }
 
-  onChange (event) {
-    this.setState({
-      value: event.target.value
-    })
-  }
+    handleKeyUp = (event) => {
+        if (event.keyCode === 13) {
+            console.log(this.state.value);
+            this.props.searchLoc();
+        }
+    }
 
-  render () {
-    return <input
-      type="text"
-      value={this.state.value}
-      onChange={this.onChange}
-    />
-  }
-
-  render() {
-    const { classes } = this.props;
-
-    const renderMenu = (
-      <Menu
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-      </Menu>
-    );
-
-    return (
-      <MuiThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton color="inherit">
-                <img src={logo} className={classes.logo} alt="logo" />
-              </IconButton>
-              <TextField
-                value={this.state.value}
-                className={classNames(classes.margin, classes.textField)}
-                variant="outlined"
-                label="Movie / Address"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end" className={classes.inputA}>
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                onChange={this.onChange}
-              />
-            </Toolbar>
-          </AppBar>
-          {renderMenu}
-        </div>
-      </MuiThemeProvider>
-    );
-  }
+    render(){
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+            <AppBar position="static" className={classes.app}>
+                <Toolbar >
+                    <NavLink to="/"> 
+                        <IconButton
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="Open drawer">
+                                <img src={logo} className={classes.logo} alt="logo" />
+                        </IconButton>
+                    </NavLink> 
+                    <div className={classes.grow} />
+                    <div className={classes.search} 
+                        id="inputSearch"
+                        onSubmit={this.handleSubmit}
+                        >
+                        <div type="submit" className={classes.searchIcon}>
+                            <Search />
+                        </div>
+                        <InputBase
+                            placeholder="Movie/Address..."
+                            classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput
+                            }}
+                            onKeyUp={this.handleKeyUp}
+                            value={this.state.value}
+                            onChange={this.onChange}
+                        />
+                    </div>
+                </Toolbar>
+                </AppBar>
+            </div>
+        );
+    }
 }
 
 HeaderResults.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(HeaderResults);

@@ -37,7 +37,7 @@ class Results extends Component {
         return(
           <div className= "Results">
             <div className='resHeader'>
-              <HeaderResults inputValue={this.props.inputValue}/>
+              <HeaderResults inputValue={this.props.inputValue}  searchLoc={this.searchLoc}/>
             </div>
 
             <div className='resContent'>
