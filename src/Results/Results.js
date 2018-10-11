@@ -12,9 +12,9 @@ class Results extends Component {
     value: 0
   };
 
-  searchLoc = async () =>{
-    const input = this.props.inputValue;
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`);
+  searchLoc = async (iValue) =>{
+    //const input = this.props.inputValue;
+    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=5`);
     const data = await api_call.json();
     this.setState({
       res: api_call.ok?data:[],
@@ -23,7 +23,7 @@ class Results extends Component {
   };
 
   componentDidMount(){
-    this.searchLoc()
+    this.searchLoc(this.props.inputValue)
   };
 
   handleChange = (_, value) => {
