@@ -33,10 +33,7 @@ class Results extends Component {
     if (this.state.res.length > 0){
       return(
         <div className= "Results">
-          <div className='resHeader'>
-            <HeaderResults valueInput={this.props.input}/>
-          </div>
-
+          <HeaderResults inputValue={this.props.input} searchLoc={this.searchLoc}/>
           <div className='resContent'>
             <div className="mobileOnly">
               <BrowserRouter>
