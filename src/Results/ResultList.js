@@ -4,7 +4,7 @@ import './ResultList.css';
 
 class ResultList extends Component {
 
-    transformDatas = datas => {
+    transformDatasLocationInMovie = datas => {
         let res = [];
         datas.map(data => {
 
@@ -13,7 +13,14 @@ class ResultList extends Component {
                 const add = {};
                 add.title = data.title;
                 add.release_year = data.release_year;
-                add.locations = new Array(data.locations);
+                add.locations = new Array(data.locations)
+                add.synopsis = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                add.shortSynopsis = add.shortSynopsis.substring(0, 20)
                 res.push(add);
             } else {
                 res.filter(f => f.title === data.title && f.release_year === data.release_year)[0].locations.push(data.locations);
@@ -24,7 +31,7 @@ class ResultList extends Component {
     };
 
     render() {
-        let datas = this.transformDatas(this.props.locationsList);
+        let datas = this.transformDatasLocationInMovie(this.props.locationsList);
         // console.log("resultList", datas);
         return (
             <div className='cardContainer'>{
