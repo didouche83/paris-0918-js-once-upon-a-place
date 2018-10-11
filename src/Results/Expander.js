@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
-import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
@@ -105,15 +101,22 @@ const showingSynopsis = (synopsisReduced, synopsisReduced){
       }
 }*/
 //--------------------------------------------------------------------------------------------------------------------------------------
-
+const hideSynopsis = synopsisReduced => {
+  if (document.getElementById(synopsisReduced).style.display === 'block'){
+    document.getElementById(synopsisReduced).style.display = 'none';
+  } 
+  else {
+    document.getElementById(synopsisReduced).style.display = 'block';
+  }
+}
 //----------------------------------------------------------------------------------------------------------------------------------------
 
 const DetailedExpansionPanel = props => {
   const { classes } = props;
   return (
-    <div className={classes.root}>
+    
+    <div className={classes.root} onclick={hideSynopsis}>
       <ExpansionPanel>
-        
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
             <div className={classes.heading}>
