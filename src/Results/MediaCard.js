@@ -26,39 +26,36 @@ class MediaCard extends Component {
     const { classes } = this.props;
 
     return (
-      <div>
         <Card id="carde" className={classes.card}>
-        <div id="cardmedia">
-          <CardActionArea id="cardactionarea">
-            <div id="cardImage">
-              <CardMedia
-                className={classes.media}
-                image="http://www.ralentirtravaux.com/images/troie.jpg"
-                title={this.props.locationMovie.title}
-              />
-            </div>
-            <CardContent id="CardContent">
-              <Typography gutterBottom variant="headline" component="h2">
-                {this.props.locationMovie.title}
-              </Typography>
-              <Typography component="p">
-                 Scenes locations: {this.props.locationMovie.locations}
-              </Typography>
-              <Typography component="p">
-                  -
-              </Typography>
-              <Typography component="p">
-                 Shooting year: {this.props.locationMovie.release_year}
-              </Typography>
-              <div id="button">
-                <Dialog locationMovie={this.props.locationMovie}/>
+          <div id="cardmedia">
+            <CardActionArea id="cardactionarea">
+              <div id="cardImage">
+                <CardMedia
+                  className={classes.media}
+                  image="http://www.ralentirtravaux.com/images/troie.jpg"
+                  title={this.props.locationMovie.title}
+                />
               </div>
-            </CardContent>
-          </CardActionArea>
-        </div>
+              <CardContent id="CardContent">
+                <Typography gutterBottom variant="headline" component="h2">
+                  {this.props.locationMovie.title}
+                </Typography>
+                <Typography component="p">
+                   Scenes locations: {this.props.locationMovie.locations}
+                </Typography>
+                <Typography component="p">
+                    -
+                </Typography>
+                <Typography component="p">
+                   Shooting year: {this.props.locationMovie.release_year}
+                </Typography>
+                <div id="button">
+                  <Dialog locationMovie={this.props.locationMovie}/>
+                </div>
+              </CardContent>
+            </CardActionArea>
+          </div>
         </Card>
-
-      </div>
     );
   }
 }
