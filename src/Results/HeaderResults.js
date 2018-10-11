@@ -75,6 +75,7 @@ const styles = theme => ({
   }
 });
 
+
 class HeaderResults extends Component {
 
     state = {
