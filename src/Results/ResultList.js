@@ -21,7 +21,7 @@ class ResultList extends Component {
                 consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                add.shortSynopsis = add.shortSynopsis.substring(0, 20)
+                add.shortSynopsis = add.synopsis.substring(0, 110) + '...'
                 res.push(add);
             } else {
                 res.filter(f => f.title === data.title && f.release_year === data.release_year)[0].locations.push(data.locations);
@@ -41,7 +41,7 @@ class ResultList extends Component {
                     return (
                         <div className='card'>
                             
-                            <Expander locationMovie= {e}/>
+                            <Expander movie = {e}/>
                         </div>
                     )
                 })
