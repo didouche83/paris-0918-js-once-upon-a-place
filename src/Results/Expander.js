@@ -9,16 +9,22 @@ import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   root: {
-    width: '50%',
-    border: '1px solid red',
+    width: '40%',
+    //border: '1px solid red',
     marginBottom: '15px',
+    marginTop: '15px',
+    marginLeft: '1%',
+    marginRight: '1%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
-  synopsis: {
+  text: {
     marginRight: '3vw',
   },
   affiche:{
     width: '60%',
-    border: '2px solid blue',
+    //border: '2px solid blue',
   },
   button:{
     float: 'bottom',
@@ -120,26 +126,27 @@ const DetailedExpansionPanel = props => {
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
             <div className={classes.heading}>
-              {props.locationMovie.title}
+              {props.movie.title}
             </div>
-            <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.locationMovie.title}/>
+            <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.movie.title}/>
           </div>
           <div className={classes.column}>
-            <div className={classes.secondaryHeading}>Scenes locations: {props.locationMovie.locations}</div>
-            <div className={classes.secondaryHeading}> Shooting year: {props.locationMovie.release_year}</div>
-            <div /*onClick={showingSynopsis}*/ className={classes.synopsisReduced}> Synopsis: {reducedTextSynopsis}</div>
+            <div className={classes.secondaryHeading}>Scenes locations: {props.movie.locations.map((location)=>{return location + ', '})}</div>
+            <div className={classes.secondaryHeading}> Shooting year: {props.movie.release_year}</div>
+            <div /*onClick={showingSynopsis}*/ className={classes.synopsisReduced}> Synopsis: {props.movie.shortSynopsis}</div>
     
           </div>
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.details}>
         
-          <div className={classes.synopsis}>Synopsis: {synopsisTroy}</div>
+          <div className={classes.text}>Synopsis: {props.movie.synopsis} </div>
          
           <div className={classes.trailer}>
             <iframe width="500" height="255" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               <br />
           </div>
+
         </ExpansionPanelDetails>
         <Divider />
       </ExpansionPanel>
