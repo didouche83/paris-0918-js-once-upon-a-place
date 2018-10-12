@@ -143,7 +143,7 @@ const DetailedExpansionPanel = props => {
           <div className={classes.text}>Synopsis: {props.movie.synopsis} </div>
          
           <div className={classes.trailer}>
-            <iframe width="500" height="255" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe width="350" height="155" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               <br />
           </div>
 
