@@ -26,6 +26,7 @@ const styles = theme => ({
   },
   logo: {
     width: theme.spacing.unit * 6,
+    animation: 'App-logo-spin infinite 20s linear',
   },
   search: {
     position: "relative",
@@ -75,23 +76,22 @@ const styles = theme => ({
   }
 });
 
-
 class HeaderResults extends Component {
 
     state = {
-        value: this.props.inputValue
+      inputValue: this.props.inputValue
     }
 
     onChange = (event) => {
         this.setState({
-            value: event.target.value
+          inputValue: event.target.value
         })
     }
 
     handleKeyUp = (event) => {
         if (event.keyCode === 13) {
-            console.log(this.state.value);
-            this.props.searchLoc();
+            console.log(this.state.inputValue);
+            this.props.searchLoc(this.state.inputValue);
         }
     }
 
@@ -124,7 +124,7 @@ class HeaderResults extends Component {
                             input: classes.inputInput
                             }}
                             onKeyUp={this.handleKeyUp}
-                            value={this.state.value}
+                            value={this.state.inputValue}
                             onChange={this.onChange}
                         />
                     </div>
