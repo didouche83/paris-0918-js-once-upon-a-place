@@ -11,7 +11,7 @@ class Home extends Component {
 
   autoComp = async (e) =>{
     const input = this.state.inputValue;
-    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`
+    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=50`
     const call_api = await fetch(url);
 	const data = await call_api.json();
 	const titles = data.map(x=>x.title).filter((x,i,t)=>x!==t[i-1]);
@@ -60,7 +60,8 @@ class Home extends Component {
 						</div>
 					}
 				</form>
-				<p className="intro">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio autem eum rerum pariatur, id a minima, doloribus natus nihil fuga alias ut molestiae illum neque! Vero mollitia modi alias esse.</p>
+				<p className="intro">Discover where your favorites movies have been filmed around the world with Once Upon A Place. <br/>
+ 					You could be surprised to find one near from you</p>
 			</main>
       </div>
 		);

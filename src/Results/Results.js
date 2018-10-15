@@ -13,8 +13,7 @@ class Results extends Component {
   };
 
   searchLoc = async (iValue) =>{
-    console.log(iValue)
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=5`);
+    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
     const data = await api_call.json();
     this.setState({
       res: api_call.ok ? data : [],

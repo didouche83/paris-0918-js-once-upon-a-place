@@ -9,22 +9,39 @@ import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   root: {
-    width: '50%',
-    border: '1px solid red',
+    width: '40%',
+    //border: '1px solid red',
     marginBottom: '15px',
+    marginTop: '15px',
+    marginLeft: '1%',
+    marginRight: '1%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
-  synopsis: {
+  locations: {
+    //border:'1px solid blue',
+    marginBottom:'1vw',
+  },
+  year:{
+    //border:'1px solid red',
+    marginBottom:'1vw',
+  },
+  text: {
     marginRight: '3vw',
   },
   affiche:{
     width: '60%',
-    border: '2px solid blue',
+    //border: '2px solid blue',
   },
   button:{
     float: 'bottom',
   },
   trailer:{
       margin: '2px',
+  },
+  synopsisReduced:{
+    //border:'1px solid yellow',
   },
   heading: {
     fontSize: theme.typography.pxToRem(30),
@@ -120,26 +137,27 @@ const DetailedExpansionPanel = props => {
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
             <div className={classes.heading}>
-              {props.locationMovie.title}
+              {props.movie.title}
             </div>
-            <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.locationMovie.title}/>
+            <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.movie.title}/>
           </div>
           <div className={classes.column}>
-            <div className={classes.secondaryHeading}>Scenes locations: {props.locationMovie.locations}</div>
-            <div className={classes.secondaryHeading}> Shooting year: {props.locationMovie.release_year}</div>
-            <div /*onClick={showingSynopsis}*/ className={classes.synopsisReduced}> Synopsis: {reducedTextSynopsis}</div>
+            <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', '})}</div>
+            <div className={classes.year}> <h4>Shooting year:</h4> {props.movie.release_year}</div>
+            <div /*onClick={showingSynopsis}*/ className={classes.synopsisReduced}> <h4>Synopsis: </h4>{props.movie.shortSynopsis}</div>
     
           </div>
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.details}>
         
-          <div className={classes.synopsis}>Synopsis: {synopsisTroy}</div>
+          <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div>
          
           <div className={classes.trailer}>
-            <iframe width="500" height="255" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe width="350" height="155" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
               <br />
           </div>
+
         </ExpansionPanelDetails>
         <Divider />
       </ExpansionPanel>
