@@ -5,25 +5,50 @@ import './App.css';
 import Home from './Home.js';
 import Results from './Results/Results';
 import Footer from './Footer';
+import Team from './Team'
 import './App.css';
 
 class App extends Component {
+
+  state = {
+    inputValue:''
+  }
+
+  lift = (a) =>{
+    this.setState({inputValue:a})
+  }
+
   render() {
     return (
       <div className="App">
         <BrowserRouter>
+          <div>
                 <Switch>
-                  <Route exact path="/" component={Home} />
                   <Route 
-                    path="/Results" 
-                    render={(props)=> 
-                      <Results 
-                        input={document.getElementById('searchInput').value} 
+                    exact path="/" 
+                    render={()=> 
+                      <Home 
+                        autoComp={this.autoComp}
+                        lift={this.lift}
                       />} 
                   />
+                  <Route 
+                    path="/Results" 
+                    render={()=> 
+                      <Results 
+                        inputValue={this.state.inputValue} 
+                      />} 
+                  />
+                  
+							    <Route path = "/team" render={()=> 
+                      <Team />}
+						      />
                 </Switch>
-            </BrowserRouter>
-        <Footer/>
+                <Footer/>
+            </div>
+          </BrowserRouter>
+
+        
       </div>
     );
   }
