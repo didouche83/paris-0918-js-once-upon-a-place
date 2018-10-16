@@ -7,6 +7,7 @@ import {
 import { Search } from "@material-ui/icons";
 import logo from '../images/logoCamera.svg';
 import { NavLink } from 'react-router-dom';
+import Autocompletion from '../Autocompletion'
 
 const styles = theme => ({
   root: {
@@ -30,7 +31,7 @@ const styles = theme => ({
   },
   search: {
     position: "relative",
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: "4px 4px 1px 1px",
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
@@ -40,9 +41,9 @@ const styles = theme => ({
     border: "solid",
     borderColor: "lightgrey",
     borderWidth: theme.spacing.unit * 0.1,
-    boxShadow: "1px 3px 6px #aaa",
+    boxShadow: "0px 2px 3px #aaa",
     "&:hover": {
-      boxShadow: "3px 3px 6px #aaa"
+      boxShadow: "0px 0px 0px #aaa"
     },
     height: 45
   },
@@ -79,24 +80,55 @@ const styles = theme => ({
 class HeaderResults extends Component {
 
     state = {
-      inputValue: this.props.inputValue
+      inputValue: this.props.inputValue,
+      open: false,
+      anchorEl: null,
+      elWidth: 0
     }
 
-    onChange = (event) => {
-        this.setState({
+    handleChangeAndFocus = event => {
+      this.state.inputValue !== event.target.value && this.setState(
+        {
           inputValue: event.target.value
-        })
+        },
+        () => {
+          const { inputValue } = this.state;
+          const blnOpen = inputValue !== "";
+          this.setState({
+            open: blnOpen,
+            anchorEl: document.getElementById('AppBarSearchIcon'),
+            elWidth: document.getElementById('AppBarInputBase').clientWidth,
+            inputValue: inputValue
+          });
+        }
+      );
+    };
+  
+    handleBlur = () => {
+      // this.setState({
+      //   open: false
+      // });
+    };
+
+    launchSearchLoc = (iValue) => {
+      this.props.searchLoc(iValue);
     }
 
-    handleKeyUp = (event) => {
-        if (event.keyCode === 13) {
-            console.log(this.state.inputValue);
-            this.props.searchLoc(this.state.inputValue);
-        }
+    handleKeyUp = (e) => {
+        e.keyCode === 13 && this.launchSearchLoc(this.state.inputValue);
+    }
+
+    handleSelect = (iSearchStr) => {
+      this.setState({
+        inputValue: iSearchStr,
+        open: false
+      });
+      this.launchSearchLoc(iSearchStr)
     }
 
     render(){
         const { classes } = this.props;
+        const { inputValue, open, anchorEl, elWidth } = this.state;
         return (
             <div className={classes.root}>
             <AppBar position="static" className={classes.app}>
@@ -110,23 +142,26 @@ class HeaderResults extends Component {
                         </IconButton>
                     </NavLink> 
                     <div className={classes.grow} />
-                    <div className={classes.search} 
-                        id="inputSearch"
-                        onSubmit={this.handleSubmit}
-                        >
-                        <div type="submit" className={classes.searchIcon}>
+                    <div className={classes.search} >
+                        <div className={classes.searchIcon} id="AppBarSearchIcon">
                             <Search />
                         </div>
                         <InputBase
+                            id="AppBarInputBase"
                             placeholder="Movie/Address..."
                             classes={{
                             root: classes.inputRoot,
                             input: classes.inputInput
                             }}
                             onKeyUp={this.handleKeyUp}
-                            value={this.state.inputValue}
-                            onChange={this.onChange}
+                            value={inputValue}
+                            onChange={this.handleChangeAndFocus}
+                            onFocus={this.handleFocusAndFocus}
+                            onBlur={this.handleBlur}
                         />
+                        {this.state.open && (
+                          <Autocompletion open={open} anchorEl={anchorEl} elWidth={elWidth} inputValue={inputValue} select={this.handleSelect}/>
+                        )}
                     </div>
                 </Toolbar>
                 </AppBar>
