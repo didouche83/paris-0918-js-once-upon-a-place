@@ -112,7 +112,7 @@ class HeaderResults extends Component {
     // handleKeyUp = (e) => {
     //     e.keyCode === 13 && this.launchSearchLoc(this.state.inputValue);
     // }
-
+  
     // handleSelect = (iSearchStr) => {
     //   this.setState({
     //     inputValue: iSearchStr,
@@ -150,10 +150,12 @@ class HeaderResults extends Component {
                             input: classes.inputInput
                             }}
                             onKeyUp={this.handleKeyUp}
+
                             value={inputValue}
                             onChange={this.handleChangeAndFocus}
                             onFocus={this.handleChangeAndFocus}
                             onBlur={this.handleBlur}
+
                         />
                         {this.state.open && (
                           <Autocompletion open={open} anchorEl={anchorEl} elWidth={elWidth} inputValue={inputValue} select={this.handleSelect}/>
