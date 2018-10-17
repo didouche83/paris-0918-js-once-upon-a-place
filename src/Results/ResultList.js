@@ -1,33 +1,42 @@
 import React, {Component} from 'react';
-import MediaCard from './MediaCard';
 import Expander from './Expander';
 import './ResultList.css';
 
 class ResultList extends Component {
 
+    
+
     transformDatasLocationInMovie = datas => {
         let res = [];
-        datas.map(data => {
+        let data = {};
+        let film = [];
+        let add = {};
+        const synopsis = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
+        "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
+        "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo" +
+        "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse" +
+        "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non" +
+        "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        const getFilm = (res, data) => {
+            return res.filter(f => f.title === data.title && f.release_year === data.release_year);
+        }
 
-            const film = res.filter(f => f.title === data.title && f.release_year === data.release_year);
+        for (let i=0; i<datas.length; i++) {
+            data = datas[i];
+            film = getFilm(res, data);
             if (!film.length) {
-                const add = {};
-                add.title = data.title;
-                add.release_year = data.release_year;
-                add.locations = new Array(data.locations)
-                add.synopsis = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod\
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse\
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non\
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                add.shortSynopsis = add.synopsis.substring(0, 110) + '...'
+                add = {
+                    title: data.title,
+                    release_year: data.release_year,
+                    locations: new Array(data.locations),
+                    synopsis: synopsis,
+                    shortSynopsis: synopsis.substring(0, 110) + '...'
+                };
                 res.push(add);
             } else {
-                res.filter(f => f.title === data.title && f.release_year === data.release_year)[0].locations.push(data.locations);
+                getFilm(res, data)[0].locations.push(data.locations);
             }
-
-        })
+        }
         return res;
     };
 
@@ -36,10 +45,10 @@ class ResultList extends Component {
         // console.log("resultList", datas);
         return (
             <div className='cardContainer'>{
-                datas.map(e => {
+                datas.map((e, i) => {
                     //return <p>Resultat: {e.title}</p>
                     return (
-                        <div className='card'>
+                        <div key={i} className='card'>
                             
                             <Expander movie = {e}/>
                         </div>

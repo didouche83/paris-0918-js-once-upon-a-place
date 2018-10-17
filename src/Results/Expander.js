@@ -72,13 +72,13 @@ const styles = theme => ({
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 //limite le nombre de mots affichés dans la card initiale
-const reduceLengthTextCard = synopsis =>{
-  if (synopsis.length > 50){
-    return(synopsis.substr(0, 50) + '...')
-  }
-}
-const synopsisTroy = "Dans la Grèce antique, l'enlèvement d'Hélène, reine de Sparte, par Paris, prince de Troie, est une insulte que le roi Ménélas ne peut supporter. L'honneur familial étant en jeu, Agamemnon, frère de Ménélas et puissant roi de Mycènes, réunit toutes les armées grecques afin de faire sortir Hélène de Troie. L'issue de la guerre de Troie dépendra notamment d'un homme, Achille. Arrogant, rebelle, et réputé invicible, celui-ci n'a d'attache pour rien ni personne si ce n'est sa propre gloire."
-const reducedTextSynopsis = reduceLengthTextCard(synopsisTroy)
+// const reduceLengthTextCard = synopsis =>{
+//   if (synopsis.length > 50){
+//     return(synopsis.substr(0, 50) + '...')
+//   }
+// }
+//const synopsisTroy = "Dans la Grèce antique, l'enlèvement d'Hélène, reine de Sparte, par Paris, prince de Troie, est une insulte que le roi Ménélas ne peut supporter. L'honneur familial étant en jeu, Agamemnon, frère de Ménélas et puissant roi de Mycènes, réunit toutes les armées grecques afin de faire sortir Hélène de Troie. L'issue de la guerre de Troie dépendra notamment d'un homme, Achille. Arrogant, rebelle, et réputé invicible, celui-ci n'a d'attache pour rien ni personne si ce n'est sa propre gloire."
+//const reducedTextSynopsis = reduceLengthTextCard(synopsisTroy)
 //limite le nombre de mots affichés dans la card initiale
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,21 +118,21 @@ const showingSynopsis = (synopsisReduced, synopsisReduced){
       }
 }*/
 //--------------------------------------------------------------------------------------------------------------------------------------
-const hideSynopsis = synopsisReduced => {
-  if (document.getElementById(synopsisReduced).style.display === 'block'){
-    document.getElementById(synopsisReduced).style.display = 'none';
-  } 
-  else {
-    document.getElementById(synopsisReduced).style.display = 'block';
-  }
-}
+// const hideSynopsis = synopsisReduced => {
+//   if (document.getElementById(synopsisReduced).style.display === 'block'){
+//     document.getElementById(synopsisReduced).style.display = 'none';
+//   } 
+//   else {
+//     document.getElementById(synopsisReduced).style.display = 'block';
+//   }
+// }
 //----------------------------------------------------------------------------------------------------------------------------------------
 
 const DetailedExpansionPanel = props => {
   const { classes } = props;
   return (
     
-    <div className={classes.root} onclick={hideSynopsis}>
+    <div className={classes.root}> {/*onClick={hideSynopsis}*/}
       <ExpansionPanel>
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
@@ -154,7 +154,7 @@ const DetailedExpansionPanel = props => {
           <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div>
          
           <div className={classes.trailer}>
-            <iframe width="350" height="155" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <iframe title={props.movie.title} width="350" height="155" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
               <br />
           </div>
 
