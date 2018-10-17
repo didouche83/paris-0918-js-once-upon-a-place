@@ -13,10 +13,12 @@ class Results extends Component {
   };
 
   searchLoc = async (iValue) =>{
+
     const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
     const data = await api_call.json();
     this.setState({
       res: api_call.ok ? data : [],
+
       isLoaded: true
     })
   };
@@ -25,8 +27,10 @@ class Results extends Component {
     this.searchLoc(this.props.inputValue)
   };
 
+
   handleChange = (_, iValue) => {
     this.setState({ value: iValue });
+
   };
 
   render(){
