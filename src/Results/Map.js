@@ -4,6 +4,7 @@ import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import './Map.css'
 
 class SimpleMap extends Component{
+            
     state = {
         lat: 37.763027,
         lng: -122.487701,
