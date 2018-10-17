@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {AppBar,Tabs,Tab} from '@material-ui/core';
 import ResultList from './ResultList';
-import Map from './Map';
+import SimpleMap from './Map';
 import HeaderResults from './HeaderResults';
 import './Results.css';
 
@@ -51,14 +51,14 @@ class Results extends Component {
                   {value === 0 && <ResultList 
                     locationsList = {this.state.res} 
                   />}
-                  {value === 1 && <Map />}
+                  {value === 1 && <SimpleMap />}
                 </div>
               </div>
               <div className="desktopOnly">      
                 <ResultList 
                   locationsList = {this.state.res} 
                 />
-                <Map />
+                <SimpleMap />
               </div>
             </div>
           </div>
