@@ -26,7 +26,7 @@ class Home extends Component {
 		})
 	}
 
-	inputChange = (e) =>{
+	inputChange = (e) =>{ 
 		this.setState({
 			inputValue: e.target.value
 		})
