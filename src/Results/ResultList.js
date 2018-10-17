@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
-import Expander from './Expander';
+import { Button, Typography } from "@material-ui/core";
 import './ResultList.css';
+import Expander from './Expander';
+
+const NUMBER_OF_MOVIES_PER_PAGE = 5;
 
 class ResultList extends Component {
 
-    
+    state = {
+        currentNumberPage: 1,
+        datas : []
+    }
 
     transformDatasLocationInMovie = datas => {
         let res = [];
@@ -40,21 +46,89 @@ class ResultList extends Component {
         return res;
     };
 
+    handlerButtonPrevious = () => {
+        // - 1
+        if (this.state.currentNumberPage > 1) {
+          this.setState({ currentNumberPage: this.state.currentNumberPage - 1 });
+          console.log("dec");
+        }
+    };
+    
+    handlerButtonNext = () => {
+        // + 1
+        if (
+            this.state.datas.length / NUMBER_OF_MOVIES_PER_PAGE >
+            this.state.currentNumberPage
+        ) {
+            console.log("inc");
+            this.setState({ currentNumberPage: this.state.currentNumberPage + 1 });
+        }
+    };
+
+    componentDidMount = () => {
+        this.setState({
+            datas: this.transformDatasLocationInMovie(this.props.locationsList)
+        });
+    }
+
     render() {
-        let datas = this.transformDatasLocationInMovie(this.props.locationsList);
+        const numberResultStart = (this.state.currentNumberPage - 1) * NUMBER_OF_MOVIES_PER_PAGE;
+        let numberResultEnd =
+            this.state.currentNumberPage * NUMBER_OF_MOVIES_PER_PAGE;
+        if (numberResultEnd > this.state.datas.length) {
+            numberResultEnd = this.state.datas.length;
+        }
+        //console.log(numberResultStart, numberResultEnd);
+        const pageArray = this.state.datas.slice(numberResultStart, numberResultEnd);
+  
+        const haveResults = this.state.datas.length ? true : false;
+        const isDisplayPrevious = this.state.currentNumberPage === 1 ? false : true;
+        const isDisplayNext = numberResultEnd === this.state.datas.length ? false : true;
+  
         // console.log("resultList", datas);
         return (
-            <div className='cardContainer'>{
-                datas.map((e, i) => {
-                    //return <p>Resultat: {e.title}</p>
-                    return (
-                        <div key={i} className='card'>
-                            
-                            <Expander movie = {e}/>
-                        </div>
-                    )
-                })
-            }</div>
+            <div className='cardContainer'>
+                {
+                    pageArray.map((e, i) => {
+                        return (
+                            <div key={'movie-' + i} className='card'>           
+                                <Expander movie = {e}/>
+                            </div>
+                        )
+                    })
+                }
+                <div className="center">
+                    <Typography>
+                    {haveResults
+                        ? `${numberResultStart + 1} - ${numberResultEnd} on ${
+                            this.state.datas.length
+                        } movies`
+                        : "No result found"}
+                    </Typography>
+                    <Button
+                            onClick={this.handlerButtonPrevious}
+                            variant="outlined"
+                            style={
+                            isDisplayPrevious
+                                ? { visibility: "visible" }
+                                : { visibility: "hidden" }
+                            }
+                            >
+                            {"\u003C"}
+                        </Button>
+                        <Button
+                            onClick={this.handlerButtonNext}
+                            variant="outlined"
+                            style={
+                            isDisplayNext
+                                ? { visibility: "visible" }
+                                : { visibility: "hidden" }
+                            }
+                        >
+                            {"\u003E"}
+                    </Button>
+                </div>
+            </div>
         )
     }
 }
