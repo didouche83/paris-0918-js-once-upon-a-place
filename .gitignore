@@ -698,3 +698,4 @@ ASALocalRun/
 
 .vscode
 # End of https://www.gitignore.io/api/node,linux,macos,reactnative,sublimetext,visualstudio,visualstudiocode
+.vscode
