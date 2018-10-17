@@ -16,6 +16,7 @@ class Results extends Component {
 
     const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
     const data = await api_call.json();
+    data.sort((data1, data2) => data1.title < data2.title ? -1 : 1);
     this.setState({
       res: api_call.ok ? data : [],
 
