@@ -1,46 +1,62 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+// import PropTypes from "prop-types";
 import Header from './Header';
 import './Home.css';
+import SearchBar from './SearchBar';
 
 class Home extends Component {
+
 	state = {
 		titles:[],
 		inputValue: ''
 	}
 
-  autoComp = async (e) =>{
-    const input = this.state.inputValue;
-    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=50`
-    const call_api = await fetch(url);
-	const data = await call_api.json();
-	const titles = data.map(x=>x.title).filter((x,i,t)=>x!==t[i-1]);
-		this.setState({
-			titles:input.length?titles:[]
-		})
-	}
 	
-	autoCompFill = (e) =>{
-		this.setState({
-			inputValue: e.target.innerHTML
-		})
-	}
 
-	inputChange = (e) =>{ 
-		this.setState({
-			inputValue: e.target.value
-		})
-		this.autoComp();
-		this.props.lift(e.target.value)
-	}
+
+
+//   autoComp = async (e) =>{
+//     const input = this.state.inputValue;
+//     const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=50`
+//     const call_api = await fetch(url);
+// 	const data = await call_api.json();
+// 	const titles = data.map(x=>x.title).filter((x,i,t)=>x!==t[i-1]);
+// 		this.setState({
+// 			titles:input.length?titles:[]
+// 		})
+// 	}
+	
+// 	autoCompFill = (e) =>{
+// 		this.setState({
+// 			inputValue: e.target.innerHTML
+// 		})
+// 	}
+
+// 	inputChange = (e) =>{ 
+// 		this.setState({
+// 			inputValue: e.target.value
+// 		})
+// 		this.autoComp();
+// 		this.props.lift(e.target.value)
+// 	}
 
 	render(){
+
 		return(
       <div>
       <Header />
 			<main>
-				<form>
-					<label htmlFor="searchInput"></label>
+				<div>
+					<div className="inputs">
+						
+						
+						<SearchBar inputValue={this.state.inputValue} lift={this.props.lift} blnHome={true}/>
+						{/* <NavLink to="/Results"> 
+							<input type="submit" value="Search"/>
+						</NavLink> */}
+					</div>
+					{/* <label htmlFor="searchInput"></label>
 					<div className="inputs">
 
 						<input onChange ={this.inputChange} value={this.state.inputValue} type="text" id="searchInput" autoComplete="off" placeholder="Search movie..."/>
@@ -48,8 +64,8 @@ class Home extends Component {
 						<NavLink to="/Results"> 
               				<input type="submit" value="Search"/>
             			</NavLink>
-					</div>
-					{this.state.titles.length > 0 &&
+					</div> */}
+					{/* {this.state.titles.length > 0 &&
 						<div className='autoCompRes'>
 							{this.state.titles.map((title,i) => 
 								<div
@@ -60,8 +76,8 @@ class Home extends Component {
 								) 
 							}
 						</div>
-					}
-				</form>
+					} */}
+				</div>
 				<p className="intro">Discover where your favorites movies have been filmed around the world with Once Upon A Place. <br/>
  					You could be surprised to find one near from you</p>
 			</main>

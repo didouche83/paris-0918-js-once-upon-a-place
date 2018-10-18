@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Popper, Paper, MenuItem, Grow } from "@material-ui/core";
-import axios from 'axios';
-
-// const CancelToken = axios.CancelToken;
-// const source = CancelToken.source();
 
 const styles = theme => ({
   paper: {
@@ -23,51 +19,12 @@ const styles = theme => ({
 
 class Autocompletion extends Component {
   
-  state = {
-    titles: [], 
-    searchValue: '',
-    // fetchController: null 
-  };
-
-  componentDidMount() {
-    // const AbortController = window.AbortController;
-    const { inputValue } = this.props;
-    // this.setState({
-    //   fetchController: new AbortController()
-    // }, this.autoComp(inputValue));
-    this.autoComp(inputValue);
-  }
-
-  componentDidUpdate() {    
-    const { inputValue } = this.props;
-    const { searchValue } = this.state;
-    if (searchValue !== inputValue && inputValue !== '') {
-      this.autoComp(inputValue);
-    }
-  }
-
-  componentWillUnmount() {
-    // source.cancel('Operation canceled by the user.');
-  }
-
-  autoComp = (iValue) => {
-    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'` //&$limit=50
-    axios.get(url).then(json => {
-        const titles = json.data.map(iFilm=>iFilm.title).sort().filter((iTitle,iIndex,iTitles)=>iTitle!==iTitles[iIndex-1]); 
-        this.setState({
-          searchValue: iValue,
-          titles:iValue.length?titles:[]
-        })   
-    }) 
-	}
-  
   handleClickOnMenuItem = (e) => {
     this.props.select(e.target.textContent);
   }
 
   render() {
-    const { classes, anchorEl, open, elWidth} = this.props;
-    const { titles } = this.state;
+    const { classes, anchorEl, open, elWidth, titlesList } = this.props;
 
     return (
       <div className="Autocompletion">
@@ -80,7 +37,7 @@ class Autocompletion extends Component {
           {({ TransitionProps }) => (
             <Grow {...TransitionProps} timeout={500}>
               <Paper style={{ width: elWidth }} className={classes.paper}>
-                {titles.length > 0 && titles.map((iTitle,iIndex) => 
+                {titlesList.length > 0 && titlesList.map((iTitle,iIndex) => 
                   <div key={String(iIndex)} onClick={this.handleClickOnMenuItem}>
                     <MenuItem component="div" className="AutocompletionItem">
                       <div>                    
@@ -101,7 +58,11 @@ class Autocompletion extends Component {
 }
 
 Autocompletion.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  anchorEl: PropTypes.object.isRequired, 
+  open: PropTypes.bool.isRequired,
+  elWidth: PropTypes.number.isRequired, 
+  titlesList: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(Autocompletion);

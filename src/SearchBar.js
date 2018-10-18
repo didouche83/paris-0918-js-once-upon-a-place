@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Autocompletion from "./Autocompletion";
 import { InputBase } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
+import axios from "axios";
 
 const styles = theme => ({
   search: {
@@ -58,42 +60,82 @@ class SearchBar extends Component {
     inputValue: this.props.inputValue,
     open: false,
     anchorEl: null,
-    elWidth: 0
+    elWidth: 0,
+    titlesList: []
   };
 
-  handleChangeAndFocus = event => {
-    this.state.inputValue !== event.target.value &&
-      this.setState(
-        {
-          inputValue: event.target.value
-        },
-        () => {
-          const { inputValue } = this.state;
-          const blnOpen = inputValue !== "";
-          this.setState({
-            open: blnOpen,
-            anchorEl: document.getElementById("AppBarSearchIcon"),
-            elWidth: document.getElementById("AppBarInputBase").clientWidth,
-            inputValue: inputValue
-          });
-        }
-      );
-  };
+  static contextTypes = {
+		router: PropTypes.object
+	}
 
-  handleKeyUp = e => {
-    e.keyCode === 13 && this.launchSearchLoc(this.state.inputValue);
-  };
+	redirectToTarget = () => {
+		this.context.router.history.push(`/Results`)
+	  }
 
-  handleSelect = iSearchStr => {
-    this.setState({
-      inputValue: iSearchStr,
-      open: false
+  autoComp = iValue => {
+    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'`; //&$limit=50
+    axios.get(url).then(json => {
+      const titleList = json.data
+        .map(iFilm => iFilm.title)
+        .sort()
+        .filter((iTitle, iIndex, iTitles) => iTitle !== iTitles[iIndex - 1]);
+      this.setState({
+        searchValue: iValue,
+        titlesList: iValue.length ? titleList : []
+      });
     });
-    this.launchSearchLoc(iSearchStr);
+  };
+
+  componentDidMount = () => {
+    const { inputValue } = this.props;
+    this.autoComp(inputValue);
+  };
+
+  handleChange = event => {
+    this.setState(
+      {
+        inputValue: event.target.value
+      },
+      () => {
+        const { inputValue } = this.state;
+        const blnOpen = inputValue !== "";
+        this.autoComp(inputValue);
+        this.setState({
+          open: blnOpen,
+          anchorEl: document.getElementById("AppBarSearchIcon"),
+          elWidth: document.getElementById("AppBarInputBase").clientWidth,
+          inputValue: inputValue
+        });
+      }
+    );
   };
 
   launchSearchLoc = iValue => {
     this.props.searchLoc(iValue);
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (!this.props.blnHome) {
+      this.launchSearchLoc(this.state.inputValue);
+    }
+    this.props.lift(this.state.inputValue);
+    this.setState({
+      open: false
+    });
+    this.redirectToTarget();
+  }
+
+  handleSelect = iSearchStr => {
+    if (!this.props.blnHome) {
+      this.launchSearchLoc(iSearchStr);
+    }
+    this.props.lift(iSearchStr);
+    this.setState({
+      inputValue: iSearchStr,
+      open: false
+    });
+    this.redirectToTarget();
   };
 
   handleBlur = event => {
@@ -110,10 +152,10 @@ class SearchBar extends Component {
 
   render() {
     const { classes } = this.props;
-    const { inputValue, open, anchorEl, elWidth } = this.state;
+    const { inputValue, open, anchorEl, elWidth, titlesList } = this.state;
 
     return (
-      <div className="SearchBar">
+      <form className="SearchBar" onSubmit={this.handleSubmit} autoComplete='off'>
         <div className={classes.search}>
           <div className={classes.searchIcon} id="AppBarSearchIcon">
             <Search />
@@ -125,10 +167,8 @@ class SearchBar extends Component {
               root: classes.inputRoot,
               input: classes.inputInput
             }}
-            onKeyUp={this.handleKeyUp}
             value={inputValue}
-            onChange={this.handleChangeAndFocus}
-            onFocus={this.handleChangeAndFocus}
+            onChange={this.handleChange}
             onBlur={this.handleBlur}
           />
           {this.state.open && (
@@ -136,14 +176,20 @@ class SearchBar extends Component {
               open={open}
               anchorEl={anchorEl}
               elWidth={elWidth}
+              titlesList={titlesList}
               inputValue={inputValue}
               select={this.handleSelect}
             />
           )}
         </div>
-      </div>
+      </form>
     );
   }
 }
+
+SearchBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  inputValue: PropTypes.string.isRequired,
+};
 
 export default withStyles(styles)(SearchBar);

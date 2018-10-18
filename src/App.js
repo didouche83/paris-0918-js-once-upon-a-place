@@ -12,6 +12,7 @@ class App extends Component {
 
   state = {
     inputValue:''
+
   }
 
   lift = (a) =>{
@@ -37,9 +38,9 @@ class App extends Component {
                     render={()=> 
                       <Results 
                         inputValue={this.state.inputValue} 
+                        lift={this.lift}
                       />} 
                   />
-                  
 							    <Route path = "/team" render={()=> 
                       <Team />}
 						      />
@@ -47,8 +48,6 @@ class App extends Component {
                 <Footer/>
             </div>
           </BrowserRouter>
-
-        
       </div>
     );
   }
