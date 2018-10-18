@@ -16,7 +16,6 @@ const styles = theme => ({
     marginLeft: '1%',
     marginRight: '1%',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
     },
   },
   locations: {
@@ -29,6 +28,7 @@ const styles = theme => ({
   },
   text: {
     marginRight: '3vw',
+    maxWidth: '100%',
   },
   affiche:{
     width: '60%',
@@ -38,13 +38,17 @@ const styles = theme => ({
     float: 'bottom',
   },
   trailer:{
-      margin: '2px',
+      alignItems: 'center',
+      textAlign: 'center',
+      marginLeft: 'auto',
+      marginRight: 'auto',
   },
   synopsisReduced:{
     //border:'1px solid yellow',
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(30),
+  h2: {
+    marginBlockStart: 0,
+    marginBlockEnd: 0,
   },
   icon: {
     verticalAlign: 'bottom',
@@ -60,6 +64,10 @@ const styles = theme => ({
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+  },
+  expansion: {
+    float:'right',
+
   },
   link: {
     color: theme.palette.primary.main,
@@ -77,8 +85,7 @@ const reduceLengthTextCard = synopsis =>{
     return(synopsis.substr(0, 50) + '...')
   }
 }
-const synopsisTroy = "Dans la Grèce antique, l'enlèvement d'Hélène, reine de Sparte, par Paris, prince de Troie, est une insulte que le roi Ménélas ne peut supporter. L'honneur familial étant en jeu, Agamemnon, frère de Ménélas et puissant roi de Mycènes, réunit toutes les armées grecques afin de faire sortir Hélène de Troie. L'issue de la guerre de Troie dépendra notamment d'un homme, Achille. Arrogant, rebelle, et réputé invicible, celui-ci n'a d'attache pour rien ni personne si ce n'est sa propre gloire."
-const reducedTextSynopsis = reduceLengthTextCard(synopsisTroy)
+
 //limite le nombre de mots affichés dans la card initiale
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,6 +125,7 @@ const showingSynopsis = (synopsisReduced, synopsisReduced){
       }
 }*/
 //--------------------------------------------------------------------------------------------------------------------------------------
+
 const hideSynopsis = synopsisReduced => {
   if (document.getElementById(synopsisReduced).style.display === 'block'){
     document.getElementById(synopsisReduced).style.display = 'none';
@@ -137,25 +145,30 @@ const DetailedExpansionPanel = props => {
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
             <div className={classes.heading}>
-              {props.movie.title}
-            </div>
+              <h2>{props.movie.title}</h2></div>
+              <div className={classes.director}>Director: {props.movie.director}</div>
+              <div className={classes.year}>Shooting year: {props.movie.release_year}</div>
+            
             <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.movie.title}/>
           </div>
           <div className={classes.column}>
-            <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', '})}</div>
-            <div className={classes.year}> <h4>Shooting year:</h4> {props.movie.release_year}</div>
-            <div /*onClick={showingSynopsis}*/ className={classes.synopsisReduced}> <h4>Synopsis: </h4>{props.movie.shortSynopsis}</div>
+            <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', ' + '<br>'})}</div>
+            <div ></div>
+            <div > </div>
+            {/* <div /*onClick={showingSynopsis} className={classes.synopsisReduced}> <h4>Synopsis: </h4>{props.movie.shortSynopsis}</div> */}
     
           </div>
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.details}>
+          <div className={classes.expansion}>
         
-          <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div>
-         
-          <div className={classes.trailer}>
-            <iframe width="350" height="155" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-              <br />
+            <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div> <br />
+          
+            <div className={classes.trailer}>
+              <iframe width="500" height="305" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <br />
+            </div>
           </div>
 
         </ExpansionPanelDetails>

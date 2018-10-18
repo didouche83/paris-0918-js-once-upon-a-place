@@ -7,17 +7,23 @@ import './Results.css';
 
 class Results extends Component {
   state = {
-    res: [],
+    res_Sf: [],
+    res_Movie_Db: {},
     isLoaded: false,
     value: 0
   };
 
   searchLoc = async (iValue) =>{
 
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
-    const data = await api_call.json();
+    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
+    const api_call_Movie_Db = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=d3de5ea523ed39ab920f7df5228dc53c&language=en-US&query='${iValue}'&page=1&include_adult=false`)
+
+    const dataSf = await api_call_Sf.json();
+    const dataMovieDb = await api_call_Movie_Db.json();
+
     this.setState({
-      res: api_call.ok ? data : [],
+      res_Sf: api_call_Sf.ok ? dataSf : [],
+      res_Movie_Db: api_call_Movie_Db.ok ? dataMovieDb : [],
 
       isLoaded: true
     })
@@ -34,9 +40,11 @@ class Results extends Component {
   };
 
   render(){
+    //console.log(this.state.res_Movie_Db)
+    //console.log(this.state.res_Sf)
     const { value } = this.state;
     if (this.state.isLoaded){
-      if (this.state.res.length > 0){
+      if (this.state.res_Sf.length > 0){
         return(
           <div className= "Results">
             <div className='resHeader'>
@@ -53,14 +61,16 @@ class Results extends Component {
                     </Tabs>
                   </AppBar>
                   {value === 0 && <ResultList 
-                    locationsList = {this.state.res} 
+                    locationsList = {this.state.res_Sf} 
+                    movieInformations = {this.state.res_Movie_Db}
                   />}
                   {value === 1 && <SimpleMap />}
                 </div>
               </div>
               <div className="desktopOnly">      
                 <ResultList 
-                  locationsList = {this.state.res} 
+                  locationsList = {this.state.res_Sf} 
+                  movieInformations = {this.state.res_Movie_Db}
                 />
                 <SimpleMap />
               </div>
