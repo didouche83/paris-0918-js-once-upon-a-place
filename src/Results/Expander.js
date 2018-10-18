@@ -138,6 +138,8 @@ const hideSynopsis = synopsisReduced => {
 
 const DetailedExpansionPanel = props => {
   const { classes } = props;
+  
+  //console.log(props.db)
   return (
     
     <div className={classes.root} onclick={hideSynopsis}>
@@ -148,12 +150,14 @@ const DetailedExpansionPanel = props => {
               <h2>{props.movie.title}</h2></div>
               <div className={classes.director}>Director: {props.movie.director}</div>
               <div className={classes.year}>Shooting year: {props.movie.release_year}</div>
+              
+              
             
-            <img className={classes.affiche} src="http://www.ralentirtravaux.com/images/troie.jpg" alt={props.movie.title}/>
+            <img className={classes.affiche} src={props.movie.image} alt={props.movie.title}/>
           </div>
           <div className={classes.column}>
-            <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', ' + '<br>'})}</div>
-            <div ></div>
+            {/* <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', ' + '<br>'})}</div> */}
+            <div ><img src={props.movie.poster_path} alt='image' /></div>
             <div > </div>
             {/* <div /*onClick={showingSynopsis} className={classes.synopsisReduced}> <h4>Synopsis: </h4>{props.movie.shortSynopsis}</div> */}
     
