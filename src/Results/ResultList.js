@@ -1,65 +1,123 @@
-import React, {Component} from 'react';
-import Expander from './Expander';
+
+import React, { Component } from 'react';
 import './ResultList.css';
+import Movie from './Movie'
+import { Button, Typography } from "@material-ui/core";
+
+const NUMBER_OF_MOVIES_PER_PAGE = 5;
 
 class ResultList extends Component {
 
+    state = {
+        currentNumberPage: 1,
+        moviesList: this.props.moviesList
+    }
+
+    handlerButtonPrevious = () => {
+        // - 1
+        if (this.state.currentNumberPage > 1) {
+          this.setState({ currentNumberPage: this.state.currentNumberPage - 1 });
+        }
+    };
     
-
-    transformDatasLocationInMovie = datas => {
-        let res = [];
-        let data = {};
-        let film = [];
-        let add = {};
-        const synopsis = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
-        "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
-        "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo" +
-        "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse" +
-        "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non" +
-        "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        const getFilm = (res, data) => {
-            return res.filter(f => f.title === data.title && f.release_year === data.release_year);
+    handlerButtonNext = () => {
+        // + 1
+        if (
+            this.state.moviesList.length / NUMBER_OF_MOVIES_PER_PAGE >
+            this.state.currentNumberPage
+        ) {
+            this.setState({ currentNumberPage: this.state.currentNumberPage + 1 });
         }
 
-        for (let i=0; i<datas.length; i++) {
-            data = datas[i];
-            film = getFilm(res, data);
-            if (!film.length) {
-                add = {
-                    title: data.title,
-                    release_year: data.release_year,
-                    locations: new Array(data.locations),
-                    synopsis: synopsis,
-                    shortSynopsis: synopsis.substring(0, 110) + '...'
-                };
-                res.push(add);
-            } else {
-                getFilm(res, data)[0].locations.push(data.locations);
-            }
-        }
-        return res;
     };
 
+    handlerButtonPrevious = () => {
+        // - 1
+        if (this.state.currentNumberPage > 1) {
+          this.setState({ currentNumberPage: this.state.currentNumberPage - 1 });
+          console.log("dec");
+        }
+    };
+    
+    handlerButtonNext = () => {
+        // + 1
+        if (
+            this.state.datas.length / NUMBER_OF_MOVIES_PER_PAGE >
+            this.state.currentNumberPage
+        ) {
+            console.log("inc");
+            this.setState({ currentNumberPage: this.state.currentNumberPage + 1 });
+        }
+    };
+
+    componentDidMount = () => {
+        this.setState({
+            datas: this.transformDatasLocationInMovie(this.props.locationsList)
+        });
+    }
+
     render() {
-        let datas = this.transformDatasLocationInMovie(this.props.locationsList);
-        // console.log("resultList", datas);
+
+        const { currentNumberPage, moviesList } = this.state;
+        const numberResultStart = (currentNumberPage - 1) * NUMBER_OF_MOVIES_PER_PAGE;
+        let numberResultEnd =
+            currentNumberPage * NUMBER_OF_MOVIES_PER_PAGE;
+        if (numberResultEnd > moviesList.length) {
+            numberResultEnd = moviesList.length;
+        }
+        const pageArray = moviesList.slice(numberResultStart, numberResultEnd);
+        console.log('hihi', numberResultStart, numberResultEnd)
+        const haveResults = moviesList.length ? true : false;
+        const isDisplayPrevious = currentNumberPage === 1 ? false : true;
+        const isDisplayNext = numberResultEnd === moviesList.length ? false : true;
+
         return (
-            <div className='cardContainer'>{
-                datas.map((e, i) => {
-                    //return <p>Resultat: {e.title}</p>
-                    return (
-                        <div key={i} className='card'>
-                            
-                            <Expander movie = {e}/>
-                        </div>
-                    )
-                })
-            }</div>
+            <div className='cardContainer'>
+                {
+                    pageArray.map((e, i) => {
+                        return (
+                            <div key={'movie-' + i} className='card'>
+                                <Movie movieSf={e} />
+                            </div>
+                        )
+                    })
+                }
+                <div className="center">
+                    <Typography>
+                    {haveResults
+                        ? `${numberResultStart + 1} - ${numberResultEnd} on ${
+                            moviesList.length
+                        } movies`
+                        : "No result found"}
+                    </Typography>
+                    <Button
+                            onClick={this.handlerButtonPrevious}
+                            variant="outlined"
+                            style={
+                            isDisplayPrevious
+                                ? { visibility: "visible" }
+                                : { visibility: "hidden" }
+                            }
+                            >
+                            {"\u003C"}
+                        </Button>
+                        <Button
+                            onClick={this.handlerButtonNext}
+                            variant="outlined"
+                            style={
+                            isDisplayNext
+                                ? { visibility: "visible" }
+                                : { visibility: "hidden" }
+                            }
+                        >
+                            {"\u003E"}
+                    </Button>
+                </div>
+            </div>
         )
+
     }
 }
 
 export default ResultList;
 
-
-//<MediaCard locationMovie= {e}/>
