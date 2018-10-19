@@ -33,6 +33,7 @@ const styles = theme => ({
 
 class HeaderResults extends Component {
   render() {
+    //Get this.props.classes, this.props.inputValue, this.props.elWidth, this.props.searchLoc
     const { classes, inputValue, searchLoc } = this.props;
     return (
       <div className={classes.root}>
@@ -59,6 +60,7 @@ class HeaderResults extends Component {
 HeaderResults.propTypes = {
   classes: PropTypes.object.isRequired,
   inputValue: PropTypes.string.isRequired,
+  searchLoc: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(HeaderResults);

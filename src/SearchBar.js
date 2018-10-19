@@ -39,7 +39,7 @@ const styles = theme => ({
   inputRoot: {
     color: "black",
     width: "100%",
-    height: "100%",
+    height: "100%"
   },
   inputInput: {
     paddingTop: theme.spacing.unit,
@@ -57,106 +57,146 @@ const styles = theme => ({
 });
 
 class SearchBar extends Component {
+  //---Initial states
+  //inputValue: the value that is entered in the uput field, it is initialiazed to this.props.inputValue which is the value of the input field in the Home
+  //openAutocompletion: allow to know if the Autocompletion component must be shown
+  //titlesList: list of the titles to display in the autcompletion component
   state = {
     inputValue: this.props.inputValue,
-    open: false,
-    anchorEl: null,
-    elWidth: 0,
+    openAutocompletion: false,
     titlesList: []
   };
+  //---
 
+
+  //---This is done to render Results without using any NavLink
   static contextTypes = {
-		router: PropTypes.object
-	}
+    router: PropTypes.object
+  };
 
-	redirectToTarget = () => {
-		this.context.router.history.push(`/Results`)
-	  }
+  redirectToTarget = () => {
+    this.context.router.history.push(`/Results`);
+  };
+  //---
 
-  autoComp = iValue => {
-    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'`; //&$limit=50
-    axios.get(url).then(json => {
-      const titleList = json.data
-        .map(iFilm => iFilm.title)
+
+  //---This function is used to make the autocompletion when a value is entered in the input field
+  //iStrValue : the value entered in the input field
+  autoComp = iStrValue => {
+    //The strUrl used to get a list of movies from the API
+    const strUrl = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iStrValue}%25'`; //&$limit=50
+    //THe call to the API to get a json file contaning an array of movies
+    axios.get(strUrl).then(json => {
+      //A map is done on the list of movies to get only the titles
+      //Then a sort is then done so the title will be in the alphabetical order
+      //Then a filter is done to suppress the titles that appears several times
+      const arrTitles = json.data
+        .map(iObjMovie => iObjMovie.title)
         .sort()
-        .filter((iTitle, iIndex, iTitles) => iTitle !== iTitles[iIndex - 1]);
+        .filter((iStrTitle, iIntIndex, iArrTitles) => iStrTitle !== iArrTitles[iIntIndex - 1]);
+      //Change the state of titlesList
       this.setState({
-        searchValue: iValue,
-        titlesList: iValue.length ? titleList : []
+        titlesList: iStrValue.length ? arrTitles : []
       });
     });
   };
+  //---
 
-  componentDidMount = () => {
-    const { inputValue } = this.props;
-    this.autoComp(inputValue);
-  };
-
-  handleChange = event => {
+  //---Handle the change of the value in the input field
+  handleChange = iEvent => {
+    //Change the state of the inputValue
     this.setState(
       {
-        inputValue: event.target.value
+        inputValue: iEvent.target.value
       },
       () => {
+        //Get this.state.inputValue
         const { inputValue } = this.state;
-        const blnOpen = inputValue !== "";
+        //blnOpenAutocompletion is true if the inputValue is not an empty string, so the Autcompletion component will be displayed only if a value is entered in the input fielf
+        const blnOpenAutocompletion = inputValue !== "";
+        //Call the autoComp function
         this.autoComp(inputValue);
+        //Change the state of open
         this.setState({
-          open: blnOpen,
-          anchorEl: document.getElementById("AppBarSearchIcon"),
-          elWidth: document.getElementById("AppBarInputBase").clientWidth,
-          inputValue: inputValue
+          openAutocompletion: blnOpenAutocompletion
         });
       }
     );
   };
+  //---
 
-  launchSearchLoc = iValue => {
-    this.props.searchLoc(iValue);
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
+  //---Actions made when submitting a value in the input field or selecting an item in the Autocompletion component
+  //iStrSearch: search value
+  submitOrSelectSearchValue = (iStrSearch) =>  {
+    //If we are in Results page, aunch the searchLoc function which is a function passed in props from Results
     if (!this.props.blnHome) {
-      this.launchSearchLoc(this.state.inputValue);
+      this.props.searchLoc(iStrSearch);
     }
-    this.props.lift(this.state.inputValue);
+    //Allow to launch the lift function which is a function passed in props from App
+    this.props.lift(iStrSearch);
+    //Change the state of openCompletion -> false to hide the Autocompletion component
     this.setState({
-      open: false
+      openAutocompletion: false
     });
+    //Render Results
     this.redirectToTarget();
   }
+  //---
 
-  handleSelect = iSearchStr => {
-    if (!this.props.blnHome) {
-      this.launchSearchLoc(iSearchStr);
-    }
-    this.props.lift(iSearchStr);
-    this.setState({
-      inputValue: iSearchStr,
-      open: false
-    });
-    this.redirectToTarget();
+  //---Handle the submit event on the input field
+  handleSubmit = iEvent => {
+    //preventDefault on the event so the page isn't re loaded
+    iEvent.preventDefault();
+    //launch the submitOrSelectValue function
+    this.submitOrSelectSearchValue(this.state.inputValue);
   };
+  //---
 
-  handleBlur = event => {
+  //---Handle the selection of an item in the Autocompletion component
+  //iStrSel: value of the item selected
+  handleSelect = iStrSel => {
+    //launch the submitOrSelectValue function
+    this.submitOrSelectSearchValue(iStrSel);
+  };
+  //---
+
+  //---Handle a click outside the input field
+  handleBlur = iEvent => {
+    //If the related target isn't null and contains the class "AutocompletionItem"
     if (
-      event.relatedTarget != null &&
-      event.relatedTarget.classList.contains("AutocompletionItem")
+      iEvent.relatedTarget != null &&
+      iEvent.relatedTarget.classList.contains("AutocompletionItem")
     ) {
-      this.handleSelect(event.relatedTarget.innerText);
+      //Launch the handleSelect function
+      this.handleSelect(iEvent.relatedTarget.innerText);
     }
+    //In all cases, close the Autocompletion component
     this.setState({
-      open: false
+      openAutocompletion: false
     });
+  };
+  //---
+
+  //When the component is mounted, launch the autoComp function
+  componentDidMount = () => {
+    //Get this.props.inputValue
+    const { inputValue } = this.props;
+    //Launch the autoComp function
+    this.autoComp(inputValue);
   };
 
   render() {
+    //Get this.props.classes
     const { classes } = this.props;
-    const { inputValue, open, anchorEl, elWidth, titlesList } = this.state;
+    //Get this.state.inputValue, this.state.openAutocompletion, this.state.titlesList
+    const { inputValue, openAutocompletion, titlesList } = this.state;
 
     return (
-      <form className="SearchBar" onSubmit={this.handleSubmit} autoComplete='off'>
+      <form
+        className="SearchBar"
+        onSubmit={this.handleSubmit}
+        autoComplete="off"
+      >
         <div className={classes.search}>
           <div className={classes.searchIcon} id="AppBarSearchIcon">
             <Search />
@@ -172,11 +212,10 @@ class SearchBar extends Component {
             onChange={this.handleChange}
             onBlur={this.handleBlur}
           />
-          {this.state.open && (
+          {openAutocompletion && (
             <Autocompletion
-              open={open}
-              anchorEl={anchorEl}
-              elWidth={elWidth}
+              anchorEl={document.getElementById("AppBarSearchIcon")}
+              elWidth={document.getElementById("AppBarInputBase").clientWidth}
               titlesList={titlesList}
               inputValue={inputValue}
               select={this.handleSelect}
@@ -191,6 +230,7 @@ class SearchBar extends Component {
 SearchBar.propTypes = {
   classes: PropTypes.object.isRequired,
   inputValue: PropTypes.string.isRequired,
+  searchLoc: PropTypes.func
 };
 
 export default withStyles(styles)(SearchBar);
