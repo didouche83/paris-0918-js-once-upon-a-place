@@ -11,7 +11,8 @@ class Home extends Component {
 
   autoComp = async (e) =>{
     const input = this.state.inputValue;
-    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=50`
+	const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=50`
+	
     const call_api = await fetch(url);
 	const data = await call_api.json();
 	const titles = data.map(x=>x.title).filter((x,i,t)=>x!==t[i-1]);
