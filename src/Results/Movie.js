@@ -3,6 +3,7 @@ import Expander from './Expander';
 import './Movie.css';
 const beginningURL = 'https://image.tmdb.org/t/p/w500'; //l'API coupe son URL pour les affiches, il faut rajouter ça devant
 
+
 class Movie extends Component {
 
 

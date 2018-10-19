@@ -3,7 +3,7 @@ import { AppBar, Tabs, Tab } from '@material-ui/core';
 import SimpleMap from './Map';
 import HeaderResults from './HeaderResults';
 import './Results.css';
-import Movie from './Movie'
+import ResultsList from './ResultList'
 
 class Results extends Component {
   state = {
@@ -90,17 +90,12 @@ class Results extends Component {
                       <Tab label="Map" />
                     </Tabs>
                   </AppBar>
-                  {value === 0 && <div className='cardContainer'>{
-                    this.state.moviesList.map((el, i) => <Movie key={i} movieSf={el} />)
-                  }</div>}
+                  {value === 0 && <ResultsList moviesList={this.state.moviesList}/>}
                   {value === 1 && <SimpleMap />}
                 </div>
               </div>
               <div className="desktopOnly">
-
-                <div className='cardContainer'>{
-                  this.state.moviesList.map((element, index) => <Movie key={index} movieSf={element} />)
-                }</div>
+                <ResultsList moviesList={this.state.moviesList}/>
                 <SimpleMap />
               </div>
             </div>
