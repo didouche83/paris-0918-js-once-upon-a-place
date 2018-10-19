@@ -7,7 +7,6 @@ import ResultsList from './ResultList'
 
 class Results extends Component {
   state = {
-    // locationsList: [],
     isLoaded: false,
     moviesList: [],
     value: 0
@@ -29,8 +28,6 @@ class Results extends Component {
     });
   };
 
-
-  
   transformDatasLocationInMovie = datasSf => {
     let res = [];
     let data = {};
@@ -64,7 +61,6 @@ class Results extends Component {
 
   handleChange = (_, iValue) => {
     this.setState({ value: iValue });
-
   };
 
   componentDidMount() {
@@ -77,9 +73,11 @@ class Results extends Component {
       if (this.state.moviesList.length > 0) {
         return (
           <div className="Results">
-            <div className='resHeader'>
-              <HeaderResults inputValue={this.props.inputValue} searchLoc={this.searchLoc} />
-            </div>
+           <HeaderResults
+              inputValue={inputValue}
+              searchLoc={this.searchLoc}
+              lift={this.props.lift}
+            />
 
             <div className='resContent'>
               <div className="mobileOnly">
@@ -99,6 +97,10 @@ class Results extends Component {
                 <SimpleMap />
               </div>
             </div>
+            <div className="desktopOnly">
+              <ResultList locationsList={locationsList} />
+              <SimpleMap />
+            </div>
           </div>
         );
       } else {
@@ -111,8 +113,3 @@ class Results extends Component {
 }
 
 export default Results;
-
-
-
-
-
