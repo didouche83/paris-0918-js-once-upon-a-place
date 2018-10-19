@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { Popper, Paper, MenuItem, Grow } from "@material-ui/core";
+import axios from 'axios';
 
+// const CancelToken = axios.CancelToken;
+// const source = CancelToken.source();
 
 const styles = theme => ({
   paper: {
@@ -27,7 +30,7 @@ class Autocompletion extends Component {
   };
 
   componentDidMount() {
-    const AbortController = window.AbortController;
+    // const AbortController = window.AbortController;
     const { inputValue } = this.props;
     // this.setState({
     //   fetchController: new AbortController()
@@ -44,19 +47,18 @@ class Autocompletion extends Component {
   }
 
   componentWillUnmount() {
-    // this.state.fetchController.abort();
+    // source.cancel('Operation canceled by the user.');
   }
 
-  autoComp = async (iValue) => {
+  autoComp = (iValue) => {
     const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'` //&$limit=50
-    const call_api = await fetch(url);
-    // this.state.fetchController.signal);
-    const json = await call_api.json();
-    const titles = json.map(iFilm=>iFilm.title).sort().filter((iTitle,iIndex,iTitles)=>iTitle!==iTitles[iIndex-1]);
-    this.setState({
-      searchValue: iValue,
-      titles:iValue.length?titles:[]
-    })
+    axios.get(url).then(json => {
+        const titles = json.data.map(iFilm=>iFilm.title).sort().filter((iTitle,iIndex,iTitles)=>iTitle!==iTitles[iIndex-1]); 
+        this.setState({
+          searchValue: iValue,
+          titles:iValue.length?titles:[]
+        })   
+    }) 
 	}
   
   handleClickOnMenuItem = (e) => {
@@ -80,7 +82,7 @@ class Autocompletion extends Component {
               <Paper style={{ width: elWidth }} className={classes.paper}>
                 {titles.length > 0 && titles.map((iTitle,iIndex) => 
                   <div key={String(iIndex)} onClick={this.handleClickOnMenuItem}>
-                    <MenuItem component="div">
+                    <MenuItem component="div" className="AutocompletionItem">
                       <div>                    
                         <strong style={{ fontWeight: 300 }}>
                           {iTitle}

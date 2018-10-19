@@ -1,8 +1,8 @@
+
 import React, { Component } from 'react';
 import './ResultList.css';
 import Movie from './Movie'
 import { Button, Typography } from "@material-ui/core";
-
 
 const NUMBER_OF_MOVIES_PER_PAGE = 5;
 
@@ -28,9 +28,36 @@ class ResultList extends Component {
         ) {
             this.setState({ currentNumberPage: this.state.currentNumberPage + 1 });
         }
+
     };
 
+    handlerButtonPrevious = () => {
+        // - 1
+        if (this.state.currentNumberPage > 1) {
+          this.setState({ currentNumberPage: this.state.currentNumberPage - 1 });
+          console.log("dec");
+        }
+    };
+    
+    handlerButtonNext = () => {
+        // + 1
+        if (
+            this.state.datas.length / NUMBER_OF_MOVIES_PER_PAGE >
+            this.state.currentNumberPage
+        ) {
+            console.log("inc");
+            this.setState({ currentNumberPage: this.state.currentNumberPage + 1 });
+        }
+    };
+
+    componentDidMount = () => {
+        this.setState({
+            datas: this.transformDatasLocationInMovie(this.props.locationsList)
+        });
+    }
+
     render() {
+
         const { currentNumberPage, moviesList } = this.state;
         const numberResultStart = (currentNumberPage - 1) * NUMBER_OF_MOVIES_PER_PAGE;
         let numberResultEnd =
@@ -45,7 +72,6 @@ class ResultList extends Component {
         const isDisplayNext = numberResultEnd === moviesList.length ? false : true;
 
         return (
-
             <div className='cardContainer'>
                 {
                     pageArray.map((e, i) => {

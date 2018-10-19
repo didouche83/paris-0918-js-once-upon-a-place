@@ -78,11 +78,11 @@ const styles = theme => ({
   },
 });
 
+
 const DetailedExpansionPanel = props => {
   const { classes } = props;
 
   return (
-
     <div className={classes.root}>
       <ExpansionPanel>
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
@@ -100,10 +100,13 @@ const DetailedExpansionPanel = props => {
         </ExpansionPanelSummary>
 
         <ExpansionPanelDetails className={classes.details}>
+
           <div className={classes.expansion}>
             <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div> <br />
             <div className={classes.trailer}>
               <iframe width="500" height="305" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+
+        
               <br />
             </div>
           </div>
