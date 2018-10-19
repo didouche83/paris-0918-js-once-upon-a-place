@@ -126,15 +126,15 @@ const showingSynopsis = (synopsisReduced, synopsisReduced){
 }*/
 //--------------------------------------------------------------------------------------------------------------------------------------
 
-const hideSynopsis = synopsisReduced => {
-  if (document.getElementById(synopsisReduced).style.display === 'block'){
-    document.getElementById(synopsisReduced).style.display = 'none';
-  } 
-  else {
-    document.getElementById(synopsisReduced).style.display = 'block';
-  }
-}
-//----------------------------------------------------------------------------------------------------------------------------------------
+// const hideSynopsis = synopsisReduced => {
+//   if (document.getElementById(synopsisReduced).style.display === 'block'){
+//     document.getElementById(synopsisReduced).style.display = 'none';
+//   } 
+//   else {
+//     document.getElementById(synopsisReduced).style.display = 'block';
+//   }
+// }
+// //----------------------------------------------------------------------------------------------------------------------------------------
 
 const DetailedExpansionPanel = props => {
   const { classes } = props;
@@ -142,7 +142,7 @@ const DetailedExpansionPanel = props => {
   //console.log(props.db)
   return (
     
-    <div className={classes.root} onclick={hideSynopsis}>
+    <div className={classes.root}>
       <ExpansionPanel>
         <ExpansionPanelSummary className={classes.button} expandIcon={<ExpandMoreIcon />}>
           <div className={classes.column}>
@@ -156,9 +156,8 @@ const DetailedExpansionPanel = props => {
             <img className={classes.affiche} src={props.movie.image} alt={props.movie.title}/>
           </div>
           <div className={classes.column}>
-            {/* <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', ' + '<br>'})}</div> */}
-            <div ><img src={props.movie.poster_path} alt='image' /></div>
-            <div > </div>
+            <div className={classes.locations}><h4>Scenes locations: </h4>{props.movie.locations.map((location)=>{return location + ', ' + '<br>'})}</div>
+            
             {/* <div /*onClick={showingSynopsis} className={classes.synopsisReduced}> <h4>Synopsis: </h4>{props.movie.shortSynopsis}</div> */}
     
           </div>
@@ -170,7 +169,7 @@ const DetailedExpansionPanel = props => {
             <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div> <br />
           
             <div className={classes.trailer}>
-              <iframe width="500" height="305" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              <iframe width="500" height="305" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                 <br />
             </div>
           </div>
