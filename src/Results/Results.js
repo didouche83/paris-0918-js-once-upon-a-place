@@ -99,7 +99,7 @@ class Results extends Component {
               <div className="desktopOnly">
 
                 <div className='cardContainer'>{
-                  this.state.moviesList.map((el, i) => <Movie key={i} movieSf={el} />)
+                  this.state.moviesList.map((element, index) => <Movie key={index} movieSf={element} />)
                 }</div>
                 <SimpleMap />
               </div>
