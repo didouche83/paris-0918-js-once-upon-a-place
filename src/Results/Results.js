@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
-import ResultList from './ResultList';
 import SimpleMap from './Map';
 import HeaderResults from './HeaderResults';
 import './Results.css';
@@ -17,34 +16,27 @@ class Results extends Component {
   searchLoc = async (iValue) => {
 
     const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
-
     const datasSf = await api_call_Sf.json();
-    datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1));
 
-    const resMoviesList = this.transformDatasLocationInMovie(datasSf);
+    datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
+
+    const resMoviesList = this.transformDatasLocationInMovie(datasSf); // on appelle la fonction pour regrouper les lieux par film
 
     this.setState({
-      // locationsList: api_call_Sf.ok ? datasSf : [],
-      moviesList: api_call_Sf.ok ? resMoviesList : [],
+      moviesList: api_call_Sf.ok ? resMoviesList : [], //si l'appel API ok, alors on remplit le state (moviesList) avec le résultat
+      //de la fonction qui regroupe les lieux par film
       isLoaded: true
-    })
+    });
   };
 
 
-  //il faut faire un map sur un tableau de nos résultats de movie db pour avoir les noms de films, car chaque film est stocké dans une case de tableau
-  // il faut qu'on ajoute ça à "res" le tableau de david, pour qu'on puisse filtrer en fonction des titres de film en disant que titre de movie db et faire le map dessus 
-  // est égal au titre de san francisco et ensuite faire un map dessus pour envoyer à la vignette
+  
   transformDatasLocationInMovie = datasSf => {
     let res = [];
     let data = {};
-    let film = [];
+    let film = [];                    //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
     let add = {};
-    const synopsis = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod" +
-      "tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam," +
-      "quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo" +
-      "consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse" +
-      "cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non" +
-      "proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    const synopsis = "No data available";
     const getFilm = (res, data) => {
       return res.filter(f => f.title === data.title && f.release_year === data.release_year);//(on compare le nouveau titre de film )
     } //qui est inséré dans data avec ceux qui sont déjà dans res (les films) pour voir s'ils ont les mm titres et la mm année pour
@@ -60,7 +52,7 @@ class Results extends Component {
           locations: new Array(data.locations),
           synopsis: synopsis,
           director: data.director,
-          image: "http://www.ralentirtravaux.com/images/troie.jpg"
+          image: "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg"
         };
         res.push(add);
       } else {
