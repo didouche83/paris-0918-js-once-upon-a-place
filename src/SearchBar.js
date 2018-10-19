@@ -23,7 +23,8 @@ const styles = theme => ({
     "&:hover": {
       boxShadow: "0px 0px 0px #aaa"
     },
-    height: 45
+    height: 45,
+    backgroundColor: "white"
   },
   searchIcon: {
     color: "black",
@@ -38,7 +39,7 @@ const styles = theme => ({
   inputRoot: {
     color: "black",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   inputInput: {
     paddingTop: theme.spacing.unit,

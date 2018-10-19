@@ -8,7 +8,10 @@ import SearchBar from "../SearchBar";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+    position: "sticky",
+    top: 0,
+    zIndex: 10
   },
   app: {
     backgroundColor: "white"
@@ -56,7 +59,6 @@ class HeaderResults extends Component {
 HeaderResults.propTypes = {
   classes: PropTypes.object.isRequired,
   inputValue: PropTypes.string.isRequired,
-  // searchLoc: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(HeaderResults);

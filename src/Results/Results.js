@@ -36,12 +36,6 @@ class Results extends Component {
     this.setState({ value: iValue });
   };
 
-  // liftInputValue = (iValue) => {
-  //   this.setState({
-  //     inputValue: iValue
-  //   })
-  // }
-
   render() {
     const { value, locationsList, isLoaded } = this.state;
     const { inputValue } = this.props;
@@ -49,32 +43,26 @@ class Results extends Component {
       if (locationsList.length > 0) {
         return (
           <div className="Results">
-            <div className="resHeader">
-              <HeaderResults
-                inputValue = {inputValue}
-                searchLoc={this.searchLoc}
-                lift={this.props.lift}
-                // updateResults = {this.updateResults}
-              />
+            <HeaderResults
+              inputValue={inputValue}
+              searchLoc={this.searchLoc}
+              lift={this.props.lift}
+            />
+            <div className="mobileOnly">
+              <div>
+                <AppBar position="static">
+                  <Tabs value={value} onChange={this.handleChange} centered>
+                    <Tab label="List" />
+                    <Tab label="Map" />
+                  </Tabs>
+                </AppBar>
+                {value === 0 && <ResultList locationsList={locationsList} />}
+                {value === 1 && <SimpleMap />}
+              </div>
             </div>
-
-            <div className="resContent">
-              <div className="mobileOnly">
-                <div>
-                  <AppBar position="static">
-                    <Tabs value={value} onChange={this.handleChange} centered>
-                      <Tab label="List" />
-                      <Tab label="Map" />
-                    </Tabs>
-                  </AppBar>
-                  {value === 0 && <ResultList locationsList={locationsList} />}
-                  {value === 1 && <SimpleMap />}
-                </div>
-              </div>
-              <div className="desktopOnly">
-                <ResultList locationsList={locationsList} />
-                <SimpleMap />
-              </div>
+            <div className="desktopOnly">
+              <ResultList locationsList={locationsList} />
+              <SimpleMap />
             </div>
           </div>
         );
