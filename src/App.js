@@ -8,15 +8,28 @@ import Team from "./Team";
 import "./App.css";
 
 class App extends Component {
+  
+  /**
+   * Initial state
+   * @{string} inputValue - the value that is searched by the user
+   */
   state = {
     inputValue: ""
   };
-
-  lift = a => {
-    this.setState({ inputValue: a });
+  
+  /**
+   * Used to lift the inputValue back to the App
+   * @param {string} iValue - the value to apply to this.state.inputValue
+   */
+  lift = (iValue) => {
+    this.setState({ 
+      inputValue: iValue 
+    });
   };
+  
 
   render() {
+    const { inputValue } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -25,11 +38,11 @@ class App extends Component {
               <Route
                 exact
                 path="/"
-                render={() => <Home autoComp={this.autoComp} lift={this.lift} />}
+                render={() => <Home lift={this.lift} />}
               />
               <Route
                 path="/Results"
-                render={() => <Results inputValue={this.state.inputValue} lift={this.lift} />}
+                render={() => <Results inputValue={inputValue} lift={this.lift} />}
               />
               <Route 
                 path="/team" 

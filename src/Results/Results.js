@@ -31,7 +31,7 @@ class Results extends Component {
   transformDatasLocationInMovie = datasSf => {
     let res = [];
     let data = {};
-    let film = [];                    //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
+    let film = []; //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
     let add = {};
     const synopsis = "No data available";
     const getFilm = (res, data) => {
@@ -69,6 +69,7 @@ class Results extends Component {
 
   render() {
     const { value } = this.state;
+    const { inputValue, lift } = this.props;
     if (this.state.isLoaded) {
       if (this.state.moviesList.length > 0) {
         return (
@@ -76,29 +77,22 @@ class Results extends Component {
            <HeaderResults
               inputValue={inputValue}
               searchLoc={this.searchLoc}
-              lift={this.props.lift}
+              lift={lift}
             />
-
-            <div className='resContent'>
-              <div className="mobileOnly">
-                <div>
-                  <AppBar position="static">
-                    <Tabs value={value} onChange={this.handleChange} centered>
-                      <Tab label="List" />
-                      <Tab label="Map" />
-                    </Tabs>
-                  </AppBar>
-                  {value === 0 && <ResultsList moviesList={this.state.moviesList}/>}
-                  {value === 1 && <SimpleMap />}
-                </div>
-              </div>
-              <div className="desktopOnly">
-                <ResultsList moviesList={this.state.moviesList}/>
-                <SimpleMap />
+            <div className="mobileOnly">
+              <div>
+                <AppBar position="static">
+                  <Tabs value={value} onChange={this.handleChange} centered>
+                    <Tab label="List" />
+                    <Tab label="Map" />
+                  </Tabs>
+                </AppBar>
+                {value === 0 && <ResultsList moviesList={this.state.moviesList}/>}
+                {value === 1 && <SimpleMap />}
               </div>
             </div>
             <div className="desktopOnly">
-              <ResultList locationsList={locationsList} />
+              <ResultsList moviesList={this.state.moviesList}/>
               <SimpleMap />
             </div>
           </div>

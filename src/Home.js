@@ -5,13 +5,14 @@ import SearchBar from "./SearchBar";
 
 class Home extends Component {
   render() {
+    const { lift } = this.props;
     return (
       <div className="Home">
         <Header />
         <main className="mainPart">
           <div>
             <div className="searchBar">
-              <SearchBar inputValue="" lift={this.props.lift} blnHome={true} />
+              <SearchBar inputValue='' lift={lift} blnHome={true} />
             </div>
           </div>
           <p className="intro">
