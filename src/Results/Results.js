@@ -13,19 +13,21 @@ class Results extends Component {
   };
 
   searchLoc = async (iValue) => {
-
-    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
+    this.setState({
+      isLoaded: false
+    })
+    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=100`);
     const datasSf = await api_call_Sf.json();
 
     datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
 
     const resMoviesList = this.transformDatasLocationInMovie(datasSf); // on appelle la fonction pour regrouper les lieux par film
-
     this.setState({
       moviesList: api_call_Sf.ok ? resMoviesList : [], //si l'appel API ok, alors on remplit le state (moviesList) avec le résultat
       //de la fonction qui regroupe les lieux par film
       isLoaded: true
     });
+    
   };
 
   transformDatasLocationInMovie = datasSf => {
@@ -68,8 +70,8 @@ class Results extends Component {
   };
 
   render() {
-    const { value } = this.state;
-    const { inputValue, lift } = this.props;
+    const { value, moviesList } = this.state;
+    const { lift, inputValue } = this.props;
     if (this.state.isLoaded) {
       if (this.state.moviesList.length > 0) {
         return (
@@ -87,12 +89,12 @@ class Results extends Component {
                     <Tab label="Map" />
                   </Tabs>
                 </AppBar>
-                {value === 0 && <ResultsList moviesList={this.state.moviesList}/>}
+                {value === 0 && <ResultsList moviesList={moviesList}/>}
                 {value === 1 && <SimpleMap />}
               </div>
             </div>
             <div className="desktopOnly">
-              <ResultsList moviesList={this.state.moviesList}/>
+              <ResultsList moviesList={moviesList}/>
               <SimpleMap />
             </div>
           </div>

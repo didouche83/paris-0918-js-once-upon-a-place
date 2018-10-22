@@ -138,15 +138,17 @@ class SearchBar extends Component {
     if (!this.props.blnHome) {
       this.props.searchLoc(iStrSearch);
     }
-    console.log(iStrSearch)
     //Allow to launch the lift function which is a function passed in props from App
     this.props.lift(iStrSearch);
-    //Change the state of openCompletion -> false to hide the Autocompletion component
+    //Change the state of openCompletion -> false to hide the Autocompletion component and change the inputValue to match the value selected or submitted
     this.setState({
+      inputValue: iStrSearch,
       openAutocompletion: false
     });
     //Render Results
-    this.redirectToTarget();
+    if (this.props.blnHome) {
+      this.redirectToTarget();;
+    }
   }
 
   /**
@@ -193,9 +195,9 @@ class SearchBar extends Component {
    */
   componentDidMount = () => {
     //Get this.props.inputValue
-    const { inputValue } = this.props;
+    // const { inputValue } = this.props;
     //Launch the autoComp function
-    this.autoComp(inputValue);
+    // this.autoComp(inputValue);
   };
 
   render() {

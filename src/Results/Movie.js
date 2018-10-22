@@ -13,7 +13,6 @@ class Movie extends Component {
 
     joinAPIsResults = async () => {
         const movieJoined = this.state.movie;
-        console.log('movie', movieJoined)
         //appel à l'API MovieDB en fonction du titre de l'API de SF
         const apiCallMovieDB = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=101524b9ef56aa6595b105469939da4d&language=en-US&query=${movieJoined.title}&include_adult=false`)
         const moviesDbList = await apiCallMovieDB.json();

@@ -24,7 +24,8 @@ class ResultList extends Component {
     numberResultEnd: 0,
     haveResults: false,
     isDisplayNext: false,
-    isDisplayPrevious : false
+    isDisplayPrevious : false,
+    moviesList: this.props.moviesList
   };
 
   /**
@@ -34,7 +35,8 @@ class ResultList extends Component {
     //Get this.state.currentNumberPage
     const { currentNumberPage } = this.state;
     //Get this.props.moviesList
-    const { moviesList } = this.props;
+    const { moviesList } = this.state;
+    console.log('results list', moviesList);
     //Get the first index of the moviesList that must be displayed
     const numberResultStart = (currentNumberPage - 1) * NUMBER_OF_MOVIES_PER_PAGE;
     //Get the last index of the moviesList that must be displayed
@@ -94,14 +96,13 @@ class ResultList extends Component {
   }
 
   componentWillReceiveProps() {
-    this.setState({ 
-      moviesPerPage: []
-    });
-  };
+    this.getMoviesPerPage();
+  }
 
   render() {
-    const { moviesPerPage, numberResultStart, numberResultEnd, haveResults, isDisplayNext, isDisplayPrevious } = this.state;
-    const { moviesList } = this.props;
+    const { moviesPerPage, numberResultStart, numberResultEnd, haveResults, isDisplayNext, isDisplayPrevious, moviesList } = this.state;
+    // const { moviesList } = this.props;
+    
     return (
       <div className="cardContainer">
         {haveResults && moviesPerPage.map((e, i) =>
