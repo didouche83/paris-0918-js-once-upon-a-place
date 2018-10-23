@@ -13,10 +13,10 @@ class Results extends Component {
   };
 
   searchLoc = async (iValue) =>{
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
+    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$q=${iValue}`);
     const data = await api_call.json();
     this.setState({
-      res: api_call.ok ? data : [],
+      res: api_call.ok ? data.filter(x=>x.title.toLowerCase().includes(iValue.toLowerCase())||x.locations.toLowerCase().includes(iValue.toLowerCase())) : [],
       isLoaded: true
     })
   };
