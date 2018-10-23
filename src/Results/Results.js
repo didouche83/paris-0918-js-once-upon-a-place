@@ -13,25 +13,27 @@ class Results extends Component {
   };
 
   searchLoc = async (iValue) => {
-
-    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=50`);
+    this.setState({
+      isLoaded: false
+    })
+    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'&$limit=100`);
     const datasSf = await api_call_Sf.json();
 
     datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
 
     const resMoviesList = this.transformDatasLocationInMovie(datasSf); // on appelle la fonction pour regrouper les lieux par film
-
     this.setState({
       moviesList: api_call_Sf.ok ? resMoviesList : [], //si l'appel API ok, alors on remplit le state (moviesList) avec le résultat
       //de la fonction qui regroupe les lieux par film
       isLoaded: true
     });
+    
   };
 
   transformDatasLocationInMovie = datasSf => {
     let res = [];
     let data = {};
-    let film = [];                    //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
+    let film = []; //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
     let add = {};
     const synopsis = "No data available";
     const getFilm = (res, data) => {
@@ -68,7 +70,8 @@ class Results extends Component {
   };
 
   render() {
-    const { value } = this.state;
+    const { value, moviesList } = this.state;
+    const { lift, inputValue } = this.props;
     if (this.state.isLoaded) {
       if (this.state.moviesList.length > 0) {
         return (
@@ -76,29 +79,22 @@ class Results extends Component {
            <HeaderResults
               inputValue={inputValue}
               searchLoc={this.searchLoc}
-              lift={this.props.lift}
+              lift={lift}
             />
-
-            <div className='resContent'>
-              <div className="mobileOnly">
-                <div>
-                  <AppBar position="static">
-                    <Tabs value={value} onChange={this.handleChange} centered>
-                      <Tab label="List" />
-                      <Tab label="Map" />
-                    </Tabs>
-                  </AppBar>
-                  {value === 0 && <ResultsList moviesList={this.state.moviesList}/>}
-                  {value === 1 && <SimpleMap />}
-                </div>
-              </div>
-              <div className="desktopOnly">
-                <ResultsList moviesList={this.state.moviesList}/>
-                <SimpleMap />
+            <div className="mobileOnly">
+              <div>
+                <AppBar position="static">
+                  <Tabs value={value} onChange={this.handleChange} centered>
+                    <Tab label="List" />
+                    <Tab label="Map" />
+                  </Tabs>
+                </AppBar>
+                {value === 0 && <ResultsList moviesList={moviesList}/>}
+                {value === 1 && <SimpleMap />}
               </div>
             </div>
             <div className="desktopOnly">
-              <ResultList locationsList={locationsList} />
+              <ResultsList moviesList={moviesList}/>
               <SimpleMap />
             </div>
           </div>

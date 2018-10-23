@@ -4,6 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 import { Popper, Paper, MenuItem, Grow } from "@material-ui/core";
 
 const styles = theme => ({
+  paperRoot: {
+    zIndex:11
+  },
   paper: {
     border: "solid",
     borderColor: "lightgrey",
@@ -13,7 +16,7 @@ const styles = theme => ({
     height: '1OO%',
     maxHeight: 250,
     flexGrow:1,
-    overflow: 'auto'
+    overflow: 'auto',
   }
 });
 
@@ -37,9 +40,9 @@ class Autocompletion extends Component {
           placement="bottom-start"
           transition
         >
-          {({ TransitionProps }) => (
-            <Grow {...TransitionProps} timeout={500}>
-              <Paper style={{ width: elWidth }} className={classes.paper}>
+          {/* {({ TransitionProps }) => (
+            <Grow {...TransitionProps} timeout={500}> */}
+              <Paper style={{ width: elWidth }} className={classes.paper} classes={{root: classes.paperRoot}}>
                 {titlesList.length > 0 && titlesList.map((iTitle,iIndex) => 
                   <div key={String(iIndex)} onClick={this.handleClickOnMenuItem}>
                     <MenuItem component="div" className="AutocompletionItem">
@@ -52,8 +55,8 @@ class Autocompletion extends Component {
                   </div>
                 )}
               </Paper>
-            </Grow>
-          )}
+            {/* </Grow>
+          )} */}
         </Popper>
       </div>
     );
@@ -63,7 +66,6 @@ class Autocompletion extends Component {
 Autocompletion.propTypes = {
   classes: PropTypes.object.isRequired,
   anchorEl: PropTypes.object.isRequired, 
-  open: PropTypes.bool.isRequired,
   elWidth: PropTypes.number.isRequired, 
   titlesList: PropTypes.array.isRequired
 };
