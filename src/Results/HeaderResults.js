@@ -11,7 +11,7 @@ const styles = theme => ({
     width: "100%",
     position: "sticky",
     top: 0,
-    zIndex: 10
+    zIndex: 2
   },
   app: {
     backgroundColor: "white"
@@ -33,8 +33,8 @@ const styles = theme => ({
 
 class HeaderResults extends Component {
   render() {
-    //Get this.props.classes, this.props.inputValue, this.props.elWidth, this.props.searchLoc
-    const { classes, inputValue, searchLoc } = this.props;
+    //Get this.props.classes, this.props.inputValue, this.props.searchLoc, this.props.lift
+    const { classes, inputValue, searchLoc, lift } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.app}>
@@ -49,7 +49,7 @@ class HeaderResults extends Component {
               </IconButton>
             </NavLink>
             <div className={classes.grow} />
-            <SearchBar inputValue={inputValue} searchLoc={searchLoc} lift={this.props.lift} blnHome={false}/>
+            <SearchBar inputValue={inputValue} searchLoc={searchLoc} lift={lift} blnHome={false}/>
           </Toolbar>
         </AppBar>
       </div>

@@ -57,19 +57,22 @@ const styles = theme => ({
 });
 
 class SearchBar extends Component {
-  //---Initial states
-  //inputValue: the value that is entered in the uput field, it is initialiazed to this.props.inputValue which is the value of the input field in the Home
-  //openAutocompletion: allow to know if the Autocompletion component must be shown
-  //titlesList: list of the titles to display in the autcompletion component
+
+  /**
+   * Initial state
+   * {string} inputValue - the value that is entered in the uput field, it is initialiazed to this.props.inputValue which is the value of the input field in the Home
+   * {boolean} openAutocompletion - allow to know if the Autocompletion component must be shown
+   * {array} titlesList - list of the titles to display in the autcompletion component
+   */
   state = {
     inputValue: this.props.inputValue,
     openAutocompletion: false,
     titlesList: []
   };
-  //---
 
-
-  //---This is done to render Results without using any NavLink
+  /** 
+   * This is done to render Results without using any NavLink
+   */
   static contextTypes = {
     router: PropTypes.object
   };
@@ -77,15 +80,15 @@ class SearchBar extends Component {
   redirectToTarget = () => {
     this.context.router.history.push(`/Results`);
   };
-  //---
 
-
-  //---This function is used to make the autocompletion when a value is entered in the input field
-  //iStrValue : the value entered in the input field
-  autoComp = iStrValue => {
+  /**
+   * This function is used to make the autocompletion when a value is entered in the input field
+   * @param {string} iStrValue - the value entered in the input field
+   */
+  autoComp = (iStrValue) => {
     //The strUrl used to get a list of movies from the API
     const strUrl = `https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iStrValue}%25'`; //&$limit=50
-    //THe call to the API to get a json file contaning an array of movies
+    //The call to the API to get a json file contaning an array of movies
     axios.get(strUrl).then(json => {
       //A map is done on the list of movies to get only the titles
       //Then a sort is then done so the title will be in the alphabetical order
@@ -100,10 +103,12 @@ class SearchBar extends Component {
       });
     });
   };
-  //---
 
-  //---Handle the change of the value in the input field
-  handleChange = iEvent => {
+  /**
+   * Handle the change of the value in the input field
+   * @param {event} iEvent - the event that launched the function
+   */
+  handleChange = (iEvent) => {
     //Change the state of the inputValue
     this.setState(
       {
@@ -123,10 +128,11 @@ class SearchBar extends Component {
       }
     );
   };
-  //---
 
-  //---Actions made when submitting a value in the input field or selecting an item in the Autocompletion component
-  //iStrSearch: search value
+  /**
+   * Actions made when submitting a value in the input field or selecting an item in the Autocompletion component
+   * @param {string} iStrSearch : search value
+   */
   submitOrSelectSearchValue = (iStrSearch) =>  {
     //If we are in Results page, aunch the searchLoc function which is a function passed in props from Results
     if (!this.props.blnHome) {
@@ -134,55 +140,64 @@ class SearchBar extends Component {
     }
     //Allow to launch the lift function which is a function passed in props from App
     this.props.lift(iStrSearch);
-    //Change the state of openCompletion -> false to hide the Autocompletion component
+    //Change the state of openCompletion -> false to hide the Autocompletion component and change the inputValue to match the value selected or submitted
     this.setState({
+      inputValue: iStrSearch,
       openAutocompletion: false
     });
     //Render Results
-    this.redirectToTarget();
+    if (this.props.blnHome) {
+      this.redirectToTarget();;
+    }
   }
-  //---
 
-  //---Handle the submit event on the input field
-  handleSubmit = iEvent => {
+  /**
+   * Handle the submit event on the input field
+   * @param {event} iEvent - the event that launched the function
+   */
+  handleSubmit = (iEvent) => {
     //preventDefault on the event so the page isn't re loaded
     iEvent.preventDefault();
     //launch the submitOrSelectValue function
     this.submitOrSelectSearchValue(this.state.inputValue);
   };
-  //---
 
-  //---Handle the selection of an item in the Autocompletion component
-  //iStrSel: value of the item selected
-  handleSelect = iStrSel => {
+  /**
+   * Handle the selection of an item in the Autocompletion component
+   * @param {event} - value of the item selected
+   */
+  handleSelect = (iStrSel) => {
     //launch the submitOrSelectValue function
     this.submitOrSelectSearchValue(iStrSel);
   };
-  //---
 
-  //---Handle a click outside the input field
-  handleBlur = iEvent => {
-    //If the related target isn't null and contains the class "AutocompletionItem"
-    if (
-      iEvent.relatedTarget != null &&
-      iEvent.relatedTarget.classList.contains("AutocompletionItem")
-    ) {
-      //Launch the handleSelect function
-      this.handleSelect(iEvent.relatedTarget.innerText);
-    }
-    //In all cases, close the Autocompletion component
-    this.setState({
-      openAutocompletion: false
-    });
-  };
-  //---
+  /**
+   * Handle a click outside the input field
+   * @param {event} iEvent - the event that launched the function
+   */
+  // handleBlur = (iEvent) => {
+  //   //If the related target isn't null and contains the class "AutocompletionItem"
+  //   if (
+  //     iEvent.relatedTarget != null &&
+  //     iEvent.relatedTarget.classList.contains("AutocompletionItem")
+  //   ) {
+  //     //Launch the handleSelect function
+  //     this.handleSelect(iEvent.relatedTarget.innerText);
+  //   }
+  //   //In all cases, close the Autocompletion component
+  //   this.setState({
+  //     openAutocompletion: false
+  //   });
+  // };
 
-  //When the component is mounted, launch the autoComp function
+  /**
+   * When the component is mounted, launch the autoComp function
+   */
   componentDidMount = () => {
     //Get this.props.inputValue
-    const { inputValue } = this.props;
+    // const { inputValue } = this.props;
     //Launch the autoComp function
-    this.autoComp(inputValue);
+    // this.autoComp(inputValue);
   };
 
   render() {

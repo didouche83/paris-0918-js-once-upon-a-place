@@ -45,7 +45,6 @@
     display: none;
 } 
 .desktopOnly {
-    display: block;
     display: grid;
     grid-template-columns: 5fr 6fr;
 }
