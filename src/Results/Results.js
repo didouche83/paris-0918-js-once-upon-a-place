@@ -13,7 +13,9 @@ class Results extends Component {
   };
 
   searchLoc = async (iValue) => {
-
+    this.setState({
+      isLoaded: false
+    })
     const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'`);
     const datasSf = await api_call_Sf.json();
 
