@@ -44,7 +44,7 @@ class Movie extends Component {
             <div className='card'>
                 {/* j'envoie les infos du state pour les afficher dans expander */}
                 <Expander movie={this.state.movie} />
-                <MoviesDirectorList directorName={this.state.movie.director} />
+                <MoviesDirectorList directorName={this.state.movie.director} title={this.state.movie.title} />
             </div>
         )
 
