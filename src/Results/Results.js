@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
+import { FadeLoader } from 'react-spinners';
+import { Link } from 'react-router-dom';
 import SimpleMap from './Map';
 import HeaderResults from './HeaderResults';
 import './Results.css';
@@ -27,7 +29,7 @@ class Results extends Component {
       //de la fonction qui regroupe les lieux par film
       isLoaded: true
     });
-    
+
   };
 
   transformDatasLocationInMovie = datasSf => {
@@ -76,7 +78,7 @@ class Results extends Component {
       if (this.state.moviesList.length > 0) {
         return (
           <div className="Results">
-           <HeaderResults
+            <HeaderResults
               inputValue={inputValue}
               searchLoc={this.searchLoc}
               lift={lift}
@@ -89,21 +91,37 @@ class Results extends Component {
                     <Tab label="Map" />
                   </Tabs>
                 </AppBar>
-                {value === 0 && <ResultsList moviesList={moviesList}/>}
+                {value === 0 && <ResultsList moviesList={moviesList} />}
                 {value === 1 && <SimpleMap />}
               </div>
             </div>
             <div className="desktopOnly">
-              <ResultsList moviesList={moviesList}/>
+              <ResultsList moviesList={moviesList} />
               <SimpleMap />
             </div>
           </div>
         );
       } else {
-        return <h2>Sorry! Nothing was found!</h2>
+        return (
+          <div className='Results'>
+            <h2>Your query doesn't match with any movie.</h2>
+            <Link className='linkToHome' to='/'>Make another query</Link> 
+          </div>
+        )
       }
     } else {
-      return <h2 className='loading'>Loading...</h2>
+      return (
+        <div className='Results'>
+          <div className='loadingSpinner'>
+            <FadeLoader
+              sizeUnit={"px"}
+              size={150}
+              color={'black'}
+              loading={!this.state.isloaded}
+            />
+          </div>
+        </div>
+      )
     }
   }
 }
