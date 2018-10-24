@@ -4,7 +4,7 @@ const Test = props =>{
     console.log('film director', props.result)
     return(
         <div>
-            {props.result.title}
+            {props.result}
             {/* <img src={beginningURL + props.result.poster_path} alt={props.result.title} />
             {props.result.overview} */}
         </div>
