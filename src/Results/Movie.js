@@ -17,7 +17,6 @@ class Movie extends Component {
   getYoutubeKey = () => {
     const url = `https://api.themoviedb.org/3/movie/${this.state.movie.id}/videos?api_key=${API_KEY}&language=en-US`;
     axios.get(url)
-      // .then(res => console.log('key', res.data.results[0].key))
       .then(res =>
         this.setState({
           youtubeKey: res.data.results[0].key
@@ -29,23 +28,23 @@ class Movie extends Component {
   joinAPIsResults = async () => {
     const movieJoined = this.state.movie;
     //appel à l'API MovieDB en fonction du titre de l'API de SF
-    const apiCallMovieDB = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${movieJoined.title}&include_adult=false`)
-    const moviesDbList = await apiCallMovieDB.json();
-
-    const movieTitleEqual = moviesDbList.results; //ici on récupére toutes les infos de MovieDb en fonction du titre de l'API de SF
-    if (apiCallMovieDB.ok) { //si l'appel de l'API est ok
-      if (movieTitleEqual.length > 0) { //et si j'ai bien un titre
-        movieJoined.synopsis = movieTitleEqual[0].overview; //alors je remplace le synopsis initialisé dans Result par celui de MovieDb
-        movieJoined.image = beginningURL + movieTitleEqual[0].poster_path;//et je remplace l'image initialisée dans Results par celle de MovieDb
-        movieJoined.id = movieTitleEqual[0].id;
-
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${movieJoined.title}&include_adult=false`
+    axios.get(url)
+      .then(res => {
+        const data = res.data.results[0];
+        movieJoined.synopsis = data.overview;
+        movieJoined.image = beginningURL + data.poster_path;
+        movieJoined.id = data.id;
+      })
+      .then(() => {
         this.setState({
           movie: movieJoined //je remplis mon state avec le nouveau tableau rempli des données des 2 APIs
         })
-
-        this.getYoutubeKey();
-      }
-    }
+      })
+      .then(() =>
+        this.getYoutubeKey()
+      )
+      .catch(res => console.log(res))
   }
 
   componentDidMount() {
