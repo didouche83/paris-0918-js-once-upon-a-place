@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Expander from './Expander';
+import MoviesDirectorList from './MoviesDirectorList';
 import './Movie.css';
 const beginningURL = 'https://image.tmdb.org/t/p/w500'; //l'API coupe son URL pour les affiches, il faut rajouter ça devant
 
@@ -42,7 +43,8 @@ class Movie extends Component {
         return (
             <div className='card'>
                 {/* j'envoie les infos du state pour les afficher dans expander */}
-                <Expander movie={this.state.movie} />    
+                <Expander movie={this.state.movie} />
+                <MoviesDirectorList directorName={this.state.movie.director} title={this.state.movie.title} />
             </div>
         )
 
