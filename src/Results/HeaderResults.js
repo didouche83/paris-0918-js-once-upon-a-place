@@ -11,10 +11,11 @@ const styles = theme => ({
     width: "100%",
     position: "sticky",
     top: 0,
-    zIndex: 2
+    zIndex: 1,
+    borderBottom: "solid #e6e6e6 1px"
   },
   app: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   grow: {
     flexGrow: 0
@@ -37,7 +38,7 @@ class HeaderResults extends Component {
     const { classes, inputValue, searchLoc, lift } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" className={classes.app}>
+        <AppBar position="static" className={classes.app} elevation={0}>
           <Toolbar>
             <NavLink to="/">
               <IconButton

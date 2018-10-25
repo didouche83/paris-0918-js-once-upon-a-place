@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { Popper, Paper, MenuItem, Grow } from "@material-ui/core";
+import { Popper, Paper, MenuItem } from "@material-ui/core";
 
 const styles = theme => ({
-  paperRoot: {
-    zIndex:11
+  popper: {
+    zIndex: 2,
   },
   paper: {
     border: "solid",
@@ -15,7 +15,7 @@ const styles = theme => ({
     boxShadow: "0px 0px 0px #aaa",
     height: '1OO%',
     maxHeight: 250,
-    flexGrow:1,
+    flexGrow: 1,
     overflow: 'auto',
   }
 });
@@ -39,24 +39,21 @@ class Autocompletion extends Component {
           anchorEl={anchorEl}
           placement="bottom-start"
           transition
+          className={classes.popper}
         >
-          {/* {({ TransitionProps }) => (
-            <Grow {...TransitionProps} timeout={500}> */}
-              <Paper style={{ width: elWidth }} className={classes.paper} classes={{root: classes.paperRoot}}>
-                {titlesList.length > 0 && titlesList.map((iTitle,iIndex) => 
-                  <div key={String(iIndex)} onClick={this.handleClickOnMenuItem}>
-                    <MenuItem component="div" className="AutocompletionItem">
-                      <div>                    
-                        <strong style={{ fontWeight: 300 }}>
-                          {iTitle}
-                        </strong>
-                      </div>
-                    </MenuItem>
+          <Paper style={{ width: elWidth }} className={classes.paper} classes={{root: classes.paperRoot}}>
+            {titlesList.length > 0 && titlesList.map((iTitle,iIndex) => 
+              <div key={String(iIndex)} onClick={this.handleClickOnMenuItem}>
+                <MenuItem component="div" className="AutocompletionItem">
+                  <div>                    
+                    <strong style={{ fontWeight: 300 }}>
+                      {iTitle}
+                    </strong>
                   </div>
-                )}
-              </Paper>
-            {/* </Grow>
-          )} */}
+                </MenuItem>
+              </div>
+            )}
+          </Paper>
         </Popper>
       </div>
     );

@@ -55,7 +55,7 @@ class Movie extends Component {
 
   render() {
         return (
-            <div className='card'>
+            <div className="Movie">
                 {/* j'envoie les infos du state pour les afficher dans expander */}
                 <Expander movie={this.state.movie}    youtubeKey={this.state.youtubeKey}/>
                 <MoviesDirectorList directorName={this.state.movie.director} title={this.state.movie.title} />
