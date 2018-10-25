@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core/styles';
 import { Grid, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Divider, Typography} from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import YouTube from 'react-youtube';
 
 const theme = createMuiTheme({
   typography: {
@@ -148,15 +149,21 @@ const DetailedExpansionPanel = props => {
               </Grid>
               <Divider light="true" />
               <Grid item container direction="row">
-                <Grid item xs={3}>
+                <Grid item xs={2}>
                   <Typography>
                     <b>Video:</b>
                   </Typography>
                 </Grid>
-                <Grid item xs={2}>
-                  <Typography>
-
-                  </Typography>
+                <Grid item xs={9}>
+                  <div className={classes.trailer}>
+                    {props.youtubeKey &&
+                <YouTube
+                  videoId={props.youtubeKey}
+                  // opts={opts}
+                  // onReady={this._onReady}
+                />
+              }
+                  </div>
                 </Grid>
               </Grid>
             </Grid>
