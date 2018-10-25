@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Expander from './Expander';
+import MoviesDirectorList from './MoviesDirectorList';
 import './Movie.css';
 import axios from 'axios';
 
@@ -53,17 +54,13 @@ class Movie extends Component {
 
 
   render() {
-
-    return (
-      <div className='card'>
-        {/* j'envoie les infos du state pour les afficher dans expander */}
-        <Expander
-          youtubeKey={this.state.youtubeKey}
-          movie={this.state.movie}
-        />
-      </div>
-    )
-
+        return (
+            <div className='card'>
+                {/* j'envoie les infos du state pour les afficher dans expander */}
+                <Expander movie={this.state.movie}    youtubeKey={this.state.youtubeKey}/>
+                <MoviesDirectorList directorName={this.state.movie.director} title={this.state.movie.title} />
+            </div>
+        )
   }
 }
 
