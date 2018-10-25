@@ -23,7 +23,9 @@ class Results extends Component {
 
     datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
 
-    const resMoviesList = this.transformDatasLocationInMovie(datasSf); // on appelle la fonction pour regrouper les lieux par film
+    const datasSfExistingLocations = datasSf.filter(movie => movie.locations == undefined ? false : true) //on garde uniquement les films qui ont des lieux de tournage
+
+    const resMoviesList = this.transformDatasLocationInMovie(datasSfExistingLocations); // on appelle la fonction pour regrouper les lieux par film
     this.setState({
       moviesList: api_call_Sf.ok ? resMoviesList : [], //si l'appel API ok, alors on remplit le state (moviesList) avec le résultat
       //de la fonction qui regroupe les lieux par film
@@ -32,7 +34,7 @@ class Results extends Component {
 
   };
 
-  transformDatasLocationInMovie = datasSf => {
+  transformDatasLocationInMovie = datasSfExistingLocations => {
     let res = [];
     let data = {};
     let film = []; //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
@@ -43,8 +45,8 @@ class Results extends Component {
     } //qui est inséré dans data avec ceux qui sont déjà dans res (les films) pour voir s'ils ont les mm titres et la mm année pour
     //les regrouper par lieux de tournage
 
-    for (let i = 0; i < datasSf.length; i++) {
-      data = datasSf[i];
+    for (let i = 0; i < datasSfExistingLocations.length; i++) {
+      data = datasSfExistingLocations[i];
       film = getFilm(res, data);
       if (!film.length) { //équivaut à film.length===0
         add = {
