@@ -58,6 +58,22 @@
     }
 }
 
+.Results .loadingSpinner{
+    position: fixed;
+    top: 50%;
+    right: 50%;
+}
+
+.Results .noMatch{
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    width: 50%;
+}
+
+.Results .linkToHome{
+    color: black;
+}
 
 
 

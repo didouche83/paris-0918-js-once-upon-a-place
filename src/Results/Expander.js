@@ -105,8 +105,6 @@ const DetailedExpansionPanel = props => {
           <div className={classes.expansion}>
             <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div> <br />
             <div className={classes.trailer}>
-              {/* <iframe title={props.movie.title} width="500" height="305" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe> */}
-              {console.log(props)}
               {props.youtubeKey &&
                 <YouTube
                   videoId={props.youtubeKey}
