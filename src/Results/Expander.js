@@ -6,6 +6,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Divider from '@material-ui/core/Divider';
+import YouTube from 'react-youtube';
 
 const styles = theme => ({
   root: {
@@ -105,8 +106,15 @@ const DetailedExpansionPanel = props => {
             <div className={classes.text}><h4>Synopsis: </h4> {props.movie.synopsis} </div> <br />
             <div className={classes.trailer}>
               {/* <iframe title={props.movie.title} width="500" height="305" src="https://www.youtube.com/embed/IeZrKyyXYjY" frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe> */}
+              {console.log(props)}
+              {props.youtubeKey &&
+                <YouTube
+                  videoId={props.youtubeKey}
+                  // opts={opts}
+                  // onReady={this._onReady}
+                />
+              }
 
-        
               <br />
             </div>
           </div>
