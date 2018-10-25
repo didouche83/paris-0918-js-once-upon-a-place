@@ -104,11 +104,9 @@ class ResultList extends Component {
     // const { moviesList } = this.props;
     
     return (
-      <div className="cardContainer">
+      <div className="moviesContainer">
         {haveResults && moviesPerPage.map((e, i) =>
-          <div key={"movie-" + i} className="card">
-            <Movie movieSf={e} />
-          </div>
+            <Movie key={"movie-" + i} movieSf={e} />
         )}
         <div className="center">
           <Typography>
