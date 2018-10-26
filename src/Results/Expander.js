@@ -53,7 +53,6 @@ const styles = theme => ({
     [theme.breakpoints.down("md")]: {
       width: "30%"
     }
-
   },
   movieTitle: {
     fontSize: "25px",
@@ -86,11 +85,11 @@ const styles = theme => ({
     }
   },
   youtube: {
-    width: '400px',
-    height: '300px',
+    width: "400px",
+    height: "300px",
     [theme.breakpoints.down("sm")]: {
-      width: '275px',
-      height: '175px',
+      width: "275px",
+      height: "175px"
     }
   }
 });
@@ -99,8 +98,8 @@ class DetailedExpansionPanel extends Component {
   render() {
     const { classes, movie, youtubeKey } = this.props;
     const trailer = {
-      width: '100%',
-      height: '100%',
+      width: "100%",
+      height: "100%",
       playerVars: {
         autoplay: 0
       }
@@ -114,7 +113,7 @@ class DetailedExpansionPanel extends Component {
               expandIcon={<ExpandMoreIcon />}
               classes={{ root: classes.summaryRoot }}
             >
-              <Grid container sm className={classes.moviePropsPoster}>
+              <Grid item container sm className={classes.moviePropsPoster}>
                 <div>
                   <img
                     className={classes.affiche}
@@ -125,14 +124,14 @@ class DetailedExpansionPanel extends Component {
               </Grid>
               <div className={classes.space} />
               <Grid container className={classes.movieProps}>
-                <Typography>
-                  <h2 className={classes.movieTitle}>{movie.title}</h2>
+                <Typography variant="h2" className={classes.movieTitle}>
+                  {movie.title}
                 </Typography>
-                <Divider light="true" />
+                <Divider light={true} />
                 <Typography>
                   <b>Director:</b> {movie.director}
                 </Typography>
-                <Divider light="true" />
+                <Divider light={true} />
                 <Typography>
                   <b>Number of scenes locations:</b> {movie.locations.length}
                 </Typography>
@@ -140,7 +139,7 @@ class DetailedExpansionPanel extends Component {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
               <Grid container className={classes.movieProps}>
-                <Divider light="true" />
+                <Divider light={true} />
                 <Grid item container className={classes.moviePropsItems}>
                   <Grid item xs={2}>
                     <Typography>
@@ -148,20 +147,20 @@ class DetailedExpansionPanel extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={9}>
-                    <Typography>
-                      <ul className={classes.list}>
-                        {movie.locations.map((iLocation, iIndex) => (
-                          <li key={iIndex}>
+                    <ul className={classes.list}>
+                      {movie.locations.map((iLocation, iIndex) => (
+                        <li key={iIndex}>
+                          <Typography>
                             {iLocation !== undefined
                               ? iLocation
                               : "San Francisco"}
-                          </li>
-                        ))}
-                      </ul>
-                    </Typography>
+                          </Typography>
+                        </li>
+                      ))}
+                    </ul>
                   </Grid>
                 </Grid>
-                <Divider light="true" />
+                <Divider light={true} />
                 <Grid item container className={classes.moviePropsItems}>
                   <Grid item xs={2}>
                     <Typography>
@@ -169,10 +168,12 @@ class DetailedExpansionPanel extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={9}>
-                    <Typography className={classes.synopsis}>{movie.synopsis}</Typography>
+                    <Typography className={classes.synopsis}>
+                      {movie.synopsis}
+                    </Typography>
                   </Grid>
                 </Grid>
-                <Divider light="true" />
+                <Divider light={true} />
                 <Grid item container className={classes.moviePropsItems}>
                   <Grid item xs={2}>
                     <Typography>
@@ -180,35 +181,35 @@ class DetailedExpansionPanel extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={9}>
-                    <Typography>
-                      <ul className={classes.list}>
-                        <li />
-                        <li />
-                        <li />
-                      </ul>
-                    </Typography>
+                    <ul className={classes.list}>
+                      <li />
+                      <li />
+                      <li />
+                    </ul>
                   </Grid>
                 </Grid>
                 {youtubeKey && (
                   <div>
-                    <Divider light="true" />
-                    <Grid item container className={classes.moviePropYoutubeKey}>
+                    <Divider light={true} />
+                    <Grid
+                      item
+                      container
+                      className={classes.moviePropYoutubeKey}
+                    >
                       <Grid item xs={2}>
                         <Typography>
                           <b>Video:</b>
                         </Typography>
                       </Grid>
-                      {/* <div className={classes.videoWrapper}> */}
-                        <Grid item xs={9}>
-                          <div className={classes.trailer}>
-                            <YouTube
-                              videoId={youtubeKey}
-                              opts={trailer}
-                              className={classes.youtube}
-                            />
-                          </div>
-                        </Grid>
-                      {/* </div> */}
+                      <Grid item xs={9}>
+                        <div className={classes.trailer}>
+                          <YouTube
+                            videoId={youtubeKey}
+                            opts={trailer}
+                            className={classes.youtube}
+                          />
+                        </div>
+                      </Grid>
                     </Grid>
                   </div>
                 )}
