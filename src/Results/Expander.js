@@ -93,8 +93,8 @@ const styles = theme => ({
     }
   }
 });
-
 class DetailedExpansionPanel extends Component {
+
   render() {
     const { classes, movie, youtubeKey } = this.props;
     const trailer = {
@@ -181,11 +181,17 @@ class DetailedExpansionPanel extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={9}>
-                    <ul className={classes.list}>
-                      <li />
-                      <li />
-                      <li />
-                    </ul>
+                      <ul className={classes.list}>
+                          {movie.actors.map((actor, index) => (
+                            actor && (
+                            <li key={index}>
+                            <Typography>
+                              {actor}
+                              </Typography>
+                          </li>))
+                          )
+                          }
+                      </ul>
                   </Grid>
                 </Grid>
                 {youtubeKey && (
