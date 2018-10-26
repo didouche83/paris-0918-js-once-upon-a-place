@@ -47,6 +47,14 @@ const styles = theme => ({
     flexDirection: "column",
     justifyContent: "space-around"
   },
+  moviePropsPoster: {
+    flexDirection: "column",
+    justifyContent: "space-around",
+    [theme.breakpoints.down("md")]: {
+      width: "30%"
+    }
+
+  },
   movieTitle: {
     fontSize: "25px",
     [theme.breakpoints.down("sm")]: {
@@ -77,15 +85,6 @@ const styles = theme => ({
       flexDirection: "8px"
     }
   },
-  videowrapper: {
-    // float: 'none',
-    // clear: 'both',
-    // width: '200%',
-    // position: 'relative',
-    // paddingBottom: '56.25%',
-    // paddingTop: '25px',
-    // height: 0
-  },
   youtube: {
     width: '400px',
     height: '300px',
@@ -115,7 +114,7 @@ class DetailedExpansionPanel extends Component {
               expandIcon={<ExpandMoreIcon />}
               classes={{ root: classes.summaryRoot }}
             >
-              <Grid container sm className={classes.movieProps}>
+              <Grid container sm className={classes.moviePropsPoster}>
                 <div>
                   <img
                     className={classes.affiche}
