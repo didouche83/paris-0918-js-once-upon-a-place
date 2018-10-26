@@ -14,7 +14,9 @@ class App extends Component {
    * @{string} inputValue - the value that is searched by the user
    */
   state = {
-    inputValue: ""
+    inputValue: "",
+    footerColor: "transparent",
+    displayFooter: "flex"
   };
   
   /**
@@ -26,10 +28,21 @@ class App extends Component {
       inputValue: iValue 
     });
   };
+
+  setFooterColor = (iStrColor) => {
+    this.setState({
+      footerColor: iStrColor
+    });
+  }
   
+  setDisplayFooter = (iBlnDisplay) => {
+    this.setState({
+      displayFooter: iBlnDisplay
+    });
+  }
 
   render() {
-    const { inputValue } = this.state;
+    const { inputValue, footerColor, displayFooter } = this.state;
     return (
       <div className="App">
         <BrowserRouter>
@@ -42,14 +55,14 @@ class App extends Component {
               />
               <Route
                 path="/Results"
-                render={() => <Results inputValue={inputValue} lift={this.lift} />}
+                render={() => <Results setDisplayFooter={this.setDisplayFooter} setFooterColor={this.setFooterColor} inputValue={inputValue} lift={this.lift} />}
               />
               <Route 
                 path="/team" 
                 render={() => <Team />} 
               />
             </Switch>
-            <Footer />
+            <Footer footerColor={footerColor} displayFooter={displayFooter}/>
           </div>
         </BrowserRouter>
       </div>

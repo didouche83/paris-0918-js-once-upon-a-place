@@ -4,8 +4,26 @@ import { FadeLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import SimpleMap from './Map';
 import HeaderResults from './HeaderResults';
+import { withStyles } from "@material-ui/core/styles";
 import './Results.css';
-import ResultsList from './ResultList'
+import ResultsList from './ResultList';
+// import Footer from '../Footer';
+
+const styles = theme => ({
+  rootTabs: {
+    backgroundColor: 'white',
+    color: 'black'
+  },
+  rootTab: {
+    flexGrow: 1
+  },
+  selectedTab: {
+    backgroundColor: '#98e6e6', 
+    flexGrow: 1,
+    left: 0,
+    width: '50%'
+  }
+});
 
 class Results extends Component {
   state = {
@@ -23,7 +41,7 @@ class Results extends Component {
 
     datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
 
-    const datasSfExistingLocations = datasSf.filter(movie => movie.locations == undefined ? false : true) //on garde uniquement les films qui ont des lieux de tournage
+    const datasSfExistingLocations = datasSf.filter(movie => movie.locations === undefined ? false : true) //on garde uniquement les films qui ont des lieux de tournage
 
     const resMoviesList = this.transformDatasLocationInMovie(datasSfExistingLocations); // on appelle la fonction pour regrouper les lieux par film
     this.setState({
@@ -67,15 +85,18 @@ class Results extends Component {
 
   handleChange = (_, iValue) => {
     this.setState({ value: iValue });
+    const blnDisplayFooter = iValue===1 ? 'none' : 'flex';
+    this.props.setDisplayFooter(blnDisplayFooter)
   };
 
   componentDidMount() {
-    this.searchLoc(this.props.inputValue)
+    this.searchLoc(this.props.inputValue);
+    this.props.setFooterColor('white');
   };
 
   render() {
     const { value, moviesList } = this.state;
-    const { lift, inputValue } = this.props;
+    const { classes, lift, inputValue, setFooterColor } = this.props;
     if (this.state.isLoaded) {
       if (this.state.moviesList.length > 0) {
         return (
@@ -84,13 +105,14 @@ class Results extends Component {
               inputValue={inputValue}
               searchLoc={this.searchLoc}
               lift={lift}
+              setFooterColor={setFooterColor}
             />
             <div className="mobileOnly">
               <div>
                 <AppBar position="static">
-                  <Tabs value={value} onChange={this.handleChange} centered>
-                    <Tab label="List" />
-                    <Tab label="Map" />
+                  <Tabs value={value} onChange={this.handleChange} centered classes={{root: classes.rootTabs, indicator: classes.selectedTab}}>
+                    <Tab classes={{root: classes.rootTab}} label="List" />
+                    <Tab classes={{root: classes.rootTab}} label="Map" />
                   </Tabs>
                 </AppBar>
                 {value === 0 && <ResultsList moviesList={moviesList} />}
@@ -101,6 +123,7 @@ class Results extends Component {
               <ResultsList moviesList={moviesList} />
               <SimpleMap />
             </div>
+            {/* <Footer/> */}
           </div>
         );
       } else {
@@ -128,4 +151,4 @@ class Results extends Component {
   }
 }
 
-export default Results;
+export default withStyles(styles)(Results);

@@ -33,6 +33,11 @@ const styles = theme => ({
 });
 
 class HeaderResults extends Component {
+
+  handleClick = () => {
+    this.props.setFooterColor('transparent');
+  }
+  
   render() {
     //Get this.props.classes, this.props.inputValue, this.props.searchLoc, this.props.lift
     const { classes, inputValue, searchLoc, lift } = this.props;
@@ -45,6 +50,7 @@ class HeaderResults extends Component {
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="Open drawer"
+                onClick={this.handleClick}
               >
                 <img src={logo} className={classes.logo} alt="logo" />
               </IconButton>
