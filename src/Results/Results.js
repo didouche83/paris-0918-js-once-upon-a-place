@@ -122,7 +122,7 @@ class Results extends Component {
             </div>
             <div className="desktopOnly">
               <ResultsList moviesList={moviesList} />
-              <SimpleMap />
+              <SimpleMap moviesList={moviesList}/>
             </div>
             {/* <Footer/> */}
           </div>

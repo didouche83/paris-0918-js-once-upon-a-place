@@ -34,8 +34,8 @@ class SimpleMap extends Component {
     const locations = await this.props.moviesList[0].locations.map(async e => {
 
 
-      // let re = /(&)|(' ')/;
-      // let el = e.replace(re, '+');
+      let re = /(&)|(' ')/;
+      let el = e.replace(re, '+');
 
       const geo = await axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${el}+sanfrancisco+us&key=${ApiKey}`);
       return await {
