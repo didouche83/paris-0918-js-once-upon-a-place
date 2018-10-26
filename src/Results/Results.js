@@ -1,77 +1,155 @@
 import React, { Component } from 'react';
-import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
-import ResultList from './ResultList';
-import Map from './Map';
+import { AppBar, Tabs, Tab } from '@material-ui/core';
+import { FadeLoader } from 'react-spinners';
+import { Link } from 'react-router-dom';
+import SimpleMap from './Map';
 import HeaderResults from './HeaderResults';
-import './Results.css'
+import { withStyles } from "@material-ui/core/styles";
+import './Results.css';
+import ResultsList from './ResultList';
+// import Footer from '../Footer';
+
+const styles = theme => ({
+  rootTabs: {
+    backgroundColor: 'white',
+    color: 'black'
+  },
+  rootTab: {
+    flexGrow: 1
+  },
+  selectedTab: {
+    backgroundColor: '#98e6e6',
+    flexGrow: 1,
+    left: 0,
+    width: '50%'
+  }
+});
 
 class Results extends Component {
   state = {
-    res: []
+    isLoaded: false,
+    moviesList: [],
+    value: 0
   };
 
-  searchLoc = async () =>{
-    const input = this.props.input;
-    const api_call = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${input}%25'&$limit=5`);
-    if (api_call.ok) {
-      const data = await api_call.json();
-      this.setState({
-        res: data
-      })
-    }else{
-      this.setState({
-        res: []
-      })
+  searchLoc = async (iValue) => {
+    this.setState({
+      isLoaded: false
+    })
+    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'`);
+    const datasSf = await api_call_Sf.json();
+
+    datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
+
+    const datasSfExistingLocations = datasSf.filter(movie => movie.locations === undefined ? false : true) //on garde uniquement les films qui ont des lieux de tournage
+
+    const resMoviesList = this.transformDatasLocationInMovie(datasSfExistingLocations); // on appelle la fonction pour regrouper les lieux par film
+    this.setState({
+      moviesList: api_call_Sf.ok ? resMoviesList : [], //si l'appel API ok, alors on remplit le state (moviesList) avec le résultat
+      //de la fonction qui regroupe les lieux par film
+      isLoaded: true
+    });
+
+  };
+
+  transformDatasLocationInMovie = datasSfExistingLocations => {
+    let res = [];
+    let data = {};
+    let film = []; //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
+    let add = {};
+    const synopsis = "No data available";
+    const getFilm = (res, data) => {
+      return res.filter(f => f.title === data.title && f.release_year === data.release_year);//(on compare le nouveau titre de film )
+    } //qui est inséré dans data avec ceux qui sont déjà dans res (les films) pour voir s'ils ont les mm titres et la mm année pour
+    //les regrouper par lieux de tournage
+
+    for (let i = 0; i < datasSfExistingLocations.length; i++) {
+      data = datasSfExistingLocations[i];
+      film = getFilm(res, data);
+      if (!film.length) { //équivaut à film.length===0
+        add = {
+          title: data.title,
+          release_year: data.release_year,
+          locations: new Array(data.locations),
+          synopsis: synopsis,
+          actors: new Array(data.actor_1, data.actor_2, data.actor_3),
+          director: data.director,
+          image: "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg"
+        };
+        res.push(add);
+      } else {
+        getFilm(res, data)[0].locations.push(data.locations); // si y'a un titre pareil, on push pour regrouper par film les lieux
+      }
     }
+    return res;
   };
 
-  componentDidMount(){
-    this.searchLoc()
+  handleChange = (_, iValue) => {
+    this.setState({ value: iValue });
+    const blnDisplayFooter = iValue===1 ? 'none' : 'flex';
+    this.props.setDisplayFooter(blnDisplayFooter)
   };
 
-  render(){
-    if (this.state.res.length > 0){
-      return(
-        <div className= "Results">
-          <HeaderResults inputValue={this.props.input} searchLoc={this.searchLoc}/>
-          <div className='resContent'>
+  componentDidMount() {
+    this.searchLoc(this.props.inputValue);
+    this.props.setFooterColor('white');
+  };
+
+  render() {
+    const { value, moviesList } = this.state;
+    const { classes, lift, inputValue, setFooterColor } = this.props;
+    if (this.state.isLoaded) {
+      if (this.state.moviesList.length > 0) {
+        return (
+          <div className="Results">
+            <HeaderResults
+              inputValue={inputValue}
+              searchLoc={this.searchLoc}
+              lift={lift}
+              setFooterColor={setFooterColor}
+            />
             <div className="mobileOnly">
-              <BrowserRouter>
-                <div className='router'>
-                  <NavLink 
-                    className="tab"
-                    to="/Results/List"
-                    >List</NavLink>
-                  <NavLink 
-                    className="tab"
-                    to="/Results/Map"
-                    >Map</NavLink>
-                  <Switch>
-                    <Route 
-                      path="/Results/List"
-                      render={(props)=> 
-                        <ResultList 
-                          locationsList={this.state.res} 
-                        />}
-                    />
-                    <Route path="/Results/Map" component={Map} />
-                  </Switch>
-                </div>
-              </BrowserRouter>
+              <div>
+                <AppBar position="static">
+                  <Tabs value={value} onChange={this.handleChange} centered classes={{root: classes.rootTabs, indicator: classes.selectedTab}}>
+                    <Tab classes={{root: classes.rootTab}} label="List" />
+                    <Tab classes={{root: classes.rootTab}} label="Map" />
+                  </Tabs>
+                </AppBar>
+                {value === 0 && <ResultsList moviesList={moviesList} />}
+                {value === 1 && <SimpleMap />}
+              </div>
             </div>
-            <div className="desktopOnly">      
-              <ResultList 
-                locationsList = {this.state.res} 
-              />
-              <Map />
+            <div className="desktopOnly">
+              <ResultsList moviesList={moviesList} />
+              <SimpleMap />
             </div>
+            {/* <Footer/> */}
+          </div>
+        );
+      } else {
+        return (
+          <div className='Results'>
+            <h2>Your query doesn't match with any movie.</h2>
+            <Link className='linkToHome' to='/'>Make another query</Link> 
+          </div>
+        )
+      }
+    } else {
+      return (
+        <div className='Results'>
+          <div className='loadingSpinner'>
+            <FadeLoader
+              sizeUnit={"px"}
+              size={150}
+              color={'black'}
+              loading={!this.state.isloaded}
+            />
           </div>
         </div>
-      );
-    }else{
-      return <h2>La recherche n'a donné aucun résultat</h2>
+      )
     }
   }
 }
 
-export default Results;
+export default withStyles(styles)(Results);

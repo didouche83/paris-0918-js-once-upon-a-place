@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import Header from './Header';
-import './Home.css';
+import React, { Component } from "react";
+import Header from "./Header";
+import "./Home.css";
+import SearchBar from "./SearchBar";
+// import Footer from "./Footer";
 
 class Home extends Component {
-	render(){
-		return(
-      <div>
-      <Header/>
-			<main>
-				<form>
-					<label htmlFor="searchInput"></label>
-					<div className="inputs">
-						<input type="text" id="searchInput" placeholder="Search movie..."/>
-						<NavLink to="/Results/List"> 
-              <input type="submit" value="Search"/>
-            </NavLink>
-					</div>
-				</form>
-				<p className="intro">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio autem eum rerum pariatur, id a minima, doloribus natus nihil fuga alias ut molestiae illum neque! Vero mollitia modi alias esse.</p>
-			</main>
+  render() {
+    const { lift } = this.props;
+    return (
+      <div className="Home">
+        <Header />
+        <main className="mainPart">
+          <div>
+            <div className="searchBar">
+              <SearchBar inputValue='' lift={lift} blnHome={true} />
+            </div>
+          </div>
+          <p className="intro">
+            Discover where your favorites movies have been filmed around the
+            world with Once Upon A Place. <br />
+            You could be surprised to find one near from you
+          </p>
+        </main>
+        {/* <Footer /> */}
       </div>
-		);
-	}
+    );
+  }
 }
 
 export default Home;

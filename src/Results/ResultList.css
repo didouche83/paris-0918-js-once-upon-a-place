@@ -1,7 +1,7 @@
-.card{
+.moviesContainer{
     width: 100%;
 }
 
-.cardContainer{
-    width: 100%;
+.center {
+    text-align: center;
 }

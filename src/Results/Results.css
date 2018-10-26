@@ -1,19 +1,14 @@
-/* .Results{
+.Results {
     border: 1px solid grey;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     background-color: white;
     color: black;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
+    padding-bottom: 50px;
 }
-
-.router{
-    width: 100%;
-    margin-top:10px;
-} */
-
 
 
 /* .tab{
@@ -46,3 +41,40 @@
     height: 100vh;
     width: 100vw;
 } */
+
+.mobileOnly {
+    display: none;
+} 
+.desktopOnly {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+}
+
+@media screen and (max-width: 960px) {
+    .mobileOnly {
+        display: block;
+    }
+    .desktopOnly {
+        display: none;
+    }
+}
+
+.Results .loadingSpinner{
+    position: fixed;
+    top: 50%;
+    right: 50%;
+}
+
+.Results .noMatch{
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    width: 50%;
+}
+
+.Results .linkToHome{
+    color: black;
+}
+
+
+
