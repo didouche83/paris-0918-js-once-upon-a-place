@@ -46,7 +46,7 @@
 } 
 .desktopOnly {
     display: grid;
-    grid-template-columns: 5fr 6fr;
+    grid-template-columns: 4.5fr 6.5fr;
 }
 
 @media screen and (max-width: 960px) {

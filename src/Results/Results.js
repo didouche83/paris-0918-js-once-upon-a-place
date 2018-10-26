@@ -23,7 +23,7 @@ class Results extends Component {
 
     datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
 
-    const datasSfExistingLocations = datasSf.filter(movie => movie.locations == undefined ? false : true) //on garde uniquement les films qui ont des lieux de tournage
+    const datasSfExistingLocations = datasSf.filter(movie => movie.locations === undefined ? false : true) //on garde uniquement les films qui ont des lieux de tournage
 
     const resMoviesList = this.transformDatasLocationInMovie(datasSfExistingLocations); // on appelle la fonction pour regrouper les lieux par film
     this.setState({
