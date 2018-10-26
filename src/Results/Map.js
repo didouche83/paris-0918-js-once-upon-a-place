@@ -3,7 +3,6 @@ import L from "leaflet";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import logo from "../images/logoCamera.svg";
 import axios from "axios";
-import fuckingMap from './location';
 
 import "./Map.css";
 

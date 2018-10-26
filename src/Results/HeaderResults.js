@@ -11,10 +11,11 @@ const styles = theme => ({
     width: "100%",
     position: "sticky",
     top: 0,
-    zIndex: 2
+    zIndex: 1,
+    borderBottom: "solid #e6e6e6 1px"
   },
   app: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   grow: {
     flexGrow: 0
@@ -32,18 +33,29 @@ const styles = theme => ({
 });
 
 class HeaderResults extends Component {
+
+  /**
+   * Handle the click on the IconButton (logo) that will redirect the site to Home
+   * We just want to change the color of the footer in that case
+   */
+  handleClick = () => {
+    //Function passed in props from the App Component
+    this.props.setFooterColor('transparent');
+  }
+  
   render() {
     //Get this.props.classes, this.props.inputValue, this.props.searchLoc, this.props.lift
     const { classes, inputValue, searchLoc, lift } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static" className={classes.app}>
+        <AppBar position="static" className={classes.app} elevation={0}>
           <Toolbar>
             <NavLink to="/">
               <IconButton
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="Open drawer"
+                onClick={this.handleClick}
               >
                 <img src={logo} className={classes.logo} alt="logo" />
               </IconButton>
