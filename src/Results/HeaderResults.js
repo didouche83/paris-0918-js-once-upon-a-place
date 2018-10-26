@@ -34,7 +34,12 @@ const styles = theme => ({
 
 class HeaderResults extends Component {
 
+  /**
+   * Handle the click on the IconButton (logo) that will redirect the site to Home
+   * We just want to change the color of the footer in that case
+   */
   handleClick = () => {
+    //Function passed in props from the App Component
     this.props.setFooterColor('transparent');
   }
   

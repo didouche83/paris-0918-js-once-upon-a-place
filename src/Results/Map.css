@@ -1,11 +1,5 @@
 .Map-container {
-    /* height: 100%;
-    width: 55%;
-    position: fixed !important;
-    top: 0;
-    right: 0; */
     margin-top: 9px;
-    /* margin-bottom: 50px; */
     display: flex;
 }
 
