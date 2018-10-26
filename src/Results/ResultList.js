@@ -36,7 +36,6 @@ class ResultList extends Component {
     const { currentNumberPage } = this.state;
     //Get this.props.moviesList
     const { moviesList } = this.state;
-    console.log('results list', moviesList);
     //Get the first index of the moviesList that must be displayed
     const numberResultStart = (currentNumberPage - 1) * NUMBER_OF_MOVIES_PER_PAGE;
     //Get the last index of the moviesList that must be displayed
@@ -66,7 +65,7 @@ class ResultList extends Component {
     //If currentNumberPage is bigger than 1 -> currentNumberPage = currentNumberPage - 1 and empty moviesPerPage
     //Then, launch the getMoviesPerPage function
     if (currentNumberPage > 1) {
-      this.setState({ 
+      this.setState({
         currentNumberPage: currentNumberPage - 1,
         moviesPerPage: []
       }, this.getMoviesPerPage);
@@ -84,7 +83,7 @@ class ResultList extends Component {
     //If currentNumberPage is smaller than the length of the list of movies / number of movies per page -> currentNumberPage = currentNumberPage + 1 and empty moviesPerPage
     //Then, launch the getMoviesPerPage function
     if (moviesList.length / NUMBER_OF_MOVIES_PER_PAGE > currentNumberPage) {
-      this.setState({ 
+      this.setState({
         currentNumberPage: currentNumberPage + 1,
         moviesPerPage: []
       }, this.getMoviesPerPage);
@@ -102,7 +101,7 @@ class ResultList extends Component {
   render() {
     const { moviesPerPage, numberResultStart, numberResultEnd, haveResults, isDisplayNext, isDisplayPrevious, moviesList } = this.state;
     // const { moviesList } = this.props;
-    
+
     return (
       <div className="moviesContainer">
         {haveResults && moviesPerPage.map((e, i) =>

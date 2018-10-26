@@ -18,7 +18,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   selectedTab: {
-    backgroundColor: '#98e6e6', 
+    backgroundColor: '#98e6e6',
     flexGrow: 1,
     left: 0,
     width: '50%'
@@ -72,6 +72,7 @@ class Results extends Component {
           release_year: data.release_year,
           locations: new Array(data.locations),
           synopsis: synopsis,
+          actors: new Array(data.actor_1, data.actor_2, data.actor_3),
           director: data.director,
           image: "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg"
         };

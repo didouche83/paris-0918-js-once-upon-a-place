@@ -94,8 +94,8 @@ const styles = theme => ({
     }
   }
 });
-
 class DetailedExpansionPanel extends Component {
+
   render() {
     const { classes, movie, youtubeKey } = this.props;
     const trailer = {
@@ -148,17 +148,17 @@ class DetailedExpansionPanel extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={9}>
-                    <Typography>
                       <ul className={classes.list}>
                         {movie.locations.map((iLocation, iIndex) => (
                           <li key={iIndex}>
+                            <Typography>
                             {iLocation !== undefined
                               ? iLocation
                               : "San Francisco"}
+                              </Typography>
                           </li>
                         ))}
                       </ul>
-                    </Typography>
                   </Grid>
                 </Grid>
                 <Divider light="true" />
@@ -180,13 +180,17 @@ class DetailedExpansionPanel extends Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={9}>
-                    <Typography>
                       <ul className={classes.list}>
-                        <li />
-                        <li />
-                        <li />
+                          {movie.actors.map((actor, index) => (
+                            actor && (
+                            <li key={index}>
+                            <Typography>
+                              {actor}
+                              </Typography>
+                          </li>))
+                          )
+                          }
                       </ul>
-                    </Typography>
                   </Grid>
                 </Grid>
                 {youtubeKey && (
