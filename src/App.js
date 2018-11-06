@@ -66,7 +66,7 @@ class App extends Component {
               />
               <Route 
                 path="/team" 
-                render={() => <Team />} 
+                render={() => <Team setFooterColor={this.setFooterColor}/>} 
               />
             </Switch>
             <Footer footerColor={footerColor} displayFooter={displayFooter}/>
