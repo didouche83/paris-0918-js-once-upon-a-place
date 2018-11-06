@@ -16,7 +16,8 @@ class App extends Component {
   state = {
     inputValue: "",
     footerColor: "transparent",
-    displayFooter: "flex"
+    displayFooter: "flex",
+    appPosition: "fixed"
   };
   
   /**
@@ -31,7 +32,8 @@ class App extends Component {
 
   setFooterColor = (iStrColor) => {
     this.setState({
-      footerColor: iStrColor
+      footerColor: iStrColor,
+      appPosition: iStrColor === "transparent" ? "fixed" : "relative"
     });
   }
   
@@ -42,9 +44,9 @@ class App extends Component {
   }
 
   render() {
-    const { inputValue, footerColor, displayFooter } = this.state;
+    const { inputValue, footerColor, displayFooter, appPosition } = this.state;
     return (
-      <div className="App">
+      <div className="App" style={{position: appPosition}}>
         <BrowserRouter>
           <div>
             <Switch>
