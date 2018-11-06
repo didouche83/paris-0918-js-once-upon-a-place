@@ -123,6 +123,7 @@ class Results extends Component {
               searchLoc={this.searchLoc}
               lift={lift}
               setFooterColor={setFooterColor}
+              blnHome = {false}
             />
             <div className="mobileOnly">
               <div>
