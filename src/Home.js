@@ -33,7 +33,6 @@ class Home extends Component {
   };
 
   render() {
-    const { classes } = this.props;
     const { spacing } = this.state;
     const { lift } = this.props;
     return (

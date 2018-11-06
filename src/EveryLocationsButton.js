@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 
@@ -21,7 +19,7 @@ class EveryLocationsButton extends Component {
         return(
         <div>
          
-        {<Link to = "/EveryLocations"> <Button variant="contained" className={classes.button}>
+        {<Link to = "/EveryLocations" style={{ textDecoration: 'none' }}> <Button variant="contained" className={classes.button}>
           See all
       </Button></Link>}
         </div>
