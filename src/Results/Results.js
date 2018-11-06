@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
-import { AppBar, Tabs, Tab } from '@material-ui/core';
-import { FadeLoader } from 'react-spinners';
-import { Link } from 'react-router-dom';
-import SimpleMap from './Map';
-import HeaderResults from './HeaderResults';
-import './Results.css';
-import ResultsList from './ResultList'
+import React, { Component } from "react";
+import { AppBar, Tabs, Tab } from "@material-ui/core";
+import { FadeLoader } from "react-spinners";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
+import SimpleMap from "./Map";
+import HeaderResults from "./HeaderResults";
+import ResultsList from "./ResultList";
+
+import "./Results.css";
 
 class Results extends Component {
   state = {
@@ -14,23 +17,33 @@ class Results extends Component {
     value: 0
   };
 
-  searchLoc = async (iValue) => {
+  searchLoc = iValue => {
+
     this.setState({
       isLoaded: false
-    })
-    const api_call_Sf = await fetch(`https://data.sfgov.org/resource/wwmu-gmzc.json?$where=title like '%25${iValue}%25'`);
-    const datasSf = await api_call_Sf.json();
-
-    datasSf.sort((data1, data2) => (data1.title < data2.title ? -1 : 1)); //on trie les titres de film par ordre alphabétique
-
-    const resMoviesList = this.transformDatasLocationInMovie(datasSf); // on appelle la fonction pour regrouper les lieux par film
-    this.setState({
-      moviesList: api_call_Sf.ok ? resMoviesList : [], //si l'appel API ok, alors on remplit le state (moviesList) avec le résultat
-      //de la fonction qui regroupe les lieux par film
-      isLoaded: true
     });
 
-  };
+    const url = `https://data.sfgov.org/resource/wwmu-gmzc.json?$q=${iValue}`;
+    axios.get(url).then(res => {
+      let moviesList = res.data;
+      moviesList = this.transformDatasLocationInMovie(moviesList // on appelle la fonction pour regrouper les lieux par film
+        .filter(movie =>
+          movie.title.toLowerCase().includes(iValue.toLowerCase())
+        )
+        .sort((data1, data2) => (data1.title < data2.title ? -1 : 1)) //on trie les titres de film par ordre alphabétique;
+      )
+      this.setState({
+        moviesList,
+        isLoaded: true,
+      });
+    })
+    .catch(() =>{
+      this.setState({
+        moviesList: [],
+        isLoaded: true,
+      })
+    });
+  }
 
   transformDatasLocationInMovie = datasSf => {
     let res = [];
@@ -39,21 +52,25 @@ class Results extends Component {
     let add = {};
     const synopsis = "No data available";
     const getFilm = (res, data) => {
-      return res.filter(f => f.title === data.title && f.release_year === data.release_year);//(on compare le nouveau titre de film )
-    } //qui est inséré dans data avec ceux qui sont déjà dans res (les films) pour voir s'ils ont les mm titres et la mm année pour
+      return res.filter(
+        f => f.title === data.title && f.release_year === data.release_year
+      ); //(on compare le nouveau titre de film )
+    }; //qui est inséré dans data avec ceux qui sont déjà dans res (les films) pour voir s'ils ont les mm titres et la mm année pour
     //les regrouper par lieux de tournage
 
     for (let i = 0; i < datasSf.length; i++) {
       data = datasSf[i];
       film = getFilm(res, data);
-      if (!film.length) { //équivaut à film.length===0
+      if (!film.length) {
+        //équivaut à film.length===0
         add = {
           title: data.title,
           release_year: data.release_year,
           locations: new Array(data.locations),
           synopsis: synopsis,
           director: data.director,
-          image: "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg"
+          image:
+            "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg"
         };
         res.push(add);
       } else {
@@ -68,7 +85,7 @@ class Results extends Component {
   };
 
   componentDidMount() {
-    this.searchLoc(this.props.inputValue)
+    this.searchLoc(this.props.inputValue);
   };
 
   render() {
@@ -103,25 +120,27 @@ class Results extends Component {
         );
       } else {
         return (
-          <div className='Results'>
+          <div className="Results">
             <h2>Your query doesn't match with any movie.</h2>
-            <Link className='linkToHome' to='/'>Make another query</Link> 
+            <Link className="linkToHome" to="/">
+              Make another query
+            </Link>
           </div>
-        )
+        );
       }
     } else {
       return (
-        <div className='Results'>
-          <div className='loadingSpinner'>
+        <div className="Results">
+          <div className="loadingSpinner">
             <FadeLoader
               sizeUnit={"px"}
               size={150}
-              color={'black'}
+              color={"black"}
               loading={!this.state.isloaded}
             />
           </div>
         </div>
-      )
+      );
     }
   }
 }
