@@ -65,7 +65,7 @@ class App extends Component {
                 render={() => <EveryLocations setDisplayFooter={this.setDisplayFooter} setFooterColor={this.setFooterColor} inputValue={inputValue} lift={this.lift} /> }
               />
               <Route 
-                path="/team" 
+                path="/Team" 
                 render={() => <Team setFooterColor={this.setFooterColor}/>} 
               />
             </Switch>
