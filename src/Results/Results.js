@@ -117,12 +117,12 @@ class Results extends Component {
                   </Tabs>
                 </AppBar>
                 {value === 0 && <ResultsList moviesList={moviesList} />}
-                {value === 1 && <SimpleMap />}
+                {value === 1 && <SimpleMap moviesList={moviesList}/>}
               </div>
             </div>
             <div className="desktopOnly">
               <ResultsList moviesList={moviesList} />
-              <SimpleMap />
+              <SimpleMap moviesList={moviesList}/>
             </div>
             {/* <Footer/> */}
           </div>
