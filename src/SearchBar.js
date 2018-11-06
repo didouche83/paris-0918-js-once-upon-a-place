@@ -19,7 +19,7 @@ const styles = theme => ({
     border: "solid",
     borderColor: "lightgrey",
     borderWidth: theme.spacing.unit * 0.1,
-    boxShadow: "0px 2px 3px #aaa",
+    boxShadow: "0px 2px 4px #cccccc",
     "&:hover": {
       boxShadow: "0px 0px 0px #aaa"
     },
@@ -48,9 +48,9 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 10,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
-      width: 200,
+      width: 213,
       "&:focus": {
-        width: 300
+        width: 313
       }
     }
   }
@@ -77,7 +77,7 @@ class SearchBar extends Component {
     router: PropTypes.object
   };
 
-  redirectToTarget = () => {
+  redirectToResults = () => {
     this.context.router.history.push(`/Results`);
   };
 
@@ -119,13 +119,12 @@ class SearchBar extends Component {
       () => {
         //Get this.state.inputValue
         const { inputValue } = this.state;
-        //blnOpenAutocompletion is true if the inputValue is not an empty string, so the Autcompletion component will be displayed only if a value is entered in the input fielf
-        const blnOpenAutocompletion = inputValue !== "";
         //Call the autoComp function
         this.autoComp(inputValue);
         //Change the state of open
         this.setState({
-          openAutocompletion: blnOpenAutocompletion
+          //openAutocompletion is true if the inputValue is not an empty string, so the Autocompletion component will be displayed only if a value is entered in the input field
+          openAutocompletion: inputValue !== ""
         });
       }
     );
@@ -136,7 +135,7 @@ class SearchBar extends Component {
    * @param {string} iStrSearch : search value
    */
   submitOrSelectSearchValue = (iStrSearch) =>  {
-    //If we are in Results page, aunch the searchLoc function which is a function passed in props from Results
+    //If we are in Results page, launch the searchLoc function which is a function passed in props from Results
     if (!this.props.blnHome) {
       this.props.searchLoc(iStrSearch);
     }
@@ -149,7 +148,7 @@ class SearchBar extends Component {
     });
     //Render Results
     if (this.props.blnHome) {
-      this.redirectToTarget();;
+      this.redirectToResults();;
     }
   }
 
@@ -177,29 +176,19 @@ class SearchBar extends Component {
    * Handle a click outside the input field
    * @param {event} iEvent - the event that launched the function
    */
-  // handleBlur = (iEvent) => {
-  //   //If the related target isn't null and contains the class "AutocompletionItem"
-  //   if (
-  //     iEvent.relatedTarget != null &&
-  //     iEvent.relatedTarget.classList.contains("AutocompletionItem")
-  //   ) {
-  //     //Launch the handleSelect function
-  //     this.handleSelect(iEvent.relatedTarget.innerText);
-  //   }
-  //   //In all cases, close the Autocompletion component
-  //   this.setState({
-  //     openAutocompletion: false
-  //   });
-  // };
-
-  /**
-   * When the component is mounted, launch the autoComp function
-   */
-  componentDidMount = () => {
-    //Get this.props.inputValue
-    // const { inputValue } = this.props;
-    //Launch the autoComp function
-    // this.autoComp(inputValue);
+  handleBlur = (iEvent) => {
+    //If the related target isn't null and contains the class "AutocompletionItem"
+    if (
+      iEvent.relatedTarget != null &&
+      iEvent.relatedTarget.classList.contains("AutocompletionItem")
+    ) {
+      //Launch the handleSelect function
+      this.handleSelect(iEvent.relatedTarget.innerText);
+    }
+    //In all cases, close the Autocompletion component
+    this.setState({
+      openAutocompletion: false
+    });
   };
 
   render() {

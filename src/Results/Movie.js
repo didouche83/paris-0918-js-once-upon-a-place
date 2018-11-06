@@ -19,9 +19,10 @@ class Movie extends Component {
     const url = `https://api.themoviedb.org/3/movie/${this.state.movie.id}/videos?api_key=${API_KEY}&language=en-US`;
     axios.get(url)
       .then(res =>
-        this.setState({
-          youtubeKey: res.data.results[0].key
-        })
+        // console.log(res),
+         this.setState({
+           youtubeKey: res===undefined ? undefined : res.data===undefined ? undefined : res.data.results===undefined ? undefined : res.data.results[0]===undefined ? undefined : res.data.results[0].hasOwnProperty('key') ? res.data.results[0].key : undefined
+         })
       )
       .catch(res => console.log(res))
   }
@@ -55,7 +56,7 @@ class Movie extends Component {
 
   render() {
         return (
-            <div className='card'>
+            <div className="Movie">
                 {/* j'envoie les infos du state pour les afficher dans expander */}
                 <Expander movie={this.state.movie}    youtubeKey={this.state.youtubeKey}/>
                 <MoviesDirectorList directorName={this.state.movie.director} title={this.state.movie.title} />

@@ -1,14 +1,33 @@
-import React, { Component } from "react";
-import { AppBar, Tabs, Tab } from "@material-ui/core";
-import { FadeLoader } from "react-spinners";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { AppBar, Tabs, Tab } from '@material-ui/core';
+import { withStyles } from "@material-ui/core/styles";
+import { FadeLoader } from 'react-spinners';
+import { Link } from 'react-router-dom';
 import axios from "axios";
 
-import SimpleMap from "./Map";
-import HeaderResults from "./HeaderResults";
-import ResultsList from "./ResultList";
+import SimpleMap from './Map';
+import HeaderResults from './HeaderResults';
+import ResultsList from './ResultList';
 
-import "./Results.css";
+import './Results.css';
+
+// import Footer from '../Footer';
+
+const styles = theme => ({
+  rootTabs: {
+    backgroundColor: 'white',
+    color: 'black'
+  },
+  rootTab: {
+    flexGrow: 1
+  },
+  selectedTab: {
+    backgroundColor: '#98e6e6',
+    flexGrow: 1,
+    left: 0,
+    width: '50%'
+  }
+});
 
 class Results extends Component {
   state = {
@@ -45,7 +64,7 @@ class Results extends Component {
     });
   }
 
-  transformDatasLocationInMovie = datasSf => {
+  transformDatasLocationInMovie = datasSfExistingLocations => {
     let res = [];
     let data = {};
     let film = []; //ici on initialise ce dont on va avoir besoin dans la fonction (de res à synopsis)
@@ -58,8 +77,8 @@ class Results extends Component {
     }; //qui est inséré dans data avec ceux qui sont déjà dans res (les films) pour voir s'ils ont les mm titres et la mm année pour
     //les regrouper par lieux de tournage
 
-    for (let i = 0; i < datasSf.length; i++) {
-      data = datasSf[i];
+    for (let i = 0; i < datasSfExistingLocations.length; i++) {
+      data = datasSfExistingLocations[i];
       film = getFilm(res, data);
       if (!film.length) {
         //équivaut à film.length===0
@@ -68,6 +87,7 @@ class Results extends Component {
           release_year: data.release_year,
           locations: new Array(data.locations),
           synopsis: synopsis,
+          actors: new Array(data.actor_1, data.actor_2, data.actor_3),
           director: data.director,
           image:
             "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg"
@@ -82,15 +102,18 @@ class Results extends Component {
 
   handleChange = (_, iValue) => {
     this.setState({ value: iValue });
+    const blnDisplayFooter = iValue===1 ? 'none' : 'flex';
+    this.props.setDisplayFooter(blnDisplayFooter)
   };
 
   componentDidMount() {
     this.searchLoc(this.props.inputValue);
+    this.props.setFooterColor('white');
   };
 
   render() {
     const { value, moviesList } = this.state;
-    const { lift, inputValue } = this.props;
+    const { classes, lift, inputValue, setFooterColor } = this.props;
     if (this.state.isLoaded) {
       if (this.state.moviesList.length > 0) {
         return (
@@ -99,23 +122,25 @@ class Results extends Component {
               inputValue={inputValue}
               searchLoc={this.searchLoc}
               lift={lift}
+              setFooterColor={setFooterColor}
             />
             <div className="mobileOnly">
               <div>
                 <AppBar position="static">
-                  <Tabs value={value} onChange={this.handleChange} centered>
-                    <Tab label="List" />
-                    <Tab label="Map" />
+                  <Tabs value={value} onChange={this.handleChange} centered classes={{root: classes.rootTabs, indicator: classes.selectedTab}}>
+                    <Tab classes={{root: classes.rootTab}} label="List" />
+                    <Tab classes={{root: classes.rootTab}} label="Map" />
                   </Tabs>
                 </AppBar>
                 {value === 0 && <ResultsList moviesList={moviesList} />}
-                {value === 1 && <SimpleMap />}
+                {value === 1 && <SimpleMap moviesList={moviesList}/>}
               </div>
             </div>
             <div className="desktopOnly">
               <ResultsList moviesList={moviesList} />
-              <SimpleMap />
+              <SimpleMap moviesList={moviesList}/>
             </div>
+            {/* <Footer/> */}
           </div>
         );
       } else {
@@ -145,4 +170,4 @@ class Results extends Component {
   }
 }
 
-export default Results;
+export default withStyles(styles)(Results);
