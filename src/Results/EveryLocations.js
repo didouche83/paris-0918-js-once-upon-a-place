@@ -56,7 +56,6 @@ class EveryLocations extends Component {
         }
         return res;
       };
-    
 
     render(){
         const { lift, inputValue, setFooterColor } = this.props;
@@ -70,7 +69,7 @@ class EveryLocations extends Component {
                   setFooterColor={setFooterColor}
                   blnHome = {true}/>
                 <GlobalMap />
-                Hello World!
+                
             </div>
 
         )
