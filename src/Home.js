@@ -3,14 +3,9 @@ import Header from "./Header";
 import "./Home.css";
 import SearchBar from "./SearchBar";
 import EveryLocationsButton from './EveryLocationsButton';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import Paper from '@material-ui/core/Paper';
+
 // import Footer from "./Footer";
 
 const styles = theme => ({
@@ -51,7 +46,7 @@ class Home extends Component {
             {[0].map(value => (
               <Grid key={value} item>
                 <div className="searchBar">
-                        <p className="searchBarIntro">Want to know more about your favorite movie ? <br/>
+                        <p className="searchBarIntro">Want to know where a movie has been shot ? <br/>
                         Type its title just here :</p>
                         <SearchBar inputValue='' lift={lift} blnHome={true} />
                 </div>
@@ -61,7 +56,7 @@ class Home extends Component {
               {[0].map(value => (
               <Grid key={value} item>
                 <div className="everyLocationsButton">
-                        <p className ="buttonIntro">Want to see all the movie locations in San Francisco ? <br/>
+                        <p className ="buttonIntro">Want to see all movie locations in San Francisco ? <br/>
                         Click below:</p>
                         <EveryLocationsButton />
                 </div>
@@ -73,9 +68,9 @@ class Home extends Component {
 
           </div>
           <p className="intro">
-            Discover where your favorites movies have been filmed around the
+            Discover where your favorites movies have been shot around the
             world with Once Upon A Place. <br />
-            You could be surprised to find one near from you
+            You could be surprised to discover one next from your place...
           </p>
         </main>
         {/* <Footer /> */}
