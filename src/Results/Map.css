@@ -4,12 +4,17 @@
 }
 
 .map {
-    height: 100%;
+    height: 84.5vh;
     width: 58%;
     position: fixed;
     
 }
 
+
+.Icon {
+    border: 2px solid red;
+    background: red;
+}
 
 @media screen and (max-width: 960px) {
     .map {
